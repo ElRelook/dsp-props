@@ -32,6 +32,6 @@ def test_lti_filter_api_on_scipy_lfilter():
 
 
 def test_non_causal_filter_declared_causal_is_caught():
-    f = dp.lti_filter(causal=True)(lambda x: np.convolve(x, [0.5, 0.5], mode="same"))
+    f = dp.lti_filter(causal=True)(lambda x: np.convolve(x, [0.25, 0.5, 0.25], mode="same"))
     report = dp.verify(f, max_examples=100, raise_on_failure=False)
     assert "causality" in [fl.relation for fl in report.failures]
