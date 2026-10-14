@@ -4,7 +4,7 @@ title: "dsp-props: property-based testing for digital signal processing"
 type: software
 authors:
   - family-names: "Basdevant"
-    given-names: "Clément Emile Valentin"
+    given-names: "Clément"
     orcid: "https://orcid.org/0009-0004-7496-2365"
 license: BSD-3-Clause
 repository-code: "https://github.com/clement-basdevant/dsp-props"
