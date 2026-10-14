@@ -32,7 +32,10 @@ Le schéma directeur complet (état de l'art, catalogue de propriétés, feuille
 - [x] Relations LTI : linéarité, invariance temporelle, causalité (`dp.lti_filter`)
 - [x] Cohérence fonction de transfert / réponse mesurée (`transfer=(b, a)`)
 - [x] Famille de 5 mutants IIR, tous détectés ; sans fonction de transfert déclarée, le filtre « faux mais LTI » reste un angle mort documenté
-- [ ] Stabilité (entrée bornée, sortie bornée), multicadence
+- [x] Stabilité EBSB avec gain déclaré (`max_gain`) : entrée pire cas sign(h[N-1-k]) construite à partir de la réponse impulsionnelle mesurée
+- [x] Multicadence (`dp.resampler(L, M)`) : linéarité, invariance périodique (retard M en entrée = retard L en sortie), longueur de sortie, gain DC, rejet du repliement ; `resample_poly` passe pour 1/2, 3/1, 2/3, 5/4, 1/4, 3/8
+- [x] Famille de 6 mutants multicadence, tous détectés ; une décimation sans filtre (`x[::2]`) passe tout sauf le rejet du repliement
+- [x] L'invariance temporelle accepte les filtres non causaux (comparaison après le retard)
 
 ## Observations à suivre en phase 2
 

@@ -44,6 +44,13 @@ dp.transform(kind="generic", inverse=idct_ortho, parseval=True, parseval_scale=l
 # La tolérance suit le conditionnement de la récursion (IIRTolerance).
 dp.lti_filter(causal=True, transfer=(b, a))(lambda x: scipy.signal.lfilter(b, a, x))
 
+# Stabilité EBSB : aucune entrée bornée par 1 ne doit dépasser le gain déclaré (entrée pire cas construite)
+dp.lti_filter(max_gain=l1_de_h)(mon_filtre)
+
+# Rééchantillonneur rationnel L/M : linéarité, retard de M échantillons en entrée = retard de L en sortie,
+# longueur ceil(N L / M), gain DC, et rejet du repliement quand on décime
+dp.resampler(2, 3)(lambda x: scipy.signal.resample_poly(x, 2, 3))
+
 # Traitement par blocs : tout découpage (blocs vides et d'un échantillon compris) doit donner la même sortie
 @dp.streaming()
 class MonFiltre:
@@ -69,7 +76,7 @@ dp.transform(inverse=torch_ifft, parseval=True, tolerance=tol)(torch_fft)
 
 ## Valider l'outil : la suite de mutants
 
-`mutants/` contient 25 implémentations volontairement boguées, réparties en cinq familles :
+`mutants/` contient 31 implémentations volontairement boguées, réparties en six familles :
 
 | Famille | Mutants |
 | --- | --- |
@@ -77,12 +84,13 @@ dp.transform(inverse=torch_ifft, parseval=True, tolerance=tol)(torch_fft)
 | FFT réelle (`rfft`) | un bin de moins, inverse qui ignore N, bin de Nyquist divisé par 2, spectre conjugué, inverse sans symétrie hermitienne |
 | DCT-II orthonormée | poids du coefficient DC oublié, inverse du mauvais type, calcul en float32 |
 | Filtre IIR (ordre 4, résonant) | récursion en float32, filtfilt déclaré causal, coefficients qui changent en cours de route, état initial non nul, gain faux de 1 % |
+| Rééchantillonneur 2/3 | gain d'interpolation oublié, anti-repliement trop faible, longueur arrondie par défaut, phase qui dépend de la parité de N, filtrage en float32, état global qui fuit d'un appel à l'autre |
 | Streaming par blocs | état remis à zéro, historique décalé d'un échantillon, bloc vide qui efface l'état, blocs courts non filtrés |
 
 ```
 python mutants/run_mutants.py
 ...
-Mutation score: 25/25 (100%)
+Mutation score: 31/31 (100%)
 ```
 
 Angle mort documenté : un filtre faux mais toujours linéaire, invariant et causal (gain multiplié par 1,01) passe toutes les relations si l'on ne déclare pas sa fonction de transfert. Avec `transfer=(b, a)`, il est détecté.
@@ -115,9 +123,9 @@ python -m pytest
 
 ## Feuille de route
 
-1. **Fondations** : générateurs, relations de base, tests sur `numpy.fft` *(en cours)*
-2. **Moteur de tolérance** : modèles d'erreur par classe d'opérateur, calibration contre précision étendue
-3. **Relations avancées** : causalité, stabilité, streaming par blocs, multicadence
+1. **Fondations** : générateurs, relations de base, tests sur `numpy.fft` *(fait)*
+2. **Moteur de tolérance** : modèles d'erreur par classe d'opérateur, calibration contre précision étendue *(fait)*
+3. **Relations avancées** : causalité, stabilité, streaming par blocs, multicadence *(fait)*
 4. **Suite de mutants** : une quarantaine de mutants, essai sur `scipy.signal`
 5. **Shrinking et rapport** : contre-exemples minimaux, rapport HTML
 6. **Auto-découverte et adaptateur C**

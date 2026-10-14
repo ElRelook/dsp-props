@@ -51,7 +51,10 @@ class TimeInvariance(Relation):
         x, s = inputs
         y = np.asarray(spec.func(x))
         yd = np.asarray(spec.func(np.concatenate([np.zeros(s), x])))
-        expected = np.concatenate([np.zeros(s), y])
+        if not spec.causal:
+            # a non-causal filter may respond before the delayed input starts
+            yd = yd[s:]
+        expected = np.concatenate([np.zeros(s), y]) if spec.causal else y
         assert_close(yd, expected, spec.tolerance, ref_norm=norm(x), what=f"{self.name} (delay {s})")
 
 
@@ -125,4 +128,37 @@ class TransferConsistency(Relation):
             )
 
 
-LTI_RELATIONS = [LTILinearity(), TimeInvariance(), Causality(), TransferConsistency()]
+class BoundedGain(Relation):
+    """No bounded input can be amplified more than the declared gain (BIBO stability).
+
+    The worst input of length N is sign(h[N-1-k]) (h measured from the
+    impulse response): it drives y[N-1] to sum |h[:N]|, the largest possible
+    output for |x| <= 1.
+    """
+
+    name = "bounded gain"
+
+    def applies(self, spec):
+        return spec.max_gain is not None
+
+    def inputs(self, spec):
+        return lengths(spec.max_n).filter(lambda m: m >= 1)
+
+    def check(self, spec, n):
+        impulse = np.zeros(n)
+        impulse[0] = 1.0
+        h = np.asarray(spec.func(impulse))[:n]
+        x = np.sign(h[::-1]).astype(float)
+        y = np.asarray(spec.func(x))
+        if not np.all(np.isfinite(y)):
+            raise AssertionError(f"{self.name}: non-finite output for a bounded input of length {n}")
+        peak = float(np.max(np.abs(y))) if len(y) else 0.0
+        limit = spec.max_gain + spec.tolerance.bound(n, np.float64, np.sqrt(n))
+        if not peak <= limit:
+            raise AssertionError(
+                f"{self.name}: input bounded by 1 (worst case for N = {n}) gave |y| = {peak:.6g} "
+                f"> declared gain {spec.max_gain:g}"
+            )
+
+
+LTI_RELATIONS = [LTILinearity(), TimeInvariance(), Causality(), TransferConsistency(), BoundedGain()]
