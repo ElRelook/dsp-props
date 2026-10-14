@@ -37,6 +37,13 @@ Le schéma directeur complet (état de l'art, catalogue de propriétés, feuille
 - [x] Famille de 6 mutants multicadence, tous détectés ; une décimation sans filtre (`x[::2]`) passe tout sauf le rejet du repliement
 - [x] L'invariance temporelle accepte les filtres non causaux (comparaison après le retard)
 
+## Phase 5 : état
+
+- [x] Chaque échec garde l'entrée minimale trouvée par Hypothesis et le nombre d'entrées générées avant le premier échec
+- [x] Rapport exportable en JSON et Markdown, avec le temps par relation
+- [x] Mesures sur les 31 mutants (`benchmarks/mutant_results.json`) : contre-exemple de 3 échantillons au plus pour 27 sur 30 (médiane 2) ; 27 mutants détectés dès les 3 premières entrées, le plus lent après 32
+- [ ] Rapport HTML
+
 ## Observations à suivre en phase 2
 
 - La tolérance FFT (c · ε · log2 N · ‖y‖, c = 20) a rejeté le calcul de référence du théorème du décalage tant que l'argument des twiddles n'était pas réduit modulo N : la référence elle-même doit être plus précise que l'opérateur testé.

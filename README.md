@@ -93,6 +93,17 @@ python mutants/run_mutants.py
 Mutation score: 31/31 (100%)
 ```
 
+Les contre-exemples sont minuscules : pour 27 mutants sur 30 (hors `iir_wrong_gain`, détecté sur la réponse impulsionnelle), le signal réduit par Hypothesis fait au plus 3 échantillons (médiane : 2), et 27 mutants tombent dans les 3 premières entrées générées. Les exceptions sont attendues : 97 échantillons pour un filtre qui change après 64, et 192 pour les relations de gain DC et de repliement, qui exigent des signaux longs. `python mutants/run_mutants.py --json benchmarks/mutant_results.json` enregistre ces mesures.
+
+Chaque rapport donne l'entrée minimale et s'exporte :
+
+```python
+report = dp.verify(ma_fft, raise_on_failure=False)
+print(report)              # FAIL inversibility ... minimal input: [1, 1]
+report.to_json()           # pour la CI ou un tableau de résultats
+report.to_markdown()       # pour une PR ou un ticket
+```
+
 Angle mort documenté : un filtre faux mais toujours linéaire, invariant et causal (gain multiplié par 1,01) passe toutes les relations si l'on ne déclare pas sa fonction de transfert. Avec `transfer=(b, a)`, il est détecté.
 
 ## Chasse aux bugs dans de vraies bibliothèques
