@@ -60,6 +60,25 @@ class MonFiltre:
 dp.stateful(lambda bloc, z: scipy.signal.lfilter(b, a, bloc, zi=z), init_state=np.zeros(2))
 ```
 
+## En ligne de commande
+
+`dsp-props check` trouve tous les opérateurs déclarés dans un module ou un fichier et les vérifie :
+
+```
+$ dsp-props check examples/filters.py --examples 100
+FAIL examples/filters.py:buggy_fft  (4 relations, 3.4s)
+      FAIL inversibility
+           inversibility: L2 error 2.000e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)
+           minimal input: [1, 1]
+ok   examples/filters.py:fft  (6 relations, 6.5s)
+ok   examples/filters.py:lowpass  (4 relations, 3.1s)
+ok   examples/filters.py:resample_2_3  (5 relations, 2.8s)
+
+3/4 operators pass
+```
+
+Cibles possibles : `paquet.module`, `fichier.py`, `module:operateur`. Options : `--json`, `--markdown`, `--examples N`, `--derandomize` (entrées reproductibles en CI). Code de sortie 1 si une relation échoue, ce qui suffit pour bloquer une CI.
+
 ## Tolérances calibrées
 
 Une borne fixe en ε · log N ne décrit pas toutes les bibliothèques : sur N = 2…1200, la FFT de PyTorch (MKL) atteint 195 ε contre 4 ε pour NumPy, selon la factorisation de N. `dp.calibrate` mesure l'erreur réelle contre une référence en précision étendue et en déduit la tolérance :

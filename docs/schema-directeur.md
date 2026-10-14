@@ -44,6 +44,11 @@ Le schéma directeur complet (état de l'art, catalogue de propriétés, feuille
 - [x] Mesures sur les 31 mutants (`benchmarks/mutant_results.json`) : contre-exemple de 3 échantillons au plus pour 27 sur 30 (médiane 2) ; 27 mutants détectés dès les 3 premières entrées, le plus lent après 32
 - [ ] Rapport HTML
 
+## Phase 6 : état
+
+- [x] Outil en ligne de commande `dsp-props check` : découverte automatique des opérateurs déclarés (module, fichier, `module:attribut`, registres en dictionnaire), export JSON et Markdown, code de sortie pour la CI
+- [ ] Adaptateur pour du code C (ctypes ou cffi)
+
 ## Observations à suivre en phase 2
 
 - La tolérance FFT (c · ε · log2 N · ‖y‖, c = 20) a rejeté le calcul de référence du théorème du décalage tant que l'argument des twiddles n'était pas réduit modulo N : la référence elle-même doit être plus précise que l'opérateur testé.
