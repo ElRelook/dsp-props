@@ -170,9 +170,9 @@ python -m pytest
 1. **Fondations** : générateurs, relations de base, tests sur `numpy.fft` *(fait)*
 2. **Moteur de tolérance** : modèles d'erreur par classe d'opérateur, calibration contre précision étendue *(fait)*
 3. **Relations avancées** : causalité, stabilité, streaming par blocs, multicadence *(fait)*
-4. **Suite de mutants** : une quarantaine de mutants, essai sur `scipy.signal`
-5. **Shrinking et rapport** : contre-exemples minimaux, rapport HTML
-6. **Auto-découverte et adaptateur C**
+4. **Suite de mutants** : une quarantaine de mutants, essai sur `scipy.signal` *(31 mutants, campagne sur 46 cibles réelles ; à compléter)*
+5. **Shrinking et rapport** : contre-exemples minimaux, rapport HTML *(fait)*
+6. **Auto-découverte et adaptateur C** *(fait : `dsp-props check`, `dsp_props.adapters`)*
 
 ## Licence
 
