@@ -143,8 +143,4 @@ himself. Every number in this paper is produced by scripts in the repository
 (`mutants/run_mutants.py`, `benchmarks/campaign.py`,
 `benchmarks/error_profile.py`).
 
-# Acknowledgements
-
-TODO.
-
 # References
