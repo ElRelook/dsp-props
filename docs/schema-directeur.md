@@ -25,7 +25,7 @@ Le schéma directeur complet (état de l'art, catalogue de propriétés, feuille
 - [x] La calibration refuse un opérateur faux (erreur > 10^6 ε) au lieu d'absorber le bug
 - [x] Profil d'erreur sur N = 2…1200 (`benchmarks/error_profile.csv`) : pire cas NumPy 4,1 ε, SciPy 3,7 ε, PyTorch/MKL 195 ε (N = 596 = 4 × 149). Pour torch, 220 longueurs dépassent 20 ε ; toutes ont un facteur premier entre 17 et 149, et 130 d'entre elles sont multiples de 4.
 - [x] Modèle d'erreur IIR (`IIRTolerance`) : borne en ε · ordre · ‖h_A‖₁ · (‖b‖₁ + (‖a‖₁ − 1) ‖h_BA‖₁) · ‖x‖, jamais dépassée sur 80 filtres de rayon 0,5 à 0,999 et d'ordre 2 à 12 (pire rapport 0,008), et qui détecte toujours la récursion en float32
-- [ ] Figure erreur/N pour l'article
+- [x] Figure erreur/N pour l'article (`docs/figures/error_profile.png`)
 
 ## Phase 3 : état
 

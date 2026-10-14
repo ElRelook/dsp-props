@@ -63,7 +63,9 @@ print(tol.summary())
 dp.transform(inverse=torch_ifft, parseval=True, tolerance=tol)(torch_fft)
 ```
 
-`python benchmarks/error_profile.py` produit le profil d'erreur complet (`benchmarks/error_profile.csv`).
+`python benchmarks/error_profile.py` produit le profil d'erreur complet (`benchmarks/error_profile.csv`), et `python benchmarks/plot_error_profile.py` la figure ci-dessous.
+
+![Erreur relative de la FFT selon N, NumPy contre PyTorch](docs/figures/error_profile.png)
 
 ## Valider l'outil : la suite de mutants
 
