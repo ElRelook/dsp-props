@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import time
 from dataclasses import dataclass, field
 from typing import Callable, Optional
 
@@ -11,6 +12,7 @@ from hypothesis import HealthCheck, given, settings
 from hypothesis.errors import FlakyFailure, HypothesisException
 
 from .core.tolerance import FFTTolerance, ToleranceModel
+from .report import Failure, PropertyViolation, Report
 from .relations import LTI_RELATIONS, MULTIRATE_RELATIONS, STREAMING_RELATIONS, TRANSFORM_RELATIONS
 
 
@@ -232,50 +234,24 @@ def transform(inverse=None, *, kind="dft", linear=True, parseval=False, parseval
     return decorate
 
 
-@dataclass
-class Failure:
-    relation: str
-    error: BaseException
-
-    def __str__(self):
-        return f"{self.relation}: {self.error}"
-
-
-@dataclass
-class Report:
-    func_name: str
-    checked: list
-    failures: list
-
-    @property
-    def ok(self):
-        return not self.failures
-
-    def __str__(self):
-        lines = [f"dsp-props report for {self.func_name}"]
-        for name in self.checked:
-            bad = [f for f in self.failures if f.relation == name]
-            lines.append(f"  {'FAIL' if bad else 'ok  '} {name}")
-            for f in bad:
-                lines.append(f"       {str(f.error).splitlines()[0]}")
-        return "\n".join(lines)
-
-
-class PropertyViolation(AssertionError):
-    def __init__(self, report: Report):
-        super().__init__(str(report))
-        self.report = report
-
-
 def _hypothesis_test(rel, spec, max_examples, derandomize):
     @settings(max_examples=max_examples, deadline=None, database=None,
               derandomize=derandomize, suppress_health_check=list(HealthCheck),
               print_blob=False)
     @given(rel.inputs(spec))
     def run(inputs):
-        rel.check(spec, inputs)
+        trace["calls"] += 1
+        try:
+            rel.check(spec, inputs)
+        except Exception:
+            # Hypothesis replays the shrunk example last, so this ends as the minimal input.
+            trace["example"] = inputs
+            if trace["first_failure"] is None:
+                trace["first_failure"] = trace["calls"]
+            raise
 
-    return run
+    trace = {"calls": 0, "example": None, "first_failure": None}
+    return run, trace
 
 
 def verify(func, *, max_examples=200, raise_on_failure=True, derandomize=False) -> Report:
@@ -283,20 +259,27 @@ def verify(func, *, max_examples=200, raise_on_failure=True, derandomize=False) 
     spec = getattr(func, "__dsp_props__", None)
     if spec is None:
         raise TypeError(f"{func!r} has no dsp-props declaration (use @dp.transform, @dp.lti_filter, @dp.resampler or @dp.streaming)")
-    failures, checked = [], []
+    failures, checked, seconds = [], [], {}
     for rel in spec.relations:
         checked.append(rel.name)
+        run, trace = _hypothesis_test(rel, spec, max_examples, derandomize)
+        t0 = time.perf_counter()
+        error = None
         try:
-            _hypothesis_test(rel, spec, max_examples, derandomize)()
+            run()
         except FlakyFailure as exc:
             # the operator gave different results for the same input: hidden state
-            failures.append(Failure(rel.name, AssertionError(
-                f"{rel.name}: non-deterministic operator (same input, different result): {exc}")))
+            error = AssertionError(f"{rel.name}: non-deterministic operator (same input, different result): {exc}")
         except HypothesisException:
             raise  # misuse of the framework, not a property violation
         except Exception as exc:  # noqa: BLE001 - every failure is reported
-            failures.append(Failure(rel.name, exc))
-    report = Report(getattr(func, "__name__", repr(func)), checked, failures)
+            error = exc
+        seconds[rel.name] = time.perf_counter() - t0
+        if error is not None:
+            failures.append(Failure(rel.name, error, trace["example"], trace["first_failure"]))
+    report = Report(getattr(func, "__name__", repr(func)), checked, failures,
+                    kind=type(spec).__name__.replace("Spec", "").lower(),
+                    examples_per_relation=max_examples, seconds=seconds)
     if failures and raise_on_failure:
         raise PropertyViolation(report)
     return report
