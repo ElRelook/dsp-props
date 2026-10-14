@@ -29,3 +29,10 @@ def test_check_exit_status_and_json(tmp_path, capsys):
 
 def test_unknown_module_is_a_usage_error():
     assert main(["check", "no_such_module_xyz"]) == 2
+
+
+def test_html_report(tmp_path):
+    out = tmp_path / "r.html"
+    assert main(["check", f"{EXAMPLE}:buggy_fft", "--examples", "20", "--html", str(out)]) == 1
+    page = out.read_text()
+    assert page.startswith("<!doctype html>") and "Minimal input" in page and "0/1 operators pass" in page

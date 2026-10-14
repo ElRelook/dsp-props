@@ -94,6 +94,12 @@ def _check(args):
         pathlib.Path(args.json).write_text(json.dumps(data, indent=2))
     if args.markdown:
         pathlib.Path(args.markdown).write_text("\n\n".join(r.to_markdown() for _, r in reports) + "\n")
+    if args.html:
+        from .report import render_html
+
+        for n, r in reports:
+            r.func_name = n
+        pathlib.Path(args.html).write_text(render_html([r for _, r in reports]))
     return 1 if failed else 0
 
 
@@ -107,6 +113,7 @@ def main(argv=None):
     check.add_argument("--derandomize", action="store_true", help="reproducible inputs (for CI)")
     check.add_argument("--json", help="write the full report as JSON")
     check.add_argument("--markdown", help="write the report as Markdown")
+    check.add_argument("--html", help="write the report as a standalone HTML page")
     check.add_argument("-v", "--verbose", action="store_true", help="list relations of passing operators too")
     args = parser.parse_args(argv)
     return _check(args)

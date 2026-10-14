@@ -77,7 +77,7 @@ ok   examples/filters.py:resample_2_3  (5 relations, 2.8s)
 3/4 operators pass
 ```
 
-Cibles possibles : `paquet.module`, `fichier.py`, `module:operateur`. Options : `--json`, `--markdown`, `--examples N`, `--derandomize` (entrées reproductibles en CI). Code de sortie 1 si une relation échoue, ce qui suffit pour bloquer une CI.
+Cibles possibles : `paquet.module`, `fichier.py`, `module:operateur`. Options : `--json`, `--markdown`, `--html`, `--examples N`, `--derandomize` (entrées reproductibles en CI). Code de sortie 1 si une relation échoue, ce qui suffit pour bloquer une CI.
 
 ## Code C
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import html
 import json
 from dataclasses import dataclass, field
 from typing import Any, Optional
@@ -143,6 +144,48 @@ class Report:
             if f.examples_tried is not None:
                 lines.append(f"First failure after {f.examples_tried} generated input(s).")
         return "\n".join(lines)
+
+    def to_html(self):
+        """A self-contained HTML fragment (one table, failures with their minimal input)."""
+        return render_html([self])
+
+
+_CSS = """
+body{font:15px/1.5 system-ui,sans-serif;margin:24px auto;max-width:900px;padding:0 16px;color:#1d1d1f;background:#fff}
+table{border-collapse:collapse;width:100%;margin:8px 0 24px}
+td,th{border-bottom:1px solid #ddd;padding:4px 8px;text-align:left}
+.ok{color:#1a7f37}.fail{color:#c62828;font-weight:600}
+code{background:#f3f3f3;padding:1px 4px;border-radius:3px;word-break:break-all}
+@media (prefers-color-scheme:dark){body{background:#161618;color:#e8e8ea}td,th{border-color:#333}
+code{background:#26262a}.ok{color:#5fd07f}.fail{color:#ff7a7a}}
+"""
+
+
+def render_html(reports, title="dsp-props report"):
+    """A standalone HTML page for one or more reports."""
+    esc = html.escape
+    passed = sum(r.ok for r in reports)
+    parts = [f"<!doctype html><meta charset='utf-8'><meta name='viewport' content='width=device-width'>"
+             f"<title>{esc(title)}</title><style>{_CSS}</style>",
+             f"<h1>{esc(title)}</h1><p>{passed}/{len(reports)} operators pass.</p>"]
+    for r in reports:
+        state = "<span class='ok'>passes</span>" if r.ok else "<span class='fail'>fails</span>"
+        parts.append(f"<h2><code>{esc(r.func_name)}</code> {state}</h2>")
+        parts.append("<table><tr><th>Relation</th><th>Result</th><th>Time (s)</th></tr>")
+        for name in r.checked:
+            bad = any(f.relation == name for f in r.failures)
+            cls, word = ("fail", "FAIL") if bad else ("ok", "ok")
+            parts.append(f"<tr><td>{esc(name)}</td><td class='{cls}'>{word}</td>"
+                         f"<td>{r.seconds.get(name, 0.0):.2f}</td></tr>")
+        parts.append("</table>")
+        for f in r.failures:
+            parts.append(f"<p><b>{esc(f.relation)}</b>: {esc(f.message)}")
+            if f.example is not None:
+                parts.append(f"<br>Minimal input: <code>{esc(_short(describe(f.example)))}</code>")
+            if f.examples_tried is not None:
+                parts.append(f"<br>First failure after {f.examples_tried} generated input(s).")
+            parts.append("</p>")
+    return "\n".join(parts) + "\n"
 
 
 class PropertyViolation(AssertionError):

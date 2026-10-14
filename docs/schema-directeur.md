@@ -42,7 +42,7 @@ Le schéma directeur complet (état de l'art, catalogue de propriétés, feuille
 - [x] Chaque échec garde l'entrée minimale trouvée par Hypothesis et le nombre d'entrées générées avant le premier échec
 - [x] Rapport exportable en JSON et Markdown, avec le temps par relation
 - [x] Mesures sur les 31 mutants (`benchmarks/mutant_results.json`) : contre-exemple de 3 échantillons au plus pour 27 sur 30 (médiane 2) ; 27 mutants détectés dès les 3 premières entrées, le plus lent après 32
-- [ ] Rapport HTML
+- [x] Rapport HTML autonome (`report.to_html()`, `dsp-props check --html`), lisible en thème clair et sombre
 
 ## Phase 6 : état
 
