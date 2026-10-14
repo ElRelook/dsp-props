@@ -121,6 +121,13 @@ class Inversibility(Relation):
         assert_close(y, x, spec.tolerance, what=self.name)
 
 
+def _pow2_normalise(v):
+    peak = float(np.max(np.abs(v))) if len(v) else 0.0
+    if peak == 0.0 or not np.isfinite(peak):
+        return v
+    return np.ldexp(v.real, -np.frexp(peak)[1]) + (1j * np.ldexp(v.imag, -np.frexp(peak)[1]) if np.iscomplexobj(v) else 0)
+
+
 class ConvolutionTheorem(Relation):
     """inverse(f(x) * f(y)) = circular convolution of x and y (computed directly)."""
 
@@ -135,6 +142,9 @@ class ConvolutionTheorem(Relation):
     def check(self, spec, inputs):
         x, y = inputs
         n = len(x)
+        # The relation is bilinear: scaling each input by a power of two is exact and keeps
+        # the products x[i] y[j] and X[k] Y[k] away from underflow (1e-100 x 1e-100 inputs).
+        x, y = _pow2_normalise(x), _pow2_normalise(y)
         idx = (np.arange(n)[:, None] - np.arange(n)[None, :]) % n
         direct = y[idx] @ x
         fast = spec.invert(np.asarray(spec.func(x)) * np.asarray(spec.func(y)), n)
