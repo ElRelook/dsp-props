@@ -44,7 +44,7 @@ Mutation score: 8/8 (100%)
 ## Installation (développement)
 
 ```
-git clone https://github.com/ElRelook/dsp-props
+git clone https://github.com/clement-basdevant/dsp-props
 cd dsp-props
 python -m pip install -e ".[dev]"
 python -m pytest

@@ -5,6 +5,6 @@ type: software
 authors:
   - name: "dsp-props contributors"
 license: BSD-3-Clause
-repository-code: "https://github.com/ElRelook/dsp-props"
+repository-code: "https://github.com/clement-basdevant/dsp-props"
 version: 0.0.1
 date-released: 2026-10-14
