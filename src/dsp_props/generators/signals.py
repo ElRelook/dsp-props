@@ -108,3 +108,18 @@ def signals(n: int):
 def signal_pairs(draw, max_n: int = 512):
     n = draw(lengths(max_n))
     return draw(signals(n)), draw(signals(n))
+
+
+@st.composite
+def block_splits(draw, n: int, max_blocks: int = 8):
+    """Cut points splitting a length-``n`` signal into blocks.
+
+    Includes empty blocks and blocks of a single sample, the cases that
+    expose state-handling bugs in streaming code.
+    """
+    return sorted(draw(st.lists(st.integers(0, n), max_size=max_blocks - 1)))
+
+
+def split_blocks(x, cuts):
+    edges = [0, *cuts, len(x)]
+    return [x[i:j] for i, j in zip(edges[:-1], edges[1:])]

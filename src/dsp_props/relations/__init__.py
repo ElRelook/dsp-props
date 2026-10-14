@@ -1,4 +1,5 @@
 from .base import Relation
+from .streaming import BlockInvariance, STREAMING_RELATIONS
 from .transforms import (
     Linearity,
     CircularShift,
@@ -11,6 +12,8 @@ from .transforms import (
 
 __all__ = [
     "Relation",
+    "BlockInvariance",
+    "STREAMING_RELATIONS",
     "Linearity",
     "CircularShift",
     "Parseval",

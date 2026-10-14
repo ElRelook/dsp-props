@@ -290,6 +290,244 @@ def _(pair):
     assert_close(lhs, rhs, FFTTolerance(c=1000), ref_norm=ref, what="decimate linearity")
 
 
+# --------------------------------------------------------------------------
+# Campaign 2: more scipy.signal, librosa, torchaudio
+# --------------------------------------------------------------------------
+
+F32 = FFTTolerance(c=200 * np.finfo(np.float32).eps / np.finfo(np.float64).eps)
+
+
+def _f32_ok(x):
+    x32 = np.asarray(x, dtype=np.float32)
+    return bool(np.all(np.isfinite(x32))) and (norm(x32) == 0 or norm(x32) > 1e-30) and norm(x32) < 1e30
+
+
+@target("scipy.signal.filtfilt(method='gust') commutes with time reversal", st.tuples(sig(256, min_n=40), stable_iir(3)))
+def _(case):
+    # The default padding method is not reversal-symmetric by design;
+    # Gustafsson's initial conditions are.
+    import scipy.signal as ss
+    x, (b, a) = case
+    y = ss.filtfilt(b, a, x, method="gust")
+    yr = ss.filtfilt(b, a, x[::-1], method="gust")[::-1]
+    assert_close(yr, y, FFTTolerance(c=1e4), ref_norm=max(norm(y), norm(x)), what="filtfilt reversal")
+
+
+@st.composite
+def iir_with_delay(draw):
+    b, a = draw(stable_iir(2))
+    delay = draw(st.integers(0, 3))
+    return np.concatenate([np.zeros(delay), b]), a
+
+
+@target("scipy.signal.sosfilt(tf2sos(b, a)) == lfilter(b, a)", st.tuples(sig(256), iir_with_delay()))
+def _(case):
+    import scipy.signal as ss
+    x, (b, a) = case
+    m = max(len(a), len(b))
+    b, a = np.pad(b, (0, m - len(b))), np.pad(a, (0, m - len(a)))
+    y1 = ss.lfilter(b, a, x)
+    y2 = ss.sosfilt(ss.tf2sos(b, a), x)
+    assert_close(y2, y1, FFTTolerance(c=1e5), ref_norm=max(norm(y1), norm(x)), what="sosfilt(tf2sos) vs lfilter")
+
+
+@target("scipy.signal.resample(x, n) == x", sig())
+def _(x):
+    import scipy.signal as ss
+    assert_close(ss.resample(x, len(x)), x, TOL, what="resample identity")
+
+
+@target("scipy.signal.resample up x2 then down == x", sig())
+def _(x):
+    import scipy.signal as ss
+    n = len(x)
+    y = ss.resample(ss.resample(x, 2 * n), n)
+    assert_close(y, x, TOL, what=f"resample 2n->n (n={n})")
+
+
+@target("scipy.signal.hilbert: real part == x", sig())
+def _(x):
+    import scipy.signal as ss
+    assert_close(np.real(ss.hilbert(x)), x, TOL, what="hilbert real part")
+
+
+@target("scipy.signal.periodogram (boxcar, two-sided) sums to mean power", sig())
+def _(x):
+    import scipy.signal as ss
+    f, p = ss.periodogram(x, window="boxcar", detrend=False, scaling="spectrum", return_onesided=False)
+    lhs, rhs = float(np.sum(p)), float(np.mean(x ** 2))
+    assert abs(lhs - rhs) <= TOL.bound(len(x), np.float64, rhs), f"sum(P)={lhs!r} mean(x^2)={rhs!r}"
+
+
+@target("scipy.signal.periodogram one-sided == two-sided folded", sig(min_n=2))
+def _(x):
+    import scipy.signal as ss
+    kw = dict(window="boxcar", detrend=False, scaling="spectrum")
+    _, p1 = ss.periodogram(x, return_onesided=True, **kw)
+    _, p2 = ss.periodogram(x, return_onesided=False, **kw)
+    lhs, rhs = float(np.sum(p1)), float(np.sum(p2))
+    assert abs(lhs - rhs) <= TOL.bound(len(x), np.float64, rhs), f"one-sided {lhs!r} vs two-sided {rhs!r} (n={len(x)})"
+
+
+@target("scipy.signal.istft(stft(x)) == x (legacy API)", st.tuples(sig(256, min_n=16), st.sampled_from([8, 16, 32])))
+def _(case):
+    import scipy.signal as ss
+    x, nperseg = case
+    if len(x) < nperseg:
+        return  # stft shrinks nperseg to len(x) with a warning; istft cannot know
+    _, _, Z = ss.stft(x, nperseg=nperseg)
+    _, y = ss.istft(Z, nperseg=nperseg)
+    assert_close(y[: len(x)], x, FFTTolerance(c=200), what=f"stft/istft nperseg={nperseg}")
+
+
+@target("scipy.signal.lfilter with zi: empty-block streaming via dp.stateful", st.tuples(stable_iir(3)))
+def _(case):
+    import scipy.signal as ss
+    ((b, a),) = case
+    nz = max(len(a), len(b)) - 1
+    op = dp.stateful(lambda blk, z: ss.lfilter(b, a, blk, zi=z), lambda: np.zeros(nz), max_n=64)
+    dp.verify(op, max_examples=20)
+
+
+# ----- librosa -----
+
+@target("librosa.istft(stft(x)) == x", st.tuples(sig(512, min_n=64), st.sampled_from([32, 64, 128]), st.sampled_from([2, 4]), st.booleans()))
+def _(case):
+    import librosa
+    x, n_fft, frac, center = case
+    if not _f32_ok(x):
+        return
+    x = x.astype(np.float32)
+    hop = n_fft // frac
+    if not center and len(x) < n_fft:
+        return
+    S = librosa.stft(x, n_fft=n_fft, hop_length=hop, center=center)
+    y = librosa.istft(S, hop_length=hop, n_fft=n_fft, center=center, length=len(x))
+    if center:
+        assert_close(y, x, F32, what=f"librosa stft n_fft={n_fft} hop={hop}")
+    else:
+        # Without centering the first and last n_fft samples are not covered by full overlap.
+        m = slice(n_fft, len(x) - n_fft)
+        if m.start < m.stop:
+            assert_close(y[m], x[m], F32, ref_norm=norm(x), what=f"librosa stft center=False n_fft={n_fft} hop={hop}")
+
+
+@target("librosa.resample same rate == x", sig())
+def _(x):
+    import librosa
+    y = librosa.resample(x, orig_sr=16000, target_sr=16000)
+    assert_close(y, x, TOL, what="librosa resample identity")
+
+
+@target("librosa.resample is linear", sig_pair(256, min_n=8, same_length=True))
+def _(pair):
+    import librosa
+    x, y = pair
+    r = lambda s: librosa.resample(s, orig_sr=22050, target_sr=16000, res_type="soxr_hq")
+    lhs = r(2 * x - 3 * y)
+    rhs = 2 * r(x) - 3 * r(y)
+    # soxr "HQ" is a 20-bit-precision resampler by design: float32-level tolerance.
+    if not (_f32_ok(x) and _f32_ok(y)):
+        return
+    assert_close(lhs, rhs, F32, ref_norm=2 * norm(r(x)) + 3 * norm(r(y)), what="librosa resample linearity")
+
+
+@target("librosa preemphasis by blocks (zi/return_zf) == one shot", st.tuples(sig(256), st.floats(0.0, 0.99)))
+def _(case):
+    import librosa
+    x, coef = case
+
+    class Pre:
+        def __init__(self):
+            self.zf = None
+
+        def process(self, blk):
+            y, self.zf = librosa.effects.preemphasis(blk, coef=coef, zi=self.zf, return_zf=True)
+            return y
+
+    # librosa's default zi uses the first sample: give an explicit zero state instead
+    class Pre0(Pre):
+        def __init__(self):
+            self.zf = np.zeros(1)
+
+    dp.verify(dp.streaming(max_n=128)(Pre0), max_examples=30)
+
+
+@target("librosa deemphasis(preemphasis(x)) == x", st.tuples(sig(), st.floats(0.0, 0.95)))
+def _(case):
+    import librosa
+    x, coef = case
+    y = librosa.effects.deemphasis(librosa.effects.preemphasis(x, coef=coef, zi=np.zeros(1)), coef=coef, zi=np.zeros(1))
+    assert_close(y, x, FFTTolerance(c=1e4), what=f"librosa pre/deemphasis coef={coef}")
+
+
+@target("librosa mu_expand(mu_compress(x)) == x", sig())
+def _(x):
+    import librosa
+    m = np.max(np.abs(x))
+    if m == 0:
+        return
+    x = x / m
+    y = librosa.mu_expand(librosa.mu_compress(x, quantize=False), quantize=False)
+    assert_close(y, x, FFTTolerance(c=1e4), what="mu law")
+
+
+# ----- torchaudio -----
+
+@target("torchaudio deemphasis(preemphasis(x)) == x", st.tuples(sig(), st.floats(0.0, 0.95)))
+def _(case):
+    import torch
+    import torchaudio.functional as F
+    x, coef = case
+    t = torch.from_numpy(x)
+    y = F.deemphasis(F.preemphasis(t, coeff=coef), coeff=coef).numpy()
+    assert_close(y, x, FFTTolerance(c=1e4), what=f"torchaudio pre/deemphasis coef={coef}")
+
+
+@target("torchaudio.functional.lfilter == scipy lfilter", st.tuples(sig(256), stable_iir(3)))
+def _(case):
+    import scipy.signal as ss
+    import torch
+    import torchaudio.functional as F
+    x, (b, a) = case
+    m = max(len(a), len(b))
+    a = np.pad(a, (0, m - len(a)))
+    b = np.pad(b, (0, m - len(b)))
+    y = F.lfilter(torch.from_numpy(x), torch.from_numpy(a), torch.from_numpy(b), clamp=False).numpy()
+    ref = ss.lfilter(b, a, x)
+    assert_close(y, ref, FFTTolerance(c=1e4), ref_norm=max(norm(ref), norm(x)), what="torchaudio lfilter")
+
+
+@target("torchaudio.functional.resample same rate == x", sig())
+def _(x):
+    import torch
+    import torchaudio.functional as F
+    y = F.resample(torch.from_numpy(x), 16000, 16000).numpy()
+    assert_close(y, x, TOL, what="torchaudio resample identity")
+
+
+@target("torchaudio fftconvolve == direct", sig_pair())
+def _(pair):
+    import torch
+    import torchaudio.functional as F
+    x, y = pair
+    direct = np.convolve(x, y)
+    fast = F.fftconvolve(torch.from_numpy(x), torch.from_numpy(y)).numpy()
+    assert_close(fast, direct, TOL, ref_norm=_conv_ref(x, y, direct), what="torchaudio fftconvolve")
+
+
+@target("torchaudio InverseSpectrogram(Spectrogram(x)) == x", st.tuples(sig(512, min_n=64), st.sampled_from([32, 64, 128]), st.sampled_from([2, 4])))
+def _(case):
+    import torch
+    import torchaudio.transforms as T
+    x, n_fft, frac = case
+    hop = n_fft // frac
+    t = torch.from_numpy(x)
+    S = T.Spectrogram(n_fft=n_fft, hop_length=hop, power=None, window_fn=torch.hann_window, wkwargs={"dtype": torch.float64})(t)
+    y = T.InverseSpectrogram(n_fft=n_fft, hop_length=hop, window_fn=torch.hann_window, wkwargs={"dtype": torch.float64})(S, length=len(x)).numpy()
+    assert_close(y, x, FFTTolerance(c=200), what=f"torchaudio spectrogram n_fft={n_fft} hop={hop}")
+
+
 def run(examples, only):
     results = []
     for name, spec in _transform_targets().items():

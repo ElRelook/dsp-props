@@ -9,6 +9,8 @@ from .signals import (
     sparse,
     signals,
     signal_pairs,
+    block_splits,
+    split_blocks,
 )
 
 __all__ = [
@@ -22,4 +24,6 @@ __all__ = [
     "sparse",
     "signals",
     "signal_pairs",
+    "block_splits",
+    "split_blocks",
 ]
