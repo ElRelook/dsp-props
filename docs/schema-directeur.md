@@ -23,3 +23,4 @@ Le schéma directeur complet (état de l'art, catalogue de propriétés, feuille
 - La tolérance FFT (c · ε · log2 N · ‖y‖, c = 20) a rejeté le calcul de référence du théorème du décalage tant que l'argument des twiddles n'était pas réduit modulo N : la référence elle-même doit être plus précise que l'opérateur testé.
 - Une DFT naïve en O(N²) dépasse la borne FFT : le modèle de tolérance doit dépendre de l'algorithme, pas seulement de l'opération.
 - Les amplitudes extrêmes (1e±100) imposent des normes calculées sans débordement.
+- La première CI a trouvé un cas réel : une entrée quasi dénormalisée (‖x‖ ≈ 3e-303) faisait produire NaN au calcul de norme complexe (division complexe par un sous-normal). Les dénormaux doivent devenir un générateur à part entière.

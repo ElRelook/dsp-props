@@ -23,3 +23,17 @@ def test_nan_is_rejected():
 def test_float32_bound_is_looser_than_float64():
     m = FFTTolerance()
     assert m.bound(256, np.float32, 1.0) > m.bound(256, np.float64, 1.0)
+
+
+def test_norm_handles_subnormal_complex_values():
+    from dsp_props.core import norm
+
+    v = np.array([5e-324 + 0j, 0j, 1e-310j])
+    assert np.isfinite(norm(v))
+    assert norm(v) > 0
+
+
+def test_norm_does_not_overflow_on_huge_values():
+    from dsp_props.core import norm
+
+    assert np.isclose(norm(np.full(4, 1e300)), 2e300)

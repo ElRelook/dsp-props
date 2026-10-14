@@ -45,6 +45,10 @@ class FFTTolerance(ToleranceModel):
 def norm(v) -> float:
     """L2 norm that does not overflow or underflow for extreme amplitudes."""
     v = np.asarray(v)
+    if np.iscomplexobj(v):
+        # Complex division by a subnormal scale computes 1/scale first and
+        # overflows; scale the real and imaginary parts separately instead.
+        v = np.concatenate([v.real.ravel(), v.imag.ravel()])
     scale = float(np.max(np.abs(v))) if v.size else 0.0
     if scale == 0.0 or not np.isfinite(scale):
         return scale
