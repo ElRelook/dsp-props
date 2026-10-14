@@ -105,7 +105,7 @@ dp.transform(inverse=torch_ifft, parseval=True, tolerance=tol)(torch_fft)
 
 `python benchmarks/error_profile.py` produit le profil d'erreur complet (`benchmarks/error_profile.csv`), et `python benchmarks/plot_error_profile.py` la figure ci-dessous.
 
-![Erreur relative de la FFT selon N, NumPy contre PyTorch](docs/figures/error_profile.png)
+![Erreur relative de la FFT selon N, NumPy contre PyTorch](https://raw.githubusercontent.com/clement-basdevant/dsp-props/main/docs/figures/error_profile.png)
 
 ## Valider l'outil : la suite de mutants
 
@@ -144,7 +144,15 @@ Angle mort documenté : un filtre faux mais toujours linéaire, invariant et cau
 `benchmarks/campaign.py` applique les relations à SciPy, NumPy, PyTorch, librosa et torchaudio (46 cibles).
 Premier bug signalé : [scipy/scipy#26406](https://github.com/scipy/scipy/issues/26406). Résultats détaillés dans `benchmarks/RESULTS-*.md`.
 
-## Installation (développement)
+## Installation
+
+Une fois publié sur PyPI :
+
+```
+python -m pip install "dsp-props[scipy]"   # [scipy] pour les filtres IIR et les fonctions de transfert
+```
+
+En développement :
 
 ```
 git clone https://github.com/clement-basdevant/dsp-props

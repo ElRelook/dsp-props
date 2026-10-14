@@ -22,3 +22,5 @@ jobs:
         run: python mutants/run_mutants.py
       - name: Command line
         run: dsp-props check examples/filters.py:fft examples/filters.py:lowpass examples/filters.py:resample_2_3 --derandomize
+      - name: Package builds
+        run: python -m build && python -m twine check dist/*

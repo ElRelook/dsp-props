@@ -3,8 +3,9 @@ message: "Si vous utilisez dsp-props, merci de le citer comme suit."
 title: "dsp-props: property-based testing for digital signal processing"
 type: software
 authors:
-  - name: "dsp-props contributors"
+  - family-names: "Basdevant"
+    given-names: "Clément"
 license: BSD-3-Clause
 repository-code: "https://github.com/clement-basdevant/dsp-props"
-version: 0.0.1
+version: 0.1.0
 date-released: 2026-10-14
