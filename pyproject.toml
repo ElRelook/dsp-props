@@ -10,7 +10,7 @@ readme = "README.md"
 license = "BSD-3-Clause"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
-authors = [{ name = "Clément Basdevant" }]
+authors = [{ name = "Clément Emile Valentin Basdevant" }]
 keywords = ["signal processing", "DSP", "property-based testing", "metamorphic testing", "hypothesis", "FFT", "filters"]
 dependencies = ["numpy>=1.24", "hypothesis>=6.80"]
 classifiers = [

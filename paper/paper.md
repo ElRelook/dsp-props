@@ -7,7 +7,7 @@ tags:
   - metamorphic testing
   - floating point
 authors:
-  - name: Clément Basdevant
+  - name: Clément Emile Valentin Basdevant
     orcid: 0009-0004-7496-2365
     affiliation: 1
 affiliations:
