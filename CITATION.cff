@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Si vous utilisez dsp-props, merci de le citer comme suit."
+title: "dsp-props: property-based testing for digital signal processing"
+type: software
+authors:
+  - name: "dsp-props contributors"
+license: BSD-3-Clause
+repository-code: "https://github.com/ElRelook/dsp-props"
+version: 0.0.1
+date-released: 2026-10-14

@@ -1,0 +1,152 @@
+"""Relations for discrete transforms (phase 1: the DFT family)."""
+
+from __future__ import annotations
+
+import numpy as np
+from hypothesis import strategies as st
+
+from ..core.tolerance import ToleranceError, assert_close, norm
+from ..generators import lengths, signals, signal_pairs
+from .base import Relation
+
+COEFFS = [1.0, -1.0, 2.0, 0.5, 1j, -0.75 + 0.25j, 3.0 - 2.0j]
+REAL_COEFFS = [1.0, -1.0, 2.0, 0.5, -0.75, 3.0]
+
+
+@st.composite
+def _signal(draw, max_n):
+    n = draw(lengths(max_n))
+    return draw(signals(n))
+
+
+class Linearity(Relation):
+    """f(a x + b y) = a f(x) + b f(y)."""
+
+    name = "linearity"
+
+    def applies(self, spec):
+        return spec.linear
+
+    def inputs(self, spec):
+        coeffs = REAL_COEFFS if spec.real_input_only else COEFFS
+        c = st.sampled_from(coeffs)
+        return st.tuples(signal_pairs(spec.max_n), c, c)
+
+    def check(self, spec, inputs):
+        (x, y), a, b = inputs
+        f = spec.func
+        fx, fy = np.asarray(f(x)), np.asarray(f(y))
+        expected = a * fx + b * fy
+        ref = abs(a) * norm(fx) + abs(b) * norm(fy)
+        assert_close(f(a * x + b * y), expected, spec.tolerance, ref_norm=ref, what=self.name)
+
+
+class CircularShift(Relation):
+    """DFT shift theorem: f(roll(x, s))[k] = f(x)[k] * exp(-2i pi k s / N)."""
+
+    name = "circular shift"
+
+    def applies(self, spec):
+        return spec.kind == "dft"
+
+    def inputs(self, spec):
+        return st.tuples(_signal(spec.max_n), st.integers(-1024, 1024))
+
+    def check(self, spec, inputs):
+        x, s = inputs
+        n = len(x)
+        fx = np.asarray(spec.func(x))
+        k = np.arange(n)
+        # Reduce k*s modulo N in integers so the twiddle argument stays in
+        # [0, 2*pi) and the reference itself is accurate.
+        expected = fx * np.exp(-2j * np.pi * ((k * s) % n) / n)
+        assert_close(spec.func(np.roll(x, s)), expected, spec.tolerance,
+                     ref_norm=norm(fx), what=f"{self.name} (s={s})")
+
+
+class Parseval(Relation):
+    """||f(x)||^2 = scale(N) * ||x||^2."""
+
+    name = "parseval"
+
+    def applies(self, spec):
+        return spec.parseval
+
+    def inputs(self, spec):
+        return _signal(spec.max_n)
+
+    def check(self, spec, x):
+        n = len(x)
+        scale = spec.parseval_scale(n)
+        lhs = norm(np.asarray(spec.func(x))) / np.sqrt(scale)
+        rhs = norm(x)
+        tol = spec.tolerance.bound(n, np.asarray(x).dtype, rhs)
+        if not abs(lhs - rhs) <= tol:
+            raise ToleranceError(
+                f"{self.name}: ||f(x)||/sqrt({scale:g}) = {lhs:.6e} but ||x|| = {rhs:.6e} (N={n})"
+            )
+
+
+class HermitianSymmetry(Relation):
+    """Real input: X[k] = conj(X[-k mod N])."""
+
+    name = "hermitian symmetry"
+
+    def applies(self, spec):
+        return spec.real_input_hermitian
+
+    def inputs(self, spec):
+        return _signal(spec.max_n)
+
+    def check(self, spec, x):
+        fx = np.asarray(spec.func(x))
+        mirrored = np.conj(np.roll(fx[::-1], 1))
+        assert_close(fx, mirrored, spec.tolerance, what=self.name)
+
+
+class Inversibility(Relation):
+    """inverse(f(x)) = x."""
+
+    name = "inversibility"
+
+    def applies(self, spec):
+        return spec.inverse is not None
+
+    def inputs(self, spec):
+        return _signal(spec.max_n)
+
+    def check(self, spec, x):
+        y = np.asarray(spec.inverse(spec.func(x)))
+        assert_close(y, x, spec.tolerance, what=self.name)
+
+
+class ConvolutionTheorem(Relation):
+    """inverse(f(x) * f(y)) = circular convolution of x and y (computed directly)."""
+
+    name = "convolution theorem"
+
+    def applies(self, spec):
+        return spec.kind == "dft" and spec.inverse is not None
+
+    def inputs(self, spec):
+        return signal_pairs(min(spec.max_n, 256))
+
+    def check(self, spec, inputs):
+        x, y = inputs
+        n = len(x)
+        idx = (np.arange(n)[:, None] - np.arange(n)[None, :]) % n
+        direct = y[idx] @ x
+        fast = np.asarray(spec.inverse(np.asarray(spec.func(x)) * np.asarray(spec.func(y))))
+        # By Cauchy-Schwarz, |c[k]| <= ||x|| ||y||, hence ||c|| <= sqrt(N) ||x|| ||y||.
+        ref = np.sqrt(n) * norm(x) * norm(y)
+        assert_close(fast, direct, spec.tolerance, ref_norm=ref, what=self.name)
+
+
+TRANSFORM_RELATIONS = [
+    Linearity(),
+    CircularShift(),
+    Parseval(),
+    HermitianSymmetry(),
+    Inversibility(),
+    ConvolutionTheorem(),
+]
