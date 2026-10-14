@@ -14,7 +14,7 @@ TOL = IIRTolerance(B, A)
 
 
 def _declare(func, causal=True):
-    return dp.lti_filter(causal=causal, tolerance=TOL)(func)
+    return dp.lti_filter(causal=causal, transfer=(B, A))(func)
 
 
 def reference(x):
@@ -61,11 +61,14 @@ MUTANTS = {
     "iir_nonzero_initial_state": _declare(nonzero_initial_state),
 }
 
-# Documented blind spot: a wrong but still linear, time-invariant, causal filter
-# satisfies every relation. Only a reference response (phase 3: transfer-function
-# consistency) can catch it. Kept out of MUTANTS so the score stays honest.
+# A wrong but still linear, time-invariant, causal filter: only the declared
+# transfer function can catch it.
+MUTANTS["iir_wrong_gain"] = _declare(wrong_gain)
+
+# Without a declared transfer function the same mutant is a blind spot.
 BLIND_SPOTS = {
-    "iir_wrong_gain": _declare(wrong_gain),
+    # a separate function object: decorators attach the declaration to the function
+    "iir_wrong_gain_without_transfer": dp.lti_filter(tolerance=TOL)(lambda x: wrong_gain(x)),
 }
 
 REFERENCE = _declare(reference)

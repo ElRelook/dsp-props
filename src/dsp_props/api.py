@@ -79,6 +79,7 @@ class StreamingSpec:
 class LTISpec:
     func: Callable
     causal: bool = True
+    transfer: Optional[tuple] = None
     tolerance: ToleranceModel = field(default_factory=lambda: FFTTolerance(c=1000.0))
     max_n: int = 512
 
@@ -87,17 +88,25 @@ class LTISpec:
         return [r for r in LTI_RELATIONS if r.applies(self)]
 
 
-def lti_filter(*, causal=True, tolerance=None, max_n=512):
+def lti_filter(*, causal=True, transfer=None, tolerance=None, max_n=512):
     """Declare a linear time-invariant filter applied with zero initial state.
 
-    Checks linearity, time invariance and (if ``causal``) causality. For a
-    recursive filter pass ``tolerance=dp.core.IIRTolerance(b, a)`` so the
-    tolerance follows the conditioning of the recursion.
+    Checks linearity, time invariance and (if ``causal``) causality. With
+    ``transfer=(b, a)`` it also checks the measured frequency response against
+    B(z)/A(z), and the tolerance defaults to ``IIRTolerance(b, a)``, which
+    follows the conditioning of the recursion.
     """
+    if tolerance is None:
+        if transfer is not None:
+            from .core.iir import IIRTolerance
+
+            tolerance = IIRTolerance(*transfer)
+        else:
+            tolerance = FFTTolerance(c=1000.0)
 
     def decorate(func):
-        func.__dsp_props__ = LTISpec(func=func, causal=causal,
-                                     tolerance=tolerance or FFTTolerance(c=1000.0), max_n=max_n)
+        func.__dsp_props__ = LTISpec(func=func, causal=causal, transfer=transfer,
+                                     tolerance=tolerance, max_n=max_n)
         return func
 
     return decorate

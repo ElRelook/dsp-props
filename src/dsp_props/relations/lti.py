@@ -84,4 +84,45 @@ class Causality(Relation):
         assert_close(y2, y1, spec.tolerance, ref_norm=norm(x) + norm(x2), what=f"{self.name} (k={k})")
 
 
-LTI_RELATIONS = [LTILinearity(), TimeInvariance(), Causality()]
+class TransferConsistency(Relation):
+    """The measured frequency response matches the declared transfer function B(z)/A(z).
+
+    The impulse response is measured over L samples (long enough for it to
+    decay), and its DFT is compared with H(e^{jw}) on the same grid.
+    """
+
+    name = "transfer function"
+
+    def applies(self, spec):
+        return spec.transfer is not None
+
+    def inputs(self, spec):
+        return st.just(None)
+
+    def check(self, spec, _):
+        from scipy.signal import freqz
+
+        from ..core.iir import recursion_gain
+
+        b, a = (np.asarray(c, dtype=float) for c in spec.transfer)
+        poles = np.roots(a / a[0]) if len(a) > 1 else np.array([])
+        r = float(np.max(np.abs(poles))) if poles.size else 0.0
+        L = int(min(1 << 16, (np.log(1e-17) / np.log(r) if r > 0 else 1) * len(a) + len(b) + 16))
+        impulse = np.zeros(L)
+        impulse[0] = 1.0
+        measured = np.fft.fft(np.asarray(spec.func(impulse)))
+        _, declared = freqz(b, a, worN=L, whole=True)
+        # Parseval: ||H_meas - H||_2 = sqrt(L) ||h_meas - h||_2 ; the impulse has norm 1.
+        tail = 1e-17 * recursion_gain(a, b)
+        tol = np.sqrt(L) * (spec.tolerance.bound(L, np.float64, 1.0) + tail)
+        err = norm(measured - declared)
+        if not err <= tol:
+            worst = int(np.argmax(np.abs(measured - declared)))
+            raise AssertionError(
+                f"{self.name}: ||H_measured - H_declared|| = {err:.3e} > {tol:.3e}; worst bin "
+                f"w = {2 * np.pi * worst / L:.4f} rad/sample: measured {measured[worst]:.6g}, "
+                f"declared {declared[worst]:.6g}"
+            )
+
+
+LTI_RELATIONS = [LTILinearity(), TimeInvariance(), Causality(), TransferConsistency()]

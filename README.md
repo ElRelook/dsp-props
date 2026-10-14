@@ -40,9 +40,9 @@ dp.transform(inverse=np.fft.irfft, kind="rdft", parseval=True)(np.fft.rfft)
 # Transformée linéaire quelconque (DCT, ondelettes...)
 dp.transform(kind="generic", inverse=idct_ortho, parseval=True, parseval_scale=lambda n: 1.0)(dct_ortho)
 
-# Filtre LTI : linéarité, invariance temporelle, causalité ; tolérance qui suit le conditionnement
-from dsp_props.core import IIRTolerance
-dp.lti_filter(causal=True, tolerance=IIRTolerance(b, a))(lambda x: scipy.signal.lfilter(b, a, x))
+# Filtre LTI : linéarité, invariance temporelle, causalité, réponse en fréquence = B(z)/A(z).
+# La tolérance suit le conditionnement de la récursion (IIRTolerance).
+dp.lti_filter(causal=True, transfer=(b, a))(lambda x: scipy.signal.lfilter(b, a, x))
 
 # Traitement par blocs : tout découpage (blocs vides et d'un échantillon compris) doit donner la même sortie
 @dp.streaming()
@@ -67,23 +67,23 @@ dp.transform(inverse=torch_ifft, parseval=True, tolerance=tol)(torch_fft)
 
 ## Valider l'outil : la suite de mutants
 
-`mutants/` contient 24 implémentations volontairement boguées, réparties en cinq familles :
+`mutants/` contient 25 implémentations volontairement boguées, réparties en cinq familles :
 
 | Famille | Mutants |
 | --- | --- |
 | FFT complexe | 1/N oublié, conjugaison manquante, décalage d'un indice, normalisation erronée, calcul en float32, signe des twiddles, dernier échantillon ignoré, offset constant |
 | FFT réelle (`rfft`) | un bin de moins, inverse qui ignore N, bin de Nyquist divisé par 2, spectre conjugué, inverse sans symétrie hermitienne |
 | DCT-II orthonormée | poids du coefficient DC oublié, inverse du mauvais type, calcul en float32 |
-| Filtre IIR (ordre 4, résonant) | récursion en float32, filtfilt déclaré causal, coefficients qui changent en cours de route, état initial non nul |
+| Filtre IIR (ordre 4, résonant) | récursion en float32, filtfilt déclaré causal, coefficients qui changent en cours de route, état initial non nul, gain faux de 1 % |
 | Streaming par blocs | état remis à zéro, historique décalé d'un échantillon, bloc vide qui efface l'état, blocs courts non filtrés |
 
 ```
 python mutants/run_mutants.py
 ...
-Mutation score: 24/24 (100%)
+Mutation score: 25/25 (100%)
 ```
 
-Angle mort documenté : un filtre faux mais toujours linéaire, invariant et causal (gain multiplié par 1,01) passe toutes les relations. Seule une comparaison à la fonction de transfert déclarée peut l'attraper (phase 3).
+Angle mort documenté : un filtre faux mais toujours linéaire, invariant et causal (gain multiplié par 1,01) passe toutes les relations si l'on ne déclare pas sa fonction de transfert. Avec `transfer=(b, a)`, il est détecté.
 
 ## Chasse aux bugs dans de vraies bibliothèques
 

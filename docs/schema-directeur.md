@@ -30,8 +30,8 @@ Le schéma directeur complet (état de l'art, catalogue de propriétés, feuille
 ## Phase 3 : état
 
 - [x] Relations LTI : linéarité, invariance temporelle, causalité (`dp.lti_filter`)
-- [x] Famille de 4 mutants IIR, tous détectés ; un angle mort documenté (filtre faux mais LTI)
-- [ ] Cohérence fonction de transfert / réponse mesurée (attrape l'angle mort)
+- [x] Cohérence fonction de transfert / réponse mesurée (`transfer=(b, a)`)
+- [x] Famille de 5 mutants IIR, tous détectés ; sans fonction de transfert déclarée, le filtre « faux mais LTI » reste un angle mort documenté
 - [ ] Stabilité (entrée bornée, sortie bornée), multicadence
 
 ## Observations à suivre en phase 2
