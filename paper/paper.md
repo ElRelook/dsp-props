@@ -8,10 +8,10 @@ tags:
   - floating point
 authors:
   - name: Clément Basdevant
-    orcid: 0000-0000-0000-0000  # TODO: author's ORCID
+    orcid: 0009-0004-7496-2365
     affiliation: 1
 affiliations:
-  - name: TODO, author's affiliation
+  - name: Independent Researcher
     index: 1
 date: 14 October 2026
 bibliography: paper.bib
