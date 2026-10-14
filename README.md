@@ -79,6 +79,20 @@ ok   examples/filters.py:resample_2_3  (5 relations, 2.8s)
 
 Cibles possibles : `paquet.module`, `fichier.py`, `module:operateur`. Options : `--json`, `--markdown`, `--examples N`, `--derandomize` (entrées reproductibles en CI). Code de sortie 1 si une relation échoue, ce qui suffit pour bloquer une CI.
 
+## Code C
+
+`dsp_props.adapters` charge une fonction C (bibliothèque partagée, via ctypes) et la déclare comme n'importe quel opérateur. Convention : `void f(const double *x, size_t n, double *y, double *etat)`.
+
+```python
+from dsp_props.adapters import build_shared, c_function, c_block_processor
+
+lib = build_shared("examples/c/biquad.c")
+dp.verify(dp.lti_filter(transfer=(b, a))(c_function(lib, "biquad", state_size=2)))
+dp.verify(dp.streaming()(c_block_processor(lib, "biquad", state_size=2)))
+```
+
+`examples/c/biquad.c` contient un biquad correct et deux variantes boguées. Celle qui oublie une variable d'état entre deux blocs passe tous les tests sur un appel unique et n'est détectée que par l'invariance au découpage en blocs.
+
 ## Tolérances calibrées
 
 Une borne fixe en ε · log N ne décrit pas toutes les bibliothèques : sur N = 2…1200, la FFT de PyTorch (MKL) atteint 195 ε contre 4 ε pour NumPy, selon la factorisation de N. `dp.calibrate` mesure l'erreur réelle contre une référence en précision étendue et en déduit la tolérance :

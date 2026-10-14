@@ -47,7 +47,7 @@ Le schéma directeur complet (état de l'art, catalogue de propriétés, feuille
 ## Phase 6 : état
 
 - [x] Outil en ligne de commande `dsp-props check` : découverte automatique des opérateurs déclarés (module, fichier, `module:attribut`, registres en dictionnaire), export JSON et Markdown, code de sortie pour la CI
-- [ ] Adaptateur pour du code C (ctypes ou cffi)
+- [x] Adaptateur pour du code C (`dsp_props.adapters`, ctypes) : fonctions sans état et traitement par blocs avec état ; un biquad C qui perd une variable d'état entre blocs passe les relations LTI sur un appel unique et n'est détecté que par l'invariance au découpage
 
 ## Observations à suivre en phase 2
 
