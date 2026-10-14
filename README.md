@@ -146,7 +146,7 @@ Premier bug signalé : [scipy/scipy#26406](https://github.com/scipy/scipy/issues
 
 ## Installation
 
-Une fois publié sur PyPI :
+Depuis PyPI ([pypi.org/project/dsp-props](https://pypi.org/project/dsp-props/)) :
 
 ```
 python -m pip install "dsp-props[scipy]"   # [scipy] pour les filtres IIR et les fonctions de transfert
