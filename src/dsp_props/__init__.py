@@ -1,6 +1,7 @@
 """dsp-props: property-based testing for digital signal processing code."""
 
 from . import core, generators, relations
+from .core import calibrate
 from .api import (
     PropertyViolation,
     Report,
@@ -19,6 +20,7 @@ __all__ = [
     "generators",
     "relations",
     "transform",
+    "calibrate",
     "streaming",
     "stateful",
     "StreamingSpec",

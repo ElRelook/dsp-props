@@ -49,6 +49,18 @@ class MonFiltre:
 dp.stateful(lambda bloc, z: scipy.signal.lfilter(b, a, bloc, zi=z), init_state=np.zeros(2))
 ```
 
+## Tolérances calibrées
+
+Une borne fixe en ε · log N ne décrit pas toutes les bibliothèques : sur N = 2…1200, la FFT de PyTorch (MKL) atteint 195 ε contre 4 ε pour NumPy, selon la factorisation de N. `dp.calibrate` mesure l'erreur réelle contre une référence en précision étendue et en déduit la tolérance :
+
+```python
+tol = dp.calibrate(torch_fft, lengths=range(1, 513))   # refuse un opérateur faux
+print(tol.summary())
+dp.transform(inverse=torch_ifft, parseval=True, tolerance=tol)(torch_fft)
+```
+
+`python benchmarks/error_profile.py` produit le profil d'erreur complet (`benchmarks/error_profile.csv`).
+
 ## Valider l'outil : la suite de mutants
 
 `mutants/` contient 20 implémentations volontairement boguées, réparties en quatre familles :

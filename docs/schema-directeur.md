@@ -19,6 +19,14 @@ Le schéma directeur complet (état de l'art, catalogue de propriétés, feuille
 - [x] Transformées réelles (`kind="rdft"`), transformées génériques (DCT, STFT) et streaming par blocs (`dp.streaming`, `dp.stateful`)
 - [x] 20 mutants en quatre familles, tous détectés
 
+## Phase 2 : état
+
+- [x] Module de calibration (`dp.calibrate`) : erreur mesurée contre une FFT en long double, longueur par longueur, avec plancher analytique c · ε · log2 N
+- [x] La calibration refuse un opérateur faux (erreur > 10^6 ε) au lieu d'absorber le bug
+- [x] Profil d'erreur sur N = 2…1200 (`benchmarks/error_profile.csv`) : pire cas NumPy 4,1 ε, SciPy 3,7 ε, PyTorch/MKL 195 ε (N = 596 = 4 × 149). Pour torch, 220 longueurs dépassent 20 ε ; toutes ont un facteur premier entre 17 et 149, et 130 d'entre elles sont multiples de 4.
+- [ ] Modèles pour filtres IIR (conditionnement des pôles) et récursions
+- [ ] Figure erreur/N pour l'article
+
 ## Observations à suivre en phase 2
 
 - La tolérance FFT (c · ε · log2 N · ‖y‖, c = 20) a rejeté le calcul de référence du théorème du décalage tant que l'argument des twiddles n'était pas réduit modulo N : la référence elle-même doit être plus précise que l'opérateur testé.
