@@ -13,7 +13,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "src"), str(ROOT)]
 
 import dsp_props as dp  # noqa: E402
-from mutants import ALL_MUTANTS, REFERENCES  # noqa: E402
+from mutants import ALL_MUTANTS, BLIND_SPOTS, REFERENCES  # noqa: E402
 
 
 def main():
@@ -39,6 +39,10 @@ def main():
         killed += bool(caught)
         status = "killed " if caught else "SURVIVED"
         print(f"{status} {name:<34} {dt:6.1f}s  by: {', '.join(caught) or '-'}")
+
+    for name, func in BLIND_SPOTS.items():
+        report = dp.verify(func, max_examples=args.examples, raise_on_failure=False)
+        print(f"blind spot {name:<31} {'caught (unexpected)' if not report.ok else 'not caught (documented)'}")
 
     total = len(ALL_MUTANTS)
     print(f"\nMutation score: {killed}/{total} ({100 * killed / total:.0f}%)")

@@ -11,7 +11,7 @@ from hypothesis import HealthCheck, given, settings
 from hypothesis.errors import HypothesisException
 
 from .core.tolerance import FFTTolerance, ToleranceModel
-from .relations import STREAMING_RELATIONS, TRANSFORM_RELATIONS
+from .relations import LTI_RELATIONS, STREAMING_RELATIONS, TRANSFORM_RELATIONS
 
 
 KINDS = ("dft", "rdft", "generic")
@@ -73,6 +73,34 @@ class StreamingSpec:
     @property
     def relations(self):
         return [r for r in STREAMING_RELATIONS if r.applies(self)]
+
+
+@dataclass
+class LTISpec:
+    func: Callable
+    causal: bool = True
+    tolerance: ToleranceModel = field(default_factory=lambda: FFTTolerance(c=1000.0))
+    max_n: int = 512
+
+    @property
+    def relations(self):
+        return [r for r in LTI_RELATIONS if r.applies(self)]
+
+
+def lti_filter(*, causal=True, tolerance=None, max_n=512):
+    """Declare a linear time-invariant filter applied with zero initial state.
+
+    Checks linearity, time invariance and (if ``causal``) causality. For a
+    recursive filter pass ``tolerance=dp.core.IIRTolerance(b, a)`` so the
+    tolerance follows the conditioning of the recursion.
+    """
+
+    def decorate(func):
+        func.__dsp_props__ = LTISpec(func=func, causal=causal,
+                                     tolerance=tolerance or FFTTolerance(c=1000.0), max_n=max_n)
+        return func
+
+    return decorate
 
 
 def streaming(*, tolerance=None, max_n=512):
@@ -192,7 +220,7 @@ def verify(func, *, max_examples=200, raise_on_failure=True, derandomize=False) 
     """Run every relation declared for ``func`` and return a report."""
     spec = getattr(func, "__dsp_props__", None)
     if spec is None:
-        raise TypeError(f"{func!r} has no dsp-props declaration (use @dp.transform or @dp.streaming)")
+        raise TypeError(f"{func!r} has no dsp-props declaration (use @dp.transform, @dp.lti_filter or @dp.streaming)")
     failures, checked = [], []
     for rel in spec.relations:
         checked.append(rel.name)

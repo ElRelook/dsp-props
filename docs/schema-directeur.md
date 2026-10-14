@@ -24,8 +24,15 @@ Le schéma directeur complet (état de l'art, catalogue de propriétés, feuille
 - [x] Module de calibration (`dp.calibrate`) : erreur mesurée contre une FFT en long double, longueur par longueur, avec plancher analytique c · ε · log2 N
 - [x] La calibration refuse un opérateur faux (erreur > 10^6 ε) au lieu d'absorber le bug
 - [x] Profil d'erreur sur N = 2…1200 (`benchmarks/error_profile.csv`) : pire cas NumPy 4,1 ε, SciPy 3,7 ε, PyTorch/MKL 195 ε (N = 596 = 4 × 149). Pour torch, 220 longueurs dépassent 20 ε ; toutes ont un facteur premier entre 17 et 149, et 130 d'entre elles sont multiples de 4.
-- [ ] Modèles pour filtres IIR (conditionnement des pôles) et récursions
+- [x] Modèle d'erreur IIR (`IIRTolerance`) : borne en ε · ordre · ‖h_A‖₁ · (‖b‖₁ + (‖a‖₁ − 1) ‖h_BA‖₁) · ‖x‖, jamais dépassée sur 80 filtres de rayon 0,5 à 0,999 et d'ordre 2 à 12 (pire rapport 0,008), et qui détecte toujours la récursion en float32
 - [ ] Figure erreur/N pour l'article
+
+## Phase 3 : état
+
+- [x] Relations LTI : linéarité, invariance temporelle, causalité (`dp.lti_filter`)
+- [x] Famille de 4 mutants IIR, tous détectés ; un angle mort documenté (filtre faux mais LTI)
+- [ ] Cohérence fonction de transfert / réponse mesurée (attrape l'angle mort)
+- [ ] Stabilité (entrée bornée, sortie bornée), multicadence
 
 ## Observations à suivre en phase 2
 

@@ -11,7 +11,7 @@ def test_numpy_fft_satisfies_all_relations():
     assert len(report.checked) == 6
 
 
-@pytest.mark.parametrize("family", ["rfft", "dct", "streaming"])
+@pytest.mark.parametrize("family", ["rfft", "dct", "iir", "streaming"])
 def test_other_references_pass(family):
     assert dp.verify(REFERENCES[family], max_examples=100).ok
 

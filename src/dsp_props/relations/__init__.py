@@ -1,4 +1,5 @@
 from .base import Relation
+from .lti import LTI_RELATIONS, Causality, LTILinearity, TimeInvariance
 from .streaming import BlockInvariance, STREAMING_RELATIONS
 from .transforms import (
     Linearity,
@@ -13,6 +14,10 @@ from .transforms import (
 
 __all__ = [
     "Relation",
+    "LTI_RELATIONS",
+    "LTILinearity",
+    "TimeInvariance",
+    "Causality",
     "BlockInvariance",
     "STREAMING_RELATIONS",
     "Linearity",

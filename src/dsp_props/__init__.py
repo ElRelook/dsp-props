@@ -5,7 +5,9 @@ from .core import calibrate
 from .api import (
     PropertyViolation,
     Report,
+    LTISpec,
     StreamingSpec,
+    lti_filter,
     TransformSpec,
     stateful,
     streaming,
@@ -22,6 +24,8 @@ __all__ = [
     "transform",
     "calibrate",
     "streaming",
+    "lti_filter",
+    "LTISpec",
     "stateful",
     "StreamingSpec",
     "verify",
