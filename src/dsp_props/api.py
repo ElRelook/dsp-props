@@ -14,6 +14,20 @@ from .core.tolerance import FFTTolerance, ToleranceModel
 from .relations import STREAMING_RELATIONS, TRANSFORM_RELATIONS
 
 
+KINDS = ("dft", "rdft", "generic")
+
+
+def hermitian_extend(half, n):
+    """Full length-``n`` DFT from the ``n // 2 + 1`` bins of a real-input DFT."""
+    half = np.asarray(half)
+    full = np.empty(n, dtype=np.result_type(half.dtype, np.complex64))
+    m = n // 2 + 1
+    full[:m] = half[:m]
+    if n > m:
+        full[m:] = np.conj(half[1 : n - m + 1][::-1])
+    return full
+
+
 @dataclass
 class TransformSpec:
     func: Callable
@@ -24,12 +38,30 @@ class TransformSpec:
     parseval_scale: Callable[[int], float] = lambda n: n
     real_input_hermitian: bool = False
     real_input_only: bool = False
+    inverse_takes_length: bool = False
     tolerance: ToleranceModel = field(default_factory=FFTTolerance)
     max_n: int = 512
 
     @property
     def relations(self):
         return [r for r in TRANSFORM_RELATIONS if r.applies(self)]
+
+    @property
+    def is_fourier(self):
+        return self.kind in ("dft", "rdft")
+
+    def full(self, x):
+        """The transform of ``x`` as a full spectrum (rdft outputs are Hermitian-extended)."""
+        y = np.asarray(self.func(x))
+        if self.kind == "rdft":
+            n = len(x)
+            if y.shape != (n // 2 + 1,):
+                raise AssertionError(f"rdft output has shape {y.shape}, expected ({n // 2 + 1},) for N={n}")
+            return hermitian_extend(y, n)
+        return y
+
+    def invert(self, X, n):
+        return np.asarray(self.inverse(X, n) if self.inverse_takes_length else self.inverse(X))
 
 
 @dataclass
@@ -74,12 +106,22 @@ def stateful(func, init_state, **kwargs):
 
 
 def transform(inverse=None, *, kind="dft", linear=True, parseval=False, parseval_scale=None,
-              real_input_hermitian=False, real_input_only=False, tolerance=None, max_n=512):
+              real_input_hermitian=False, real_input_only=None, inverse_takes_length=None,
+              tolerance=None, max_n=512):
     """Declare a function as a transform; ``dp.verify`` then checks it.
 
-    ``kind="dft"`` enables the shift and convolution theorems; use
-    ``kind="generic"`` for transforms that are only linear/invertible.
+    ``kind="dft"``: complex DFT (shift and convolution theorems apply).
+    ``kind="rdft"``: real-input DFT returning ``N // 2 + 1`` bins, like
+    ``numpy.fft.rfft``; its inverse is called as ``inverse(X, N)``.
+    ``kind="generic"``: any linear transform (DCT, wavelets, STFT...): only
+    linearity, Parseval and inversibility are checked.
     """
+    if kind not in KINDS:
+        raise ValueError(f"kind must be one of {KINDS}, got {kind!r}")
+    if real_input_only is None:
+        real_input_only = kind == "rdft"
+    if inverse_takes_length is None:
+        inverse_takes_length = kind == "rdft"
 
     def decorate(func):
         func.__dsp_props__ = TransformSpec(
@@ -91,6 +133,7 @@ def transform(inverse=None, *, kind="dft", linear=True, parseval=False, parseval
             parseval_scale=parseval_scale or (lambda n: n),
             real_input_hermitian=real_input_hermitian,
             real_input_only=real_input_only,
+            inverse_takes_length=inverse_takes_length,
             tolerance=tolerance or FFTTolerance(),
             max_n=max_n,
         )

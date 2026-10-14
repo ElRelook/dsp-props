@@ -47,7 +47,7 @@ class CircularShift(Relation):
     name = "circular shift"
 
     def applies(self, spec):
-        return spec.kind == "dft"
+        return spec.is_fourier
 
     def inputs(self, spec):
         return st.tuples(_signal(spec.max_n), st.integers(-1024, 1024))
@@ -55,12 +55,12 @@ class CircularShift(Relation):
     def check(self, spec, inputs):
         x, s = inputs
         n = len(x)
-        fx = np.asarray(spec.func(x))
+        fx = spec.full(x)
         k = np.arange(n)
         # Reduce k*s modulo N in integers so the twiddle argument stays in
         # [0, 2*pi) and the reference itself is accurate.
         expected = fx * np.exp(-2j * np.pi * ((k * s) % n) / n)
-        assert_close(spec.func(np.roll(x, s)), expected, spec.tolerance,
+        assert_close(spec.full(np.roll(x, s)), expected, spec.tolerance,
                      ref_norm=norm(fx), what=f"{self.name} (s={s})")
 
 
@@ -78,7 +78,8 @@ class Parseval(Relation):
     def check(self, spec, x):
         n = len(x)
         scale = spec.parseval_scale(n)
-        lhs = norm(np.asarray(spec.func(x))) / np.sqrt(scale)
+        spectrum = spec.full(x) if spec.is_fourier else np.asarray(spec.func(x))
+        lhs = norm(spectrum) / np.sqrt(scale)
         rhs = norm(x)
         tol = spec.tolerance.bound(n, np.asarray(x).dtype, rhs)
         if not abs(lhs - rhs) <= tol:
@@ -93,7 +94,7 @@ class HermitianSymmetry(Relation):
     name = "hermitian symmetry"
 
     def applies(self, spec):
-        return spec.real_input_hermitian
+        return spec.kind == "dft" and spec.real_input_hermitian
 
     def inputs(self, spec):
         return _signal(spec.max_n)
@@ -116,7 +117,7 @@ class Inversibility(Relation):
         return _signal(spec.max_n)
 
     def check(self, spec, x):
-        y = np.asarray(spec.inverse(spec.func(x)))
+        y = spec.invert(spec.func(x), len(x))
         assert_close(y, x, spec.tolerance, what=self.name)
 
 
@@ -126,7 +127,7 @@ class ConvolutionTheorem(Relation):
     name = "convolution theorem"
 
     def applies(self, spec):
-        return spec.kind == "dft" and spec.inverse is not None
+        return spec.is_fourier and spec.inverse is not None
 
     def inputs(self, spec):
         return signal_pairs(min(spec.max_n, 256))
@@ -136,10 +137,31 @@ class ConvolutionTheorem(Relation):
         n = len(x)
         idx = (np.arange(n)[:, None] - np.arange(n)[None, :]) % n
         direct = y[idx] @ x
-        fast = np.asarray(spec.inverse(np.asarray(spec.func(x)) * np.asarray(spec.func(y))))
+        fast = spec.invert(np.asarray(spec.func(x)) * np.asarray(spec.func(y)), n)
         # By Cauchy-Schwarz, |c[k]| <= ||x|| ||y||, hence ||c|| <= sqrt(N) ||x|| ||y||.
         ref = np.sqrt(n) * norm(x) * norm(y)
         assert_close(fast, direct, spec.tolerance, ref_norm=ref, what=self.name)
+
+
+class RealBins(Relation):
+    """Real-input DFT: the DC bin (and the Nyquist bin for even N) are real."""
+
+    name = "real DC/Nyquist bins"
+
+    def applies(self, spec):
+        return spec.kind == "rdft"
+
+    def inputs(self, spec):
+        return _signal(spec.max_n)
+
+    def check(self, spec, x):
+        n = len(x)
+        X = spec.full(x)
+        idx = [0] + ([n // 2] if n % 2 == 0 else [])
+        imag = np.imag(X[idx])
+        tol = spec.tolerance.bound(n, np.asarray(x).dtype, norm(X))
+        if not norm(imag) <= tol:
+            raise ToleranceError(f"{self.name}: imaginary part {imag} at bins {idx} (N={n})")
 
 
 TRANSFORM_RELATIONS = [
@@ -149,4 +171,5 @@ TRANSFORM_RELATIONS = [
     HermitianSymmetry(),
     Inversibility(),
     ConvolutionTheorem(),
+    RealBins(),
 ]

@@ -2,13 +2,18 @@ import numpy as np
 import pytest
 
 import dsp_props as dp
-from mutants.fft_mutants import MUTANTS, REFERENCE
+from mutants import ALL_MUTANTS, REFERENCES
 
 
 def test_numpy_fft_satisfies_all_relations():
-    report = dp.verify(REFERENCE, max_examples=150)
+    report = dp.verify(REFERENCES["fft"], max_examples=150)
     assert report.ok
     assert len(report.checked) == 6
+
+
+@pytest.mark.parametrize("family", ["rfft", "dct", "streaming"])
+def test_other_references_pass(family):
+    assert dp.verify(REFERENCES[family], max_examples=100).ok
 
 
 def test_decorator_api_on_user_function():
@@ -29,7 +34,7 @@ def test_generic_transform_skips_dft_only_relations():
     assert "convolution theorem" not in names
 
 
-@pytest.mark.parametrize("name", sorted(MUTANTS))
+@pytest.mark.parametrize("name", sorted(ALL_MUTANTS))
 def test_mutant_is_detected(name):
-    report = dp.verify(MUTANTS[name], max_examples=150, raise_on_failure=False)
+    report = dp.verify(ALL_MUTANTS[name], max_examples=150, raise_on_failure=False)
     assert not report.ok, f"mutant {name} survived"

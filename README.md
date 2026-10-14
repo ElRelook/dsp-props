@@ -31,15 +31,45 @@ dsp-props report for my_fft
 
 En cas d'échec, `verify` lève `PropertyViolation` avec, pour chaque relation violée, le contre-exemple réduit par Hypothesis.
 
+Autres déclarations :
+
+```python
+# FFT réelle : l'inverse reçoit la longueur N
+dp.transform(inverse=np.fft.irfft, kind="rdft", parseval=True)(np.fft.rfft)
+
+# Transformée linéaire quelconque (DCT, ondelettes...)
+dp.transform(kind="generic", inverse=idct_ortho, parseval=True, parseval_scale=lambda n: 1.0)(dct_ortho)
+
+# Traitement par blocs : tout découpage (blocs vides et d'un échantillon compris) doit donner la même sortie
+@dp.streaming()
+class MonFiltre:
+    def process(self, bloc): ...
+
+# Fonction à état explicite, par exemple lfilter avec zi
+dp.stateful(lambda bloc, z: scipy.signal.lfilter(b, a, bloc, zi=z), init_state=np.zeros(2))
+```
+
 ## Valider l'outil : la suite de mutants
 
-`mutants/` contient des FFT volontairement boguées (facteur 1/N oublié, conjugaison manquante, décalage d'un indice, normalisation erronée, calcul en float32, signe des twiddles inversé, dernier échantillon ignoré, offset constant). Le score de mutation mesure ce que l'outil détecte :
+`mutants/` contient 20 implémentations volontairement boguées, réparties en quatre familles :
+
+| Famille | Mutants |
+| --- | --- |
+| FFT complexe | 1/N oublié, conjugaison manquante, décalage d'un indice, normalisation erronée, calcul en float32, signe des twiddles, dernier échantillon ignoré, offset constant |
+| FFT réelle (`rfft`) | un bin de moins, inverse qui ignore N, bin de Nyquist divisé par 2, spectre conjugué, inverse sans symétrie hermitienne |
+| DCT-II orthonormée | poids du coefficient DC oublié, inverse du mauvais type, calcul en float32 |
+| Streaming par blocs | état remis à zéro, historique décalé d'un échantillon, bloc vide qui efface l'état, blocs courts non filtrés |
 
 ```
 python mutants/run_mutants.py
 ...
-Mutation score: 8/8 (100%)
+Mutation score: 20/20 (100%)
 ```
+
+## Chasse aux bugs dans de vraies bibliothèques
+
+`benchmarks/campaign.py` applique les relations à SciPy, NumPy, PyTorch, librosa et torchaudio (46 cibles).
+Premier bug signalé : [scipy/scipy#26406](https://github.com/scipy/scipy/issues/26406). Résultats détaillés dans `benchmarks/RESULTS-*.md`.
 
 ## Installation (développement)
 

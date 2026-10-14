@@ -7,6 +7,7 @@ from .transforms import (
     HermitianSymmetry,
     Inversibility,
     ConvolutionTheorem,
+    RealBins,
     TRANSFORM_RELATIONS,
 )
 
@@ -20,5 +21,6 @@ __all__ = [
     "HermitianSymmetry",
     "Inversibility",
     "ConvolutionTheorem",
+    "RealBins",
     "TRANSFORM_RELATIONS",
 ]

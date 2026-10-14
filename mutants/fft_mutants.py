@@ -70,14 +70,14 @@ def dc_offset(x):
 
 
 MUTANTS = {
-    "ifft_missing_1_over_n": _declare(ifft_missing_1_over_n, inverse=_ifft_missing_1_over_n),
-    "ifft_missing_conj": _declare(ifft_missing_conj, inverse=_ifft_missing_conj),
-    "circular_off_by_one": _declare(circular_off_by_one),
-    "wrong_normalisation": _declare(wrong_normalisation),
-    "float32_internal": _declare(float32_internal),
-    "wrong_twiddle_sign": _declare(wrong_twiddle_sign),
-    "last_sample_dropped": _declare(last_sample_dropped),
-    "dc_offset": _declare(dc_offset),
+    "fft_ifft_missing_1_over_n": _declare(ifft_missing_1_over_n, inverse=_ifft_missing_1_over_n),
+    "fft_ifft_missing_conj": _declare(ifft_missing_conj, inverse=_ifft_missing_conj),
+    "fft_circular_off_by_one": _declare(circular_off_by_one),
+    "fft_wrong_normalisation": _declare(wrong_normalisation),
+    "fft_float32_internal": _declare(float32_internal),
+    "fft_wrong_twiddle_sign": _declare(wrong_twiddle_sign),
+    "fft_last_sample_dropped": _declare(last_sample_dropped),
+    "fft_dc_offset": _declare(dc_offset),
 }
 
 REFERENCE = _declare(reference_fft)
