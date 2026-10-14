@@ -1,10 +1,12 @@
-# Publishes to PyPI when a version tag (v0.1.0, ...) is pushed.
+# Publishes to PyPI when a version tag (v0.1.0, ...) is pushed, or when run by hand
+# from the Actions tab ("Run workflow").
 # Needs a "trusted publisher" configured once on pypi.org (see RELEASING.md); no token is stored here.
 name: Release
 
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
 
 jobs:
   build:

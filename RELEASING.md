@@ -24,5 +24,7 @@ rien n'est publié tant qu'aucun tag `v*` n'est poussé.
    git push origin v0.1.0
    ```
 
+On peut aussi lancer la publication à la main : onglet *Actions > Release > Run workflow*.
+
 Le workflow `Release` construit le paquet, le vérifie et le publie. Une version publiée sur PyPI
 ne peut plus être remplacée (seulement retirée) : vérifier le numéro avant de pousser le tag.
