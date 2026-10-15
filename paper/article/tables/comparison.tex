@@ -1,0 +1,21 @@
+\begin{table*}[t]
+\caption{Mutants detected (\%, mean over seeds, with min--max when seeds disagree). For equivalent mutants the figure is a false-alarm rate and should be 0. SoP: ported test suites of NumPy and SciPy; uniform: dsp-props without its generators; fixed-tol: without its tolerance models; generic PBT: without both}
+\label{tab:comparison}
+\centering\footnotesize
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+Subject & Class (mutants) & dsp-props & uniform & fixed-tol & generic PBT \\
+\midrule
+FFT & functional (63) & 100 & 100 & 100 & 100 \\
+FFT & equivalent (13) & 0 & 0 & 0 & 0 \\
+\code{lfilter} & functional (47) & -- & -- & -- & -- \\
+\code{lfilter} & equivalent (8) & -- & -- & -- & -- \\
+\code{upfirdn} & functional (32) & -- & -- & -- & -- \\
+\code{upfirdn} & equivalent (4) & -- & -- & -- & -- \\
+overlap-add & functional (16) & -- & -- & -- & -- \\
+\midrule
+all & functional (158) & 100 & 100 & 100 & 100 \\
+all & equivalent (25) & 0 & 0 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table*}

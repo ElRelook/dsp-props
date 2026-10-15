@@ -1,0 +1,818 @@
+{
+ "classification": {
+  "fft": {
+   "functional": 63,
+   "equivalent": 13,
+   "total": 76
+  },
+  "lfilter": {
+   "functional": 47,
+   "equivalent": 8,
+   "total": 55
+  },
+  "upfirdn": {
+   "functional": 32,
+   "equivalent": 4,
+   "total": 36
+  },
+  "ola": {
+   "functional": 16,
+   "total": 16
+  },
+  "all": {
+   "functional": 158,
+   "equivalent": 25,
+   "total": 183
+  }
+ },
+ "kill_rates": {
+  "fft": {
+   "functional": {
+    "dsp-props": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n_mutants": 63,
+     "n_seeds": 5
+    },
+    "dsp-props/uniform": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n_mutants": 63,
+     "n_seeds": 5
+    },
+    "dsp-props/fixed-tol": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n_mutants": 63,
+     "n_seeds": 5
+    },
+    "generic-pbt": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n_mutants": 63,
+     "n_seeds": 5
+    }
+   },
+   "equivalent": {
+    "dsp-props": {
+     "mean": 0.0,
+     "n_mutants": 13
+    },
+    "dsp-props/uniform": {
+     "mean": 0.0,
+     "n_mutants": 13
+    },
+    "dsp-props/fixed-tol": {
+     "mean": 0.0,
+     "n_mutants": 13
+    },
+    "generic-pbt": {
+     "mean": 0.0,
+     "n_mutants": 13
+    }
+   }
+  },
+  "all": {
+   "functional": {
+    "dsp-props": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n_mutants": 158,
+     "n_seeds": 5
+    },
+    "dsp-props/uniform": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n_mutants": 158,
+     "n_seeds": 5
+    },
+    "dsp-props/fixed-tol": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n_mutants": 158,
+     "n_seeds": 5
+    },
+    "generic-pbt": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n_mutants": 158,
+     "n_seeds": 5
+    }
+   },
+   "equivalent": {
+    "dsp-props": {
+     "mean": 0.0,
+     "n_mutants": 25
+    },
+    "dsp-props/uniform": {
+     "mean": 0.0,
+     "n_mutants": 25
+    },
+    "dsp-props/fixed-tol": {
+     "mean": 0.0,
+     "n_mutants": 25
+    },
+    "generic-pbt": {
+     "mean": 0.0,
+     "n_mutants": 25
+    }
+   }
+  }
+ },
+ "originals": {
+  "fft": {
+   "dsp-props": 0,
+   "dsp-props/uniform": 0,
+   "dsp-props/fixed-tol": 0,
+   "generic-pbt": 0
+  }
+ },
+ "per_mutant": {
+  "fft-000": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-002": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-001": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-005": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-003": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-007": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-008": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-004": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-006": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-009": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-013": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-014": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-010": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-016": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-017": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-018": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-011": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-015": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-019": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-012": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-023": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-020": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-021": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-022": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-027": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-028": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-024": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-025": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-026": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-034": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-036": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-040": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-029": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-031": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-042": {
+   "class": "functional"
+  },
+  "fft-043": {
+   "class": "functional"
+  },
+  "fft-044": {
+   "class": "functional"
+  },
+  "fft-045": {
+   "class": "functional"
+  },
+  "fft-039": {
+   "class": "functional",
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "fft-046": {
+   "class": "functional"
+  },
+  "fft-047": {
+   "class": "functional"
+  },
+  "fft-041": {
+   "class": "functional"
+  },
+  "fft-048": {
+   "class": "functional"
+  },
+  "fft-052": {
+   "class": "functional"
+  },
+  "fft-053": {
+   "class": "functional"
+  },
+  "fft-054": {
+   "class": "functional"
+  },
+  "fft-055": {
+   "class": "functional"
+  },
+  "fft-049": {
+   "class": "functional"
+  },
+  "fft-056": {
+   "class": "functional"
+  },
+  "fft-057": {
+   "class": "functional"
+  },
+  "fft-059": {
+   "class": "functional"
+  },
+  "fft-060": {
+   "class": "functional"
+  },
+  "fft-050": {
+   "class": "functional"
+  },
+  "fft-051": {
+   "class": "functional"
+  },
+  "fft-058": {
+   "class": "functional"
+  },
+  "fft-061": {
+   "class": "functional"
+  },
+  "fft-062": {
+   "class": "functional"
+  },
+  "fft-067": {
+   "class": "functional"
+  },
+  "fft-063": {
+   "class": "functional"
+  },
+  "fft-069": {
+   "class": "functional"
+  },
+  "fft-065": {
+   "class": "functional"
+  },
+  "fft-073": {
+   "class": "functional"
+  },
+  "lfilter-000": {
+   "class": "functional"
+  },
+  "lfilter-002": {
+   "class": "functional"
+  },
+  "lfilter-001": {
+   "class": "functional"
+  },
+  "lfilter-004": {
+   "class": "functional"
+  },
+  "lfilter-003": {
+   "class": "functional"
+  },
+  "lfilter-005": {
+   "class": "functional"
+  },
+  "lfilter-007": {
+   "class": "functional"
+  },
+  "lfilter-009": {
+   "class": "functional"
+  },
+  "lfilter-008": {
+   "class": "functional"
+  },
+  "lfilter-010": {
+   "class": "functional"
+  },
+  "lfilter-012": {
+   "class": "functional"
+  },
+  "lfilter-015": {
+   "class": "functional"
+  },
+  "lfilter-013": {
+   "class": "functional"
+  },
+  "lfilter-017": {
+   "class": "functional"
+  },
+  "lfilter-018": {
+   "class": "functional"
+  },
+  "lfilter-020": {
+   "class": "functional"
+  },
+  "lfilter-023": {
+   "class": "functional"
+  },
+  "lfilter-024": {
+   "class": "functional"
+  },
+  "lfilter-025": {
+   "class": "functional"
+  },
+  "lfilter-026": {
+   "class": "functional"
+  },
+  "lfilter-027": {
+   "class": "functional"
+  },
+  "lfilter-022": {
+   "class": "functional"
+  },
+  "lfilter-029": {
+   "class": "functional"
+  },
+  "fft-075": {
+   "class": "functional"
+  },
+  "lfilter-031": {
+   "class": "functional"
+  },
+  "lfilter-028": {
+   "class": "functional"
+  },
+  "lfilter-034": {
+   "class": "functional"
+  },
+  "lfilter-032": {
+   "class": "functional"
+  },
+  "lfilter-033": {
+   "class": "functional"
+  },
+  "lfilter-030": {
+   "class": "functional"
+  },
+  "lfilter-036": {
+   "class": "functional"
+  },
+  "lfilter-037": {
+   "class": "functional"
+  },
+  "lfilter-039": {
+   "class": "functional"
+  },
+  "lfilter-038": {
+   "class": "functional"
+  },
+  "lfilter-035": {
+   "class": "functional"
+  },
+  "lfilter-043": {
+   "class": "functional"
+  },
+  "lfilter-045": {
+   "class": "functional"
+  },
+  "lfilter-041": {
+   "class": "functional"
+  },
+  "lfilter-046": {
+   "class": "functional"
+  },
+  "lfilter-047": {
+   "class": "functional"
+  },
+  "lfilter-050": {
+   "class": "functional"
+  },
+  "lfilter-048": {
+   "class": "functional"
+  },
+  "lfilter-052": {
+   "class": "functional"
+  },
+  "lfilter-044": {
+   "class": "functional"
+  },
+  "lfilter-054": {
+   "class": "functional"
+  },
+  "lfilter-051": {
+   "class": "functional"
+  },
+  "lfilter-049": {
+   "class": "functional"
+  },
+  "upfirdn-000": {
+   "class": "functional"
+  },
+  "upfirdn-001": {
+   "class": "functional"
+  },
+  "upfirdn-003": {
+   "class": "functional"
+  },
+  "upfirdn-004": {
+   "class": "functional"
+  },
+  "lfilter-053": {
+   "class": "functional"
+  },
+  "upfirdn-006": {
+   "class": "functional"
+  },
+  "upfirdn-002": {
+   "class": "functional"
+  },
+  "upfirdn-007": {
+   "class": "functional"
+  },
+  "upfirdn-005": {
+   "class": "functional"
+  },
+  "upfirdn-009": {
+   "class": "functional"
+  },
+  "upfirdn-008": {
+   "class": "functional"
+  },
+  "upfirdn-010": {
+   "class": "functional"
+  },
+  "upfirdn-016": {
+   "class": "functional"
+  },
+  "upfirdn-017": {
+   "class": "functional"
+  },
+  "upfirdn-018": {
+   "class": "functional"
+  },
+  "upfirdn-011": {
+   "class": "functional"
+  },
+  "upfirdn-021": {
+   "class": "functional"
+  },
+  "upfirdn-019": {
+   "class": "functional"
+  },
+  "upfirdn-024": {
+   "class": "functional"
+  },
+  "upfirdn-023": {
+   "class": "functional"
+  },
+  "upfirdn-026": {
+   "class": "functional"
+  },
+  "upfirdn-027": {
+   "class": "functional"
+  },
+  "upfirdn-028": {
+   "class": "functional"
+  },
+  "upfirdn-025": {
+   "class": "functional"
+  },
+  "upfirdn-030": {
+   "class": "functional"
+  },
+  "upfirdn-020": {
+   "class": "functional"
+  },
+  "upfirdn-032": {
+   "class": "functional"
+  },
+  "upfirdn-022": {
+   "class": "functional"
+  },
+  "upfirdn-034": {
+   "class": "functional"
+  },
+  "upfirdn-035": {
+   "class": "functional"
+  },
+  "ola-000": {
+   "class": "functional"
+  },
+  "ola-001": {
+   "class": "functional"
+  },
+  "ola-002": {
+   "class": "functional"
+  },
+  "ola-003": {
+   "class": "functional"
+  },
+  "ola-004": {
+   "class": "functional"
+  },
+  "ola-005": {
+   "class": "functional"
+  },
+  "upfirdn-029": {
+   "class": "functional"
+  },
+  "ola-006": {
+   "class": "functional"
+  },
+  "upfirdn-031": {
+   "class": "functional"
+  },
+  "ola-008": {
+   "class": "functional"
+  },
+  "ola-007": {
+   "class": "functional"
+  },
+  "ola-009": {
+   "class": "functional"
+  },
+  "ola-010": {
+   "class": "functional"
+  },
+  "ola-013": {
+   "class": "functional"
+  },
+  "ola-014": {
+   "class": "functional"
+  },
+  "ola-015": {
+   "class": "functional"
+  },
+  "ola-011": {
+   "class": "functional"
+  },
+  "ola-012": {
+   "class": "functional"
+  },
+  "upfirdn-033": {
+   "class": "functional"
+  }
+ },
+ "first_failure": {
+  "dsp-props": {
+   "median": 3.0,
+   "p90": 11.0
+  },
+  "dsp-props/uniform": {
+   "median": 3.0,
+   "p90": 35.0
+  },
+  "dsp-props/fixed-tol": {
+   "median": 3.0,
+   "p90": 11.0
+  },
+  "generic-pbt": {
+   "median": 3.0,
+   "p90": 35.0
+  }
+ },
+ "counterexample_length": {
+  "dsp-props": {
+   "median": 3.0,
+   "p90": 3.0,
+   "max": 256
+  },
+  "dsp-props/uniform": {
+   "median": 3.0,
+   "p90": 3.0,
+   "max": 129
+  },
+  "dsp-props/fixed-tol": {
+   "median": 3.0,
+   "p90": 3.0,
+   "max": 256
+  },
+  "generic-pbt": {
+   "median": 3.0,
+   "p90": 3.0,
+   "max": 129
+  }
+ },
+ "seconds": {
+  "dsp-props": {
+   "median": 3.2560000000000002,
+   "total": 1702.1690000000003
+  },
+  "dsp-props/uniform": {
+   "median": 1.6775,
+   "total": 1137.1019999999999
+  },
+  "dsp-props/fixed-tol": {
+   "median": 3.2199999999999998,
+   "total": 1662.0249999999999
+  },
+  "generic-pbt": {
+   "median": 1.6280000000000001,
+   "total": 1108.0
+  }
+ },
+ "timeouts": {
+  "dsp-props": 15,
+  "dsp-props/uniform": 15,
+  "dsp-props/fixed-tol": 15,
+  "generic-pbt": 15
+ }
+}

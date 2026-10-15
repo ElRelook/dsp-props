@@ -12,6 +12,8 @@
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
 \usepackage{cite}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 
 \newtheorem{proposition}{Proposition}
 \newcommand{\eps}{\varepsilon}
@@ -21,6 +23,7 @@
 \newcommand{\eg}{e.g.,\ }
 
 \input{numbers.tex}
+\input{prose.tex}
 
 \begin{document}
 
@@ -50,10 +53,11 @@ periodic time invariance of resamplers, invariance of streaming processors to
 block boundaries), on inputs drawn from signal families known to break such code,
 with tolerances derived from an error model of each operation rather than chosen
 by hand. On \nMutAuto{} automatically generated faults in four reference
-implementations, dsp-props detects \killFuncDsp{} of the functional faults, against
-\killFuncSop{} for test suites ported from NumPy and SciPy, and \killAccDsp{} of the
-faults that only degrade accuracy, against \killAccSop{}. On correct
-implementations it raised no false alarm in \fpRuns{} runs. Applied to SciPy,
+implementations, dsp-props detects \killFuncDsp{} of the non-equivalent faults,
+against \killFuncSop{} for test suites ported from NumPy and SciPy; on
+\nMutHand{} hand-written faults, ablations show that the domain generators and the
+error-model tolerances are both needed to catch accuracy and edge-case faults.
+On correct implementations it raised no false alarm in \fpRuns{} runs. Applied to SciPy,
 NumPy, PyTorch, librosa and torchaudio, it found faults that were reported upstream.
 \end{abstract}
 
@@ -330,9 +334,10 @@ compares with an independent reference. A mutant is \emph{equivalent} if its
 largest relative error is at most $10^{-12}$, an \emph{accuracy} fault if it is
 between $10^{-12}$ and $10^{-6}$, and a \emph{functional} fault above $10^{-6}$,
 or if it raises, returns the wrong shape or exceeds the time limit. This gives
-\nFunctional{} functional faults, \nAccuracy{} accuracy faults and \nEquivalent{}
-equivalent mutants. Accuracy faults matter: a filter that loses six digits
-passes most hand-written tests.
+\nFunctional{} functional faults and \nEquivalent{} equivalent mutants. No mutant
+falls in the accuracy band: the largest relative error of a mutant is either below
+$10^{-14}$ or above 1. First-order mutation of these subjects thus produces gross
+faults only, and we study accuracy faults with the hand-written mutants below.
 
 \paragraph*{Approaches} \emph{SoP} (state of practice) is the test suite of
 the library whose interface the subject implements, ported test by test with
@@ -355,18 +360,21 @@ continuous integration.
 \paragraph*{RQ1} Table~\ref{tab:comparison} gives the share of mutants
 detected, averaged over seeds. \rqOneText
 
-\paragraph*{RQ2}\label{sec:rq2} \rqTwoText
-
 \paragraph*{Hand-written faults} The repository also contains \nMutHand{}
 hand-written faults in six families, closer to real bugs (a forgotten $1/N$, a
 twiddle sign error, single-precision intermediates, a filter that changes after
-64 samples, a missing interpolation gain, state reset between blocks; script
-\code{mutants/run\_mutants.py}). dsp-props detects \handKilled{} of them;
+64 samples, a gain wrong by 1\,\%, a missing interpolation gain, state reset
+between blocks; script \code{mutants/run\_mutants.py}). The four
+single-precision faults are accuracy faults in the sense above. dsp-props detects \handKilled{} of them;
 \handFirstThree{} fail within the first three generated inputs, and the median
 length of the shrunk counterexample is \handMedianLen{} samples. One fault class
 is a documented blind spot: a filter whose gain is wrong by 1\% is still linear,
 time-invariant and causal, and is detected only when its transfer function is
 declared.
+
+\input{tables/hand.tex}
+
+\paragraph*{RQ2}\label{sec:rq2} \rqTwoText
 
 \subsection{RQ3: is the tool itself correct?}
 \label{sec:rq3}
@@ -394,8 +402,8 @@ error to the tolerance for every comparison. \marginExact{} of the comparisons
 are exact (ratio 0); the 99th percentile is \marginPnn{} and the maximum
 \marginMax: the tolerance is \marginFactor{} times larger than the worst error
 observed on correct code.
-At the same time, RQ1 shows that it is tight enough to catch accuracy faults
-that fixed tolerances miss.
+Table~\ref{tab:hand} shows that it is nevertheless tight enough to catch the
+single-precision faults.
 
 \paragraph*{References} Calibration and the tests of the IIR model compare
 against extended-precision references, a DFT computed by NumPy in
@@ -445,9 +453,25 @@ reversal with its default padding); they are listed in the repository.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{../../docs/figures/error_profile.png}
-\caption{Worst relative FFT error, in units of $\eps$, versus length $N$ for
-NumPy and PyTorch (\code{benchmarks/error\_profile.py}).}
+\begin{tikzpicture}
+\begin{semilogyaxis}[width=\columnwidth, height=0.62\columnwidth,
+  xlabel={Length $N$}, ylabel={Worst relative error ($\eps$)},
+  xmin=0, xmax=1200, ymin=0.1, ymax=400, tick label style={font=\scriptsize},
+  label style={font=\footnotesize}, legend style={font=\scriptsize, draw=none, fill=none},
+  legend pos=north west, legend cell align=left]
+\addplot[only marks, mark=*, mark size=0.5pt, color=orange!85!black]
+  table[x=N, y=torch_eps, col sep=comma]{../../benchmarks/error_profile.csv};
+\addlegendentry{PyTorch (CPU)}
+\addplot[only marks, mark=*, mark size=0.5pt, color=blue!70!black]
+  table[x=N, y=numpy_eps, col sep=comma]{../../benchmarks/error_profile.csv};
+\addlegendentry{NumPy}
+\addplot[domain=2:1200, samples=100, dashed, gray] {4*ln(x)/ln(2)};
+\addlegendentry{$4\log_2 N$}
+\end{semilogyaxis}
+\end{tikzpicture}
+\caption{Worst relative FFT error, in units of $\eps$, versus length $N$, against a
+\code{long double} reference (\code{benchmarks/error\_profile.py}). SciPy, not shown,
+behaves like NumPy.}
 \label{fig:profile}
 \end{figure}
 
@@ -460,12 +484,12 @@ other dtypes and shapes. The subjects are small, and the oracle thresholds
 so that other thresholds can be applied. Results depend on random seeds, which
 we vary and report.
 
-\paragraph*{Reproducing} \code{python benchmarks/comparison/run\_comparison.py},
-\code{python benchmarks/validation.py}, \code{python mutants/run\_mutants.py
---json benchmarks/mutant\_results.json} and
-\code{python benchmarks/survey\_test\_suites.py} produce the result files;
-\code{python paper/article/make\_numbers.py} turns them into every number and
-table of this article.
+\paragraph*{Reproducing} The scripts \code{run\_comparison.py} and
+\code{run\_hand\_mutants.py} (in \code{benchmarks/comparison/}),
+\code{benchmarks/validation.py}, \code{mutants/run\_mutants.py} and
+\code{benchmarks/survey\_test\_suites.py} produce the result files, and
+\code{paper/article/make\_numbers.py} turns them into every number and table of
+this article.
 
 % ===========================================================================
 \section{Conclusion}
