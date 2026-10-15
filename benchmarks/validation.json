@@ -1,0 +1,413 @@
+{
+ "environment": {
+  "python": "3.13.16",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "hypothesis": "6.169.3"
+ },
+ "reference": {
+  "dft": [
+   {
+    "n": 1,
+    "rel_error_in_eps64": 0.00010606230635326534
+   },
+   {
+    "n": 2,
+    "rel_error_in_eps64": 6.941189778537812e-05
+   },
+   {
+    "n": 3,
+    "rel_error_in_eps64": 6.540470764215763e-05
+   },
+   {
+    "n": 4,
+    "rel_error_in_eps64": 4.595627908631914e-05
+   },
+   {
+    "n": 5,
+    "rel_error_in_eps64": 0.00020364286702290283
+   },
+   {
+    "n": 7,
+    "rel_error_in_eps64": 0.0002033280376004418
+   },
+   {
+    "n": 8,
+    "rel_error_in_eps64": 0.00011894793191961469
+   },
+   {
+    "n": 16,
+    "rel_error_in_eps64": 0.00021432367988439663
+   },
+   {
+    "n": 17,
+    "rel_error_in_eps64": 0.0002560772476845719
+   },
+   {
+    "n": 31,
+    "rel_error_in_eps64": 0.00043213377942238906
+   },
+   {
+    "n": 32,
+    "rel_error_in_eps64": 0.00024719128263188156
+   },
+   {
+    "n": 64,
+    "rel_error_in_eps64": 0.000284752728317093
+   },
+   {
+    "n": 97,
+    "rel_error_in_eps64": 0.0004995608881615528
+   },
+   {
+    "n": 127,
+    "rel_error_in_eps64": 0.0009400620642548152
+   },
+   {
+    "n": 128,
+    "rel_error_in_eps64": 0.0003724645964225836
+   },
+   {
+    "n": 129,
+    "rel_error_in_eps64": 0.0004567845062349921
+   },
+   {
+    "n": 255,
+    "rel_error_in_eps64": 0.0005234342986459364
+   },
+   {
+    "n": 256,
+    "rel_error_in_eps64": 0.00044275191069341344
+   },
+   {
+    "n": 257,
+    "rel_error_in_eps64": 0.001036269853554197
+   }
+  ],
+  "lfilter": [
+   {
+    "n": 1,
+    "rel_error_in_eps64": 5.066414596085238e-05
+   },
+   {
+    "n": 2,
+    "rel_error_in_eps64": 3.1175279830610336e-05
+   },
+   {
+    "n": 5,
+    "rel_error_in_eps64": 0.001430718151379917
+   },
+   {
+    "n": 16,
+    "rel_error_in_eps64": 0.002569108953884548
+   },
+   {
+    "n": 64,
+    "rel_error_in_eps64": 0.0032993511910619673
+   },
+   {
+    "n": 256,
+    "rel_error_in_eps64": 0.00537013957606974
+   }
+  ],
+  "dft_max_in_eps64": 0.001036269853554197,
+  "lfilter_max_in_eps64": 0.00537013957606974,
+  "longdouble_eps_in_eps64": 0.00048828125,
+  "mpmath_version": "1.3.0",
+  "seconds": 1.5
+ },
+ "generators": {
+  "lengths": {
+   "draws": 531,
+   "min": 1,
+   "max": 512,
+   "fraction_pathological": 0.07156308851224105,
+   "pathological_values_hit": [
+    1,
+    2,
+    3,
+    5,
+    7,
+    8,
+    15,
+    16,
+    17,
+    31,
+    32,
+    33,
+    97,
+    127,
+    128,
+    129,
+    255,
+    256,
+    257
+   ],
+   "pathological_values_missed": [],
+   "fraction_prime": 0.19962335216572505,
+   "fraction_power_of_two": 0.032015065913371
+  },
+  "signals": {
+   "impulse": {
+    "draws": 160,
+    "all_finite": true,
+    "length_ok": true,
+    "amplitude_decades": [
+     -100,
+     -3,
+     0,
+     3,
+     100
+    ],
+    "exactly_one_nonzero": 1.0
+   },
+   "sparse": {
+    "draws": 437,
+    "all_finite": true,
+    "length_ok": true,
+    "amplitude_decades": [
+     -100,
+     -3,
+     0,
+     3,
+     100
+    ],
+    "nonzeros_range": [
+     0,
+     4
+    ]
+   },
+   "white_noise": {
+    "draws": 1203,
+    "all_finite": true,
+    "length_ok": true,
+    "amplitude_decades": [
+     -323,
+     -313,
+     -309,
+     -308,
+     -304,
+     -302,
+     -300,
+     -299,
+     -297,
+     -293,
+     -290,
+     -289,
+     -286,
+     -281,
+     -263,
+     -252,
+     -251,
+     -244,
+     -234,
+     -231,
+     -228,
+     -223,
+     -213,
+     -205,
+     -202,
+     -199,
+     -195,
+     -193,
+     -192,
+     -185,
+     -183,
+     -182,
+     -181,
+     -169,
+     -150,
+     -144,
+     -143,
+     -141,
+     -138,
+     -137,
+     -134,
+     -131,
+     -130,
+     -128,
+     -127,
+     -126,
+     -125,
+     -123,
+     -122,
+     -116,
+     -109,
+     -106,
+     -102,
+     -101,
+     -100,
+     -96,
+     -95,
+     -90,
+     -89,
+     -83,
+     -80,
+     -78,
+     -77,
+     -75,
+     -68,
+     -54,
+     -53,
+     -45,
+     -43,
+     -42,
+     -41,
+     -38,
+     -36,
+     -26,
+     -22,
+     -17,
+     -16,
+     -14,
+     -12,
+     -11,
+     -9,
+     -8,
+     -6,
+     -5,
+     -4,
+     -3,
+     -2,
+     -1,
+     0,
+     1,
+     2,
+     3,
+     8,
+     86,
+     88,
+     93,
+     98,
+     99,
+     100
+    ]
+   },
+   "offgrid_sine": {
+    "draws": 716,
+    "all_finite": true,
+    "length_ok": true,
+    "amplitude_decades": [
+     -102,
+     -101,
+     -100,
+     -4,
+     -3,
+     -1,
+     0,
+     1,
+     2,
+     3,
+     98,
+     99,
+     100
+    ],
+    "freq_range": [
+     0.0,
+     0.5
+    ],
+    "fraction_on_dft_grid": 0.39385474860335196,
+    "fraction_freq_0_or_nyquist": 0.23044692737430167,
+    "distinct_freqs": 339
+   },
+   "close_tones": {
+    "draws": 727,
+    "all_finite": true,
+    "length_ok": true,
+    "amplitude_decades": [
+     -100,
+     -3,
+     0,
+     3,
+     100
+    ],
+    "separation_in_bins": [
+     0.0,
+     0.2595937699323035,
+     1.0
+    ],
+    "fraction_below_one_bin": 0.9917469050894085,
+    "fraction_identical_tones": 0.1609353507565337
+   },
+   "near_nyquist_sine": {
+    "draws": 732,
+    "all_finite": true,
+    "length_ok": true,
+    "amplitude_decades": [
+     -102,
+     -101,
+     -100,
+     -6,
+     -5,
+     -4,
+     -3,
+     -1,
+     0,
+     2,
+     3,
+     98,
+     99,
+     100
+    ],
+    "freq_range": [
+     0.45,
+     0.5
+    ],
+    "fraction_on_dft_grid": 0.04371584699453552,
+    "fraction_freq_0_or_nyquist": 0.09016393442622951,
+    "distinct_freqs": 297
+   },
+   "dc": {
+    "draws": 25,
+    "all_finite": true,
+    "length_ok": true,
+    "amplitude_decades": [
+     -100,
+     -3,
+     0,
+     3,
+     100
+    ],
+    "constant": 1.0
+   }
+  },
+  "block_splits": {
+   "draws": 4000,
+   "fraction_with_empty_block": 0.77925,
+   "fraction_with_one_sample_block": 0.373,
+   "blocks_cover_signal": true
+  },
+  "seconds": 16.8
+ },
+ "known-bug": {
+  "scipy": "1.18.1",
+  "runs": [
+   {
+    "seed": 2000,
+    "passed": false,
+    "report": "dsp-props report for <lambda>\n  FAIL block invariance\n       block invariance (cuts=[1, 1]): L2 error 5.007e-01 exceeds tolerance 1.618e-13 (N=2, ref norm 7.287e-01)\n       minimal input: ([1, 1], (1, 1))"
+   },
+   {
+    "seed": 2001,
+    "passed": false,
+    "report": "dsp-props report for <lambda>\n  FAIL block invariance\n       block invariance (cuts=[1, 1]): L2 error 5.007e-01 exceeds tolerance 1.197e-13 (N=2, ref norm 5.392e-01)\n       minimal input: ([1, 0], (1, 1))"
+   },
+   {
+    "seed": 2002,
+    "passed": false,
+    "report": "dsp-props report for <lambda>\n  FAIL block invariance\n       block invariance (cuts=[1, 1]): L2 error 5.007e-01 exceeds tolerance 1.618e-13 (N=2, ref norm 7.287e-01)\n       minimal input: ([1, 1], (1, 1))"
+   },
+   {
+    "seed": 2003,
+    "passed": false,
+    "report": "dsp-props report for <lambda>\n  FAIL block invariance\n       block invariance (cuts=[1, 1]): L2 error 5.007e-01 exceeds tolerance 1.197e-13 (N=2, ref norm 5.392e-01)\n       minimal input: ([1, 0], (1, 1))"
+   },
+   {
+    "seed": 2004,
+    "passed": false,
+    "report": "dsp-props report for <lambda>\n  FAIL block invariance\n       block invariance (cuts=[1, 1]): L2 error 5.007e-01 exceeds tolerance 1.618e-13 (N=2, ref norm 7.287e-01)\n       minimal input: ([1, 1], (1, 1))"
+   }
+  ],
+  "seconds": 4.7
+ }
+}
