@@ -3689,6 +3689,346 @@
     }
    ],
    "seconds": 0.15
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (1,), expected (2,) for N=2",
+     "first_failure": 1,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 3.03
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 2.41
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (1,), expected (2,) for N=2",
+     "first_failure": 1,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.54
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 2.69
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 2.74
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.43
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.48
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.53
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.5
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.24
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (1,), expected (2,) for N=2",
+     "first_failure": 1,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.58
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 2.7
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (1,), expected (2,) for N=2",
+     "first_failure": 1,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.55
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 2.66
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 2.84
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.44
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.28
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.36
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.52
+  },
+  {
+   "mutant": "rfft_half_bins_off_by_one",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "rfft_half_bins_off_by_one",
+     "relation": "circular shift",
+     "error": "AssertionError",
+     "message": "rdft output has shape (0,), expected (1,) for N=1",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.31
   }
  ]
 }
