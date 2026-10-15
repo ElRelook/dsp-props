@@ -160,6 +160,1835 @@
    "killed": false,
    "failures": [],
    "seconds": 3.23
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.47
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 7.75
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.05
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 7.87
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.13
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.74
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.1
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.23
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.32
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.15
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.23
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 7.98
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.06
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.36
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.08
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.73
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.41
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.26
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "reference:rfft",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.941e-324 exceeds tolerance 0.000e+00 (N=3, ref norm 9.881e-324)",
+     "first_failure": 131,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 1.62
+  },
+  {
+   "mutant": "reference:rfft",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.69
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 5.14
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.52
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.7
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.5
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.56
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.58
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.55
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.63
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.04
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.72
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.63
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.27
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.73
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.62
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.57
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.46
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.7
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.68
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.65
+  },
+  {
+   "mutant": "reference:dct",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.79
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.48
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.51
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.58
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.47
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.39
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.63
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.66
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.6
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.65
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.73
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.97
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.19
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.34
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.12
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.84
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.59
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.86
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.76
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.93
+  },
+  {
+   "mutant": "reference:iir",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.71
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.89
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.78
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.96
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.01
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.02
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.13
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.28
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.46
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.33
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.06
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.15
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.83
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.01
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.0
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 4.34
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.11
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.33
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.31
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.37
+  },
+  {
+   "mutant": "reference:multirate",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.23
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.28
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.11
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.14
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.14
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.15
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 0.61
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 0.44
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 0.51
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 0.59
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 0.71
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.24
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.31
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.15
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.16
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 1.2
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 0.6
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 0.5
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 0.59
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 0.61
+  },
+  {
+   "mutant": "reference:streaming",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 0.46
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.000e+00 exceeds tolerance 4.441e-15 (N=2, ref norm 1.000e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 5.16
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 4.95
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 4.92
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 5.12
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 5.05
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 14,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.43
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 11,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.22
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 11,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.35
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 5,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.51
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 6,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.46
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.000e+00 exceeds tolerance 1.000e-07 (N=2, ref norm 1.000e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 5.16
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 5.28
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 5.75
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 5.07
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 4.87
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 14,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.33
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 11,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.32
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 11,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.62
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 5,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.45
+  },
+  {
+   "mutant": "fft_ifft_missing_1_over_n",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_1_over_n",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 6,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.54
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 7.039e-15 (N=3, ref norm 1.000e+00)",
+     "first_failure": 3,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 5.22
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 7.039e-15 (N=3, ref norm 1.000e+00)",
+     "first_failure": 3,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 5.17
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 7.039e-15 (N=3, ref norm 1.000e+00)",
+     "first_failure": 3,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 5.12
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 7.039e-15 (N=3, ref norm 1.000e+00)",
+     "first_failure": 5,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 5.08
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 7.039e-15 (N=3, ref norm 1.000e+00)",
+     "first_failure": 5,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 5.18
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 9.954e-15 (N=3, ref norm 1.414e+00)",
+     "first_failure": 18,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 2.35
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 9.954e-15 (N=3, ref norm 1.414e+00)",
+     "first_failure": 11,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 2.42
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 9.954e-15 (N=3, ref norm 1.414e+00)",
+     "first_failure": 15,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 3.0
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 9.954e-15 (N=3, ref norm 1.414e+00)",
+     "first_failure": 8,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 2.97
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 9.954e-15 (N=3, ref norm 1.414e+00)",
+     "first_failure": 6,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 2.75
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.000e-07 (N=3, ref norm 1.000e+00)",
+     "first_failure": 3,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 5.38
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.000e-07 (N=3, ref norm 1.000e+00)",
+     "first_failure": 3,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 4.85
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.000e-07 (N=3, ref norm 1.000e+00)",
+     "first_failure": 3,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 5.33
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.000e-07 (N=3, ref norm 1.000e+00)",
+     "first_failure": 5,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 4.83
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.000e-07 (N=3, ref norm 1.000e+00)",
+     "first_failure": 5,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 4.62
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=3, ref norm 1.414e+00)",
+     "first_failure": 18,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 2.36
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=3, ref norm 1.414e+00)",
+     "first_failure": 11,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 2.14
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=3, ref norm 1.414e+00)",
+     "first_failure": 15,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 2.41
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=3, ref norm 1.414e+00)",
+     "first_failure": 8,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 2.61
+  },
+  {
+   "mutant": "fft_ifft_missing_conj",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_ifft_missing_conj",
+     "relation": "inversibility",
+     "error": "ToleranceError",
+     "message": "inversibility: L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=3, ref norm 1.414e+00)",
+     "first_failure": 6,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 2.64
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.828e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.28
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.828e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.16
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.828e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.94
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 8.882e-15 (N=2, ref norm 2.000e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.94
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 8.882e-15 (N=2, ref norm 2.000e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.97
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 8.882e-15 (N=2, ref norm 2.000e+00)",
+     "first_failure": 4,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.83
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 8.882e-15 (N=2, ref norm 2.000e+00)",
+     "first_failure": 8,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.89
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 8.882e-15 (N=2, ref norm 2.000e+00)",
+     "first_failure": 12,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.0
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 8.882e-15 (N=2, ref norm 2.000e+00)",
+     "first_failure": 5,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.2
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 8.882e-15 (N=2, ref norm 2.000e+00)",
+     "first_failure": 10,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.07
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.828e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.32
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.828e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.99
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.828e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.97
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 2.000e-07 (N=2, ref norm 2.000e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.92
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 2.000e-07 (N=2, ref norm 2.000e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.19
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 2.000e-07 (N=2, ref norm 2.000e+00)",
+     "first_failure": 4,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.89
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 2.000e-07 (N=2, ref norm 2.000e+00)",
+     "first_failure": 8,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.99
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 2.000e-07 (N=2, ref norm 2.000e+00)",
+     "first_failure": 12,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.96
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 2.000e-07 (N=2, ref norm 2.000e+00)",
+     "first_failure": 5,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.18
+  },
+  {
+   "mutant": "fft_circular_off_by_one",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_circular_off_by_one",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 4.000e+00 exceeds tolerance 2.000e-07 (N=2, ref norm 2.000e+00)",
+     "first_failure": 10,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.95
   }
  ]
 }
