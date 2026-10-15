@@ -95,7 +95,7 @@ def _job(args):
     subject, mid, source, approach, seed, timeout = args
     signal.signal(signal.SIGALRM, _alarm)
     t0 = time.perf_counter()
-    record = {"subject": subject, "mutant": mid, "approach": approach, "seed": seed}
+    record = {"subject": subject, "mutant": mid, "approach": approach, "seed": seed, "time_limit": timeout}
     try:
         # re-fires every 10 s after the first expiry, in case some layer swallows the exception
         signal.setitimer(signal.ITIMER_REAL, timeout, 10)
@@ -262,7 +262,7 @@ def main(argv=None):
     p.add_argument("--subjects", nargs="+", default=SUBJECT_NAMES, choices=SUBJECT_NAMES)
     p.add_argument("--approaches", nargs="+", choices=approaches.APPROACHES)
     p.add_argument("--seeds", type=int, default=5)
-    p.add_argument("--timeout", type=int, default=300, help="seconds per approach run")
+    p.add_argument("--timeout", type=int, default=60, help="seconds per approach run")
     p.add_argument("--oracle-timeout", type=int, default=120)
     p.add_argument("--workers", type=int, default=os.cpu_count())
     p.add_argument("--mem-gb", type=float, default=3.0, help="address-space limit per worker")

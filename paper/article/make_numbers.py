@@ -139,8 +139,8 @@ Subject & Class (mutants) & """ + head + r""" \\
 """
     (HERE / "tables" / "comparison.tex").write_text(table)
     rec = [json.loads(line) for line in results.read_text().splitlines()]
-    timeouts = [r for r in rec if r["approach"] != "oracle"]
-    macros["timeoutSeconds"] = "300"
+    limits = {r["time_limit"] for r in rec if r["approach"] != "oracle" and "time_limit" in r}
+    macros["timeoutSeconds"] = str(max(limits)) if limits else "60"
     return summ
 
 
