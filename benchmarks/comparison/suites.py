@@ -189,7 +189,9 @@ def lfilter_oracle(mod):
     rng = np.random.default_rng(11)
     filters = [(B4, A4), (B2, A2), (np.array([1.0, 1.0]), np.array([1.0])),
                (np.array([1.0, 0.0, -1.0]), np.array([0.5, -0.5])),
-               (rng.standard_normal(3), np.real(np.poly([0.5, -0.3, 0.8j, -0.8j])))]
+               (rng.standard_normal(3), np.real(np.poly([0.5, -0.3, 0.8j, -0.8j]))),
+               # order 0 (pure gain, empty state), which the SciPy suite tests
+               (np.array([2.0]), np.array([1.0])), (np.array([1.0]), np.array([4.0]))]
     outs = []
     for b, a in filters:
         nz = max(len(a), len(b)) - 1
@@ -400,6 +402,11 @@ def upfirdn_oracle(mod):
             for n in [1, 2, 3, 4, 7, 10, 41, 100]:
                 x = rng.standard_normal(n)
                 outs.append(("upfirdn", n, mod.upfirdn(h, x, up, down), ss.upfirdn(h, x, up, down)))
+                # default arguments, which callers (and the SciPy suite) rely on
+                if down == 1:
+                    outs.append(("upfirdn_default_down", n, mod.upfirdn(h, x, up), ss.upfirdn(h, x, up)))
+                if up == down == 1:
+                    outs.append(("upfirdn_defaults", n, mod.upfirdn(h, x), ss.upfirdn(h, x)))
     return outs
 
 

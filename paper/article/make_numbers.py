@@ -17,6 +17,8 @@ import math
 import sys
 from pathlib import Path
 
+import numpy as np
+
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 BENCH = ROOT / "benchmarks"
@@ -141,6 +143,24 @@ Subject & Class (mutants) & """ + head + r""" \\
     rec = [json.loads(line) for line in results.read_text().splitlines()]
     limits = {r["time_limit"] for r in rec if r["approach"] != "oracle" and r.get("timeout") and "time_limit" in r}
     macros["timeoutSeconds"] = str(max(limits)) if limits else "45"
+    # complementarity of SoP and dsp-props on functional mutants (killed = by a majority of seeds)
+    func = {m: v for m, v in summ["per_mutant"].items() if v["class"] == "functional"}
+    sop = {m for m, v in func.items() if v["sop"] >= 0.5}
+    dsp = {m for m, v in func.items() if v["dsp-props"] >= 0.5}
+    macros["killSopOnly"] = str(len(sop - dsp))
+    macros["killDspOnly"] = str(len(dsp - sop))
+    macros["killNeither"] = str(len(set(func) - sop - dsp))
+    macros["killUnion"] = pct(len(sop | dsp) / len(func))
+    randomised = [a for a in short if a != "sop"]
+    macros["ablationDisagree"] = str(sum(len({v[a] >= 0.5 for a in randomised}) > 1 for v in func.values()))
+    ff, cl, sec = summ["first_failure"], summ["counterexample_length"], summ["seconds"]
+    for a, akey in short.items():
+        if a in ff:
+            macros[f"firstMed{akey}"] = f"{ff[a]['median']:g}"
+            macros[f"firstPnn{akey}"] = f"{ff[a]['p90']:.0f}"
+            macros[f"cexMed{akey}"] = f"{cl[a]['median']:g}"
+            macros[f"cexPnn{akey}"] = f"{cl[a]['p90']:.0f}"
+        macros[f"secMed{akey}"] = f"{sec[a]['median']:.3g}"
     return summ
 
 
@@ -154,13 +174,20 @@ def hand_ablation(macros):
     names = list(dict.fromkeys(r["mutant"] for r in rows))
     approaches = [a for a in run_comparison.approaches.RANDOMISED if any(r["approach"] == a for r in rows)]
     lines = []
-    for name in names:
-        cells = []
-        for a in approaches:
-            ks = [r["killed"] for r in rows if r["mutant"] == name and r["approach"] == a]
-            cells.append(f"{sum(ks)}/{len(ks)}" if ks else "--")
-        label = name.replace("reference:", "reference ").replace("_", r"\_")
-        lines.append(rf"\code{{{label}}} & " + " & ".join(cells) + r" \\")
+    families = {"fft": ("FFT", "fft"), "rfft": ("real FFT", "rfft"), "dct": ("DCT", "dct"),
+                "iir": ("IIR filter", "iir"), "rate": ("resampler", "multirate"),
+                "stream": ("streaming", "streaming")}
+    for fam, (title, ref) in families.items():
+        refs = [n for n in names if n == f"reference:{ref}"]
+        muts = [n for n in names if not n.startswith("reference:") and n.split("_")[0] == fam]
+        for label, group in [(f"{title}, reference", refs), (f"{title}, {len(muts)} mutants", muts)]:
+            if not group:
+                continue
+            cells = []
+            for a in approaches:
+                ks = [r["killed"] for r in rows if r["mutant"] in group and r["approach"] == a]
+                cells.append(f"{sum(ks)}/{len(ks)}")
+            lines.append(f"{label} & " + " & ".join(cells) + r" \\")
     totals = []
     mutants = [n for n in names if not n.startswith("reference:")]
     for a in approaches:
@@ -172,9 +199,20 @@ def hand_ablation(macros):
         macros[f"hand{key}Always"] = str(killed_all)
         macros[f"hand{key}Never"] = str(sum(not any(r["killed"] for r in rows if r["mutant"] == n and r["approach"] == a)
                                             for n in mutants))
+        kills = [r["failures"][0] for r in rows if r["approach"] == a and r["killed"]
+                 and not r["mutant"].startswith("reference:") and r["failures"]]
+        first = np.array([f["first_failure"] for f in kills if f.get("first_failure") is not None])
+        cex = np.array([f["counterexample_length"] for f in kills if f.get("counterexample_length") is not None])
+        macros[f"hand{key}FirstMed"] = f"{np.median(first):g}"
+        macros[f"hand{key}FirstPnn"] = f"{np.percentile(first, 90):.0f}"
+        macros[f"hand{key}CexPnn"] = f"{np.percentile(cex, 90):.0f}"
+        macros[f"hand{key}FalseAlarms"] = str(sum(r["killed"] for r in rows
+                                                  if r["approach"] == a and r["mutant"].startswith("reference:")))
+    keys = [{"dsp-props": "Dsp", "dsp-props/uniform": "Uni", "dsp-props/fixed-tol": "Fix", "generic-pbt": "Gen"}[a]
+            for a in approaches]
     head = " & ".join(APPROACH_LABELS[a] for a in approaches)
     table = r"""\begin{table}[t]
-\caption{Hand-written mutants: seeds (out of """ + str(data["seeds"]) + r""") in which each approach detects the mutant. The first rows are the correct references, which must never be detected}
+\caption{Hand-written mutants by family: runs that report a failure, over mutants and """ + str(data["seeds"]) + r""" seeds. A correct reference must never fail}
 \label{tab:hand}
 \centering\scriptsize
 \begin{tabular}{@{}lrrrr@{}}
@@ -183,7 +221,9 @@ Mutant & """ + head + r""" \\
 \midrule
 """ + "\n".join(lines) + r"""
 \midrule
-always detected & """ + " & ".join(totals) + r""" \\
+mutants always detected & """ + " & ".join(totals) + r""" \\
+first failure, median (p90) & """ + " & ".join(f"{macros['hand' + k + 'FirstMed']} ({macros['hand' + k + 'FirstPnn']})" for k in keys) + r""" \\
+counterexample length, p90 & """ + " & ".join(macros['hand' + k + 'CexPnn'] for k in keys) + r""" \\
 \bottomrule
 \end{tabular}
 \end{table}

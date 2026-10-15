@@ -1,5 +1,61 @@
-% Analysis text that depends on the final results (written once the comparison has finished).
-\newcommand{\rqOneText}{\textcolor{red}{[Analysis pending: the comparison run is not finished.]}}
-\newcommand{\rqTwoText}{\textcolor{red}{[Analysis pending: the ablation runs are not finished.]}}
-\newcommand{\conclusionResult}{\textcolor{red}{[Main result pending.]}}
+% Analysis of the results. The numbers are macros from numbers.tex (make_numbers.py).
+\newcommand{\rqOneText}{dsp-props detects \killFuncDsp{} of the \nFunctional{}
+functional mutants and the ported suites \killFuncSop{}; no approach raises an
+alarm on an equivalent mutant. The two sets of detected faults are not nested:
+\killSopOnly{} mutants are detected only by the suites, \killDspOnly{} only by
+dsp-props, and together they detect \killUnion{} of them.
+
+Every miss of dsp-props has the same cause: the fault shows only for operator
+parameters that no declaration uses. A declaration fixes the coefficients of a
+filter or the rates of a resampler, and dsp-props then varies the input signal.
+Seven \code{lfilter} mutants break filters of order 0 or 1, or filters whose
+numerator is shorter than the denominator, and the declared filters have orders
+4 and 2 with numerators at least as long. The \code{upfirdn} survivors change the
+length of the full output, which the declarations never see since they reach
+\code{upfirdn} through \code{resample\_poly} and through a FIR filter truncated to
+the input length, or ignore the last input sample, which every relation sees
+identically on both of its sides. The suites miss the opposite kind of fault.
+Their only comparisons with expected values on the FFT use length 30, which the
+subject computes with Bluestein's algorithm; on powers of two they only check
+that \code{ifft} inverts \code{fft}, which two mutants of the radix-2 twiddle
+factors still satisfy. They also always pass the rates of \code{upfirdn}
+explicitly, so four mutants of its default arguments survive.
+
+dsp-props therefore does not detect more of these faults than suites refined
+over many years; it detects other ones, without expected values, and its misses
+are a matter of declarations rather than of relations: declaring a first-order
+filter would have caught the \code{lfilter} survivors.}
+
+\newcommand{\rqTwoText}{On the generated mutants the four randomised variants
+detect the same faults, up to one FFT mutant that the variants with uniform
+inputs miss in some seeds (Table~\ref{tab:comparison}). These faults are gross:
+the median number of inputs before the first failure is \firstMedDsp{} for
+dsp-props and \firstMedUni{} for uniform inputs, and the median counterexample
+has \cexMedDsp{} and \cexMedUni{} samples. The generators and tolerances do
+not change what is detected here, and the generators cost time, with a median of
+\secMedDsp{}~s per mutant against \secMedUni{}~s for uniform inputs and
+\secMedSop{}~s for a ported suite.
+
+The hand-written faults, which include the accuracy faults, separate the
+variants (Table~\ref{tab:hand}). Every variant detects every fault in every seed,
+but not equally fast. With the domain generators, the median failure appears at
+input \handDspFirstMed{} (90th percentile \handDspFirstPnn{}); with uniform inputs
+at input \handUniFirstMed{} (\handUniFirstPnn{}), and with generic PBT at input
+\handGenFirstMed{} (\handGenFirstPnn{}). Counterexamples are smaller too: the 90th percentile of their length is
+\handDspCexPnn{} samples for dsp-props, \handUniCexPnn{} with uniform inputs, and
+\handFixCexPnn{} with a fixed tolerance. Finally, generic PBT raised a false alarm on the correct real FFT, in
+\handGenFalseAlarms{} of its \nSeeds{} runs: Hypothesis drew a
+subnormal input of norm $10^{-323}$, for which a purely relative tolerance is
+zero and a rounding error of one subnormal fails the test. The error model of
+dsp-props includes an absolute floor, and it raised no false alarm.
+With 200 inputs per relation, these differences do not change the detection
+rate; with a smaller budget, or on faults that need a specific input, they
+would.}
+
+\newcommand{\conclusionResult}{On \nFunctional{} generated faults it detects
+\killFuncDsp{}, against \killFuncSop{} for the ported test suites of NumPy and
+SciPy, and the two are complementary: together they detect \killUnion. Its
+misses come from operator parameters that no declaration exercised; the misses
+of the suites, from code paths that their few expected values do not reach.}
+
 \newcommand{\reportedOthers}{the delay dropped by \code{tf2sos} to SciPy, and the clamping of \code{deemphasis} to torchaudio.}

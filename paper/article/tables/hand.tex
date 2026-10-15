@@ -1,1 +1,27 @@
-% hand_mutants.json not produced yet
+\begin{table}[t]
+\caption{Hand-written mutants by family: runs that report a failure, over mutants and 5 seeds. A correct reference must never fail}
+\label{tab:hand}
+\centering\scriptsize
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Mutant & dsp-props & uniform & fixed-tol & generic PBT \\
+\midrule
+FFT, reference & 0/5 & 0/5 & 0/5 & 0/5 \\
+FFT, 8 mutants & 40/40 & 40/40 & 40/40 & 40/40 \\
+real FFT, reference & 0/5 & 0/5 & 0/5 & 1/5 \\
+real FFT, 5 mutants & 25/25 & 25/25 & 25/25 & 25/25 \\
+DCT, reference & 0/5 & 0/5 & 0/5 & 0/5 \\
+DCT, 3 mutants & 15/15 & 15/15 & 15/15 & 15/15 \\
+IIR filter, reference & 0/5 & 0/5 & 0/5 & 0/5 \\
+IIR filter, 5 mutants & 25/25 & 25/25 & 25/25 & 25/25 \\
+resampler, reference & 0/5 & 0/5 & 0/5 & 0/5 \\
+resampler, 6 mutants & 30/30 & 30/30 & 30/30 & 30/30 \\
+streaming, reference & 0/5 & 0/5 & 0/5 & 0/5 \\
+streaming, 4 mutants & 20/20 & 20/20 & 20/20 & 20/20 \\
+\midrule
+mutants always detected & 31 & 31 & 31 & 31 \\
+first failure, median (p90) & 3 (7) & 8 (22) & 3 (10) & 8 (39) \\
+counterexample length, p90 & 17 & 34 & 97 & 35 \\
+\bottomrule
+\end{tabular}
+\end{table}

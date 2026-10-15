@@ -6,13 +6,12 @@
    "total": 76
   },
   "lfilter": {
-   "functional": 47,
-   "equivalent": 8,
+   "functional": 51,
+   "equivalent": 4,
    "total": 55
   },
   "upfirdn": {
-   "functional": 32,
-   "equivalent": 4,
+   "functional": 36,
    "total": 36
   },
   "ola": {
@@ -20,14 +19,21 @@
    "total": 16
   },
   "all": {
-   "functional": 158,
-   "equivalent": 25,
+   "functional": 166,
+   "equivalent": 17,
    "total": 183
   }
  },
  "kill_rates": {
   "fft": {
    "functional": {
+    "sop": {
+     "mean": 0.9682539682539683,
+     "min": 0.9682539682539683,
+     "max": 0.9682539682539683,
+     "n_mutants": 63,
+     "n_seeds": 1
+    },
     "dsp-props": {
      "mean": 1.0,
      "min": 1.0,
@@ -36,8 +42,8 @@
      "n_seeds": 5
     },
     "dsp-props/uniform": {
-     "mean": 1.0,
-     "min": 1.0,
+     "mean": 0.9968253968253968,
+     "min": 0.9841269841269841,
      "max": 1.0,
      "n_mutants": 63,
      "n_seeds": 5
@@ -50,14 +56,18 @@
      "n_seeds": 5
     },
     "generic-pbt": {
-     "mean": 1.0,
-     "min": 1.0,
+     "mean": 0.9968253968253968,
+     "min": 0.9841269841269841,
      "max": 1.0,
      "n_mutants": 63,
      "n_seeds": 5
     }
    },
    "equivalent": {
+    "sop": {
+     "mean": 0.0,
+     "n_mutants": 13
+    },
     "dsp-props": {
      "mean": 0.0,
      "n_mutants": 13
@@ -76,53 +86,203 @@
     }
    }
   },
-  "all": {
+  "lfilter": {
    "functional": {
-    "dsp-props": {
+    "sop": {
      "mean": 1.0,
      "min": 1.0,
      "max": 1.0,
-     "n_mutants": 158,
+     "n_mutants": 51,
+     "n_seeds": 1
+    },
+    "dsp-props": {
+     "mean": 0.8627450980392158,
+     "min": 0.8627450980392157,
+     "max": 0.8627450980392157,
+     "n_mutants": 51,
      "n_seeds": 5
     },
     "dsp-props/uniform": {
-     "mean": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "n_mutants": 158,
+     "mean": 0.8627450980392158,
+     "min": 0.8627450980392157,
+     "max": 0.8627450980392157,
+     "n_mutants": 51,
      "n_seeds": 5
     },
     "dsp-props/fixed-tol": {
-     "mean": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "n_mutants": 158,
+     "mean": 0.8627450980392158,
+     "min": 0.8627450980392157,
+     "max": 0.8627450980392157,
+     "n_mutants": 51,
      "n_seeds": 5
     },
     "generic-pbt": {
-     "mean": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "n_mutants": 158,
+     "mean": 0.8627450980392158,
+     "min": 0.8627450980392157,
+     "max": 0.8627450980392157,
+     "n_mutants": 51,
      "n_seeds": 5
     }
    },
    "equivalent": {
+    "sop": {
+     "mean": 0.0,
+     "n_mutants": 4
+    },
     "dsp-props": {
      "mean": 0.0,
-     "n_mutants": 25
+     "n_mutants": 4
     },
     "dsp-props/uniform": {
      "mean": 0.0,
-     "n_mutants": 25
+     "n_mutants": 4
     },
     "dsp-props/fixed-tol": {
      "mean": 0.0,
-     "n_mutants": 25
+     "n_mutants": 4
     },
     "generic-pbt": {
      "mean": 0.0,
-     "n_mutants": 25
+     "n_mutants": 4
+    }
+   }
+  },
+  "upfirdn": {
+   "functional": {
+    "sop": {
+     "mean": 0.8888888888888888,
+     "min": 0.8888888888888888,
+     "max": 0.8888888888888888,
+     "n_mutants": 36,
+     "n_seeds": 1
+    },
+    "dsp-props": {
+     "mean": 0.7222222222222222,
+     "min": 0.7222222222222222,
+     "max": 0.7222222222222222,
+     "n_mutants": 36,
+     "n_seeds": 5
+    },
+    "dsp-props/uniform": {
+     "mean": 0.7222222222222222,
+     "min": 0.7222222222222222,
+     "max": 0.7222222222222222,
+     "n_mutants": 36,
+     "n_seeds": 5
+    },
+    "dsp-props/fixed-tol": {
+     "mean": 0.7222222222222222,
+     "min": 0.7222222222222222,
+     "max": 0.7222222222222222,
+     "n_mutants": 36,
+     "n_seeds": 5
+    },
+    "generic-pbt": {
+     "mean": 0.7222222222222222,
+     "min": 0.7222222222222222,
+     "max": 0.7222222222222222,
+     "n_mutants": 36,
+     "n_seeds": 5
+    }
+   }
+  },
+  "ola": {
+   "functional": {
+    "sop": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n_mutants": 16,
+     "n_seeds": 1
+    },
+    "dsp-props": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n_mutants": 16,
+     "n_seeds": 5
+    },
+    "dsp-props/uniform": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n_mutants": 16,
+     "n_seeds": 5
+    },
+    "dsp-props/fixed-tol": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n_mutants": 16,
+     "n_seeds": 5
+    },
+    "generic-pbt": {
+     "mean": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "n_mutants": 16,
+     "n_seeds": 5
+    }
+   }
+  },
+  "all": {
+   "functional": {
+    "sop": {
+     "mean": 0.963855421686747,
+     "min": 0.963855421686747,
+     "max": 0.963855421686747,
+     "n_mutants": 166,
+     "n_seeds": 1
+    },
+    "dsp-props": {
+     "mean": 0.8975903614457831,
+     "min": 0.8975903614457831,
+     "max": 0.8975903614457831,
+     "n_mutants": 166,
+     "n_seeds": 5
+    },
+    "dsp-props/uniform": {
+     "mean": 0.8963855421686746,
+     "min": 0.891566265060241,
+     "max": 0.8975903614457831,
+     "n_mutants": 166,
+     "n_seeds": 5
+    },
+    "dsp-props/fixed-tol": {
+     "mean": 0.8975903614457831,
+     "min": 0.8975903614457831,
+     "max": 0.8975903614457831,
+     "n_mutants": 166,
+     "n_seeds": 5
+    },
+    "generic-pbt": {
+     "mean": 0.8963855421686746,
+     "min": 0.891566265060241,
+     "max": 0.8975903614457831,
+     "n_mutants": 166,
+     "n_seeds": 5
+    }
+   },
+   "equivalent": {
+    "sop": {
+     "mean": 0.0,
+     "n_mutants": 17
+    },
+    "dsp-props": {
+     "mean": 0.0,
+     "n_mutants": 17
+    },
+    "dsp-props/uniform": {
+     "mean": 0.0,
+     "n_mutants": 17
+    },
+    "dsp-props/fixed-tol": {
+     "mean": 0.0,
+     "n_mutants": 17
+    },
+    "generic-pbt": {
+     "mean": 0.0,
+     "n_mutants": 17
     }
    }
   }
@@ -132,12 +292,35 @@
    "dsp-props": 0,
    "dsp-props/uniform": 0,
    "dsp-props/fixed-tol": 0,
-   "generic-pbt": 0
+   "generic-pbt": 0,
+   "sop": 0
+  },
+  "lfilter": {
+   "dsp-props": 0,
+   "dsp-props/uniform": 0,
+   "dsp-props/fixed-tol": 0,
+   "generic-pbt": 0,
+   "sop": 0
+  },
+  "upfirdn": {
+   "dsp-props": 0,
+   "dsp-props/uniform": 0,
+   "dsp-props/fixed-tol": 0,
+   "generic-pbt": 0,
+   "sop": 0
+  },
+  "ola": {
+   "dsp-props": 0,
+   "dsp-props/uniform": 0,
+   "dsp-props/fixed-tol": 0,
+   "generic-pbt": 0,
+   "sop": 0
   }
  },
  "per_mutant": {
   "fft-000": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -145,6 +328,7 @@
   },
   "fft-002": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -152,6 +336,7 @@
   },
   "fft-001": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -159,6 +344,7 @@
   },
   "fft-005": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -166,6 +352,7 @@
   },
   "fft-003": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -173,6 +360,7 @@
   },
   "fft-007": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -180,6 +368,7 @@
   },
   "fft-008": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -187,6 +376,7 @@
   },
   "fft-004": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -194,6 +384,7 @@
   },
   "fft-006": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -201,6 +392,7 @@
   },
   "fft-009": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -208,6 +400,7 @@
   },
   "fft-013": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -215,6 +408,7 @@
   },
   "fft-014": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -222,6 +416,7 @@
   },
   "fft-010": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -229,6 +424,7 @@
   },
   "fft-016": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -236,6 +432,7 @@
   },
   "fft-017": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -243,6 +440,7 @@
   },
   "fft-018": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -250,6 +448,7 @@
   },
   "fft-011": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -257,6 +456,7 @@
   },
   "fft-015": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -264,6 +464,7 @@
   },
   "fft-019": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -271,6 +472,7 @@
   },
   "fft-012": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -278,6 +480,7 @@
   },
   "fft-023": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -285,6 +488,7 @@
   },
   "fft-020": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -292,6 +496,7 @@
   },
   "fft-021": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -299,6 +504,7 @@
   },
   "fft-022": {
    "class": "functional",
+   "sop": 0.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -306,6 +512,7 @@
   },
   "fft-027": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -313,6 +520,7 @@
   },
   "fft-028": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -320,6 +528,7 @@
   },
   "fft-024": {
    "class": "functional",
+   "sop": 0.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -327,6 +536,7 @@
   },
   "fft-025": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -334,6 +544,7 @@
   },
   "fft-026": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -341,6 +552,7 @@
   },
   "fft-034": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -348,6 +560,7 @@
   },
   "fft-036": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -355,6 +568,7 @@
   },
   "fft-040": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -362,6 +576,7 @@
   },
   "fft-029": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
@@ -369,450 +584,1136 @@
   },
   "fft-031": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
    "generic-pbt": 1.0
   },
   "fft-042": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-043": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-044": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-045": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-039": {
    "class": "functional",
+   "sop": 1.0,
    "dsp-props": 1.0,
    "dsp-props/uniform": 1.0,
    "dsp-props/fixed-tol": 1.0,
    "generic-pbt": 1.0
   },
   "fft-046": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-047": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-041": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-048": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-052": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-053": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-054": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-055": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-049": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-056": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-057": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-059": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-060": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-050": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-051": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-058": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-061": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-062": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-067": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-063": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-069": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-065": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 0.8,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 0.8
   },
   "fft-073": {
-   "class": "functional"
-  },
-  "lfilter-000": {
-   "class": "functional"
-  },
-  "lfilter-002": {
-   "class": "functional"
-  },
-  "lfilter-001": {
-   "class": "functional"
-  },
-  "lfilter-004": {
-   "class": "functional"
-  },
-  "lfilter-003": {
-   "class": "functional"
-  },
-  "lfilter-005": {
-   "class": "functional"
-  },
-  "lfilter-007": {
-   "class": "functional"
-  },
-  "lfilter-009": {
-   "class": "functional"
-  },
-  "lfilter-008": {
-   "class": "functional"
-  },
-  "lfilter-010": {
-   "class": "functional"
-  },
-  "lfilter-012": {
-   "class": "functional"
-  },
-  "lfilter-015": {
-   "class": "functional"
-  },
-  "lfilter-013": {
-   "class": "functional"
-  },
-  "lfilter-017": {
-   "class": "functional"
-  },
-  "lfilter-018": {
-   "class": "functional"
-  },
-  "lfilter-020": {
-   "class": "functional"
-  },
-  "lfilter-023": {
-   "class": "functional"
-  },
-  "lfilter-024": {
-   "class": "functional"
-  },
-  "lfilter-025": {
-   "class": "functional"
-  },
-  "lfilter-026": {
-   "class": "functional"
-  },
-  "lfilter-027": {
-   "class": "functional"
-  },
-  "lfilter-022": {
-   "class": "functional"
-  },
-  "lfilter-029": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "fft-075": {
-   "class": "functional"
-  },
-  "lfilter-031": {
-   "class": "functional"
-  },
-  "lfilter-028": {
-   "class": "functional"
-  },
-  "lfilter-034": {
-   "class": "functional"
-  },
-  "lfilter-032": {
-   "class": "functional"
-  },
-  "lfilter-033": {
-   "class": "functional"
-  },
-  "lfilter-030": {
-   "class": "functional"
-  },
-  "lfilter-036": {
-   "class": "functional"
-  },
-  "lfilter-037": {
-   "class": "functional"
-  },
-  "lfilter-039": {
-   "class": "functional"
-  },
-  "lfilter-038": {
-   "class": "functional"
-  },
-  "lfilter-035": {
-   "class": "functional"
-  },
-  "lfilter-043": {
-   "class": "functional"
-  },
-  "lfilter-045": {
-   "class": "functional"
-  },
-  "lfilter-041": {
-   "class": "functional"
-  },
-  "lfilter-046": {
-   "class": "functional"
-  },
-  "lfilter-047": {
-   "class": "functional"
-  },
-  "lfilter-050": {
-   "class": "functional"
-  },
-  "lfilter-048": {
-   "class": "functional"
-  },
-  "lfilter-052": {
-   "class": "functional"
-  },
-  "lfilter-044": {
-   "class": "functional"
-  },
-  "lfilter-054": {
-   "class": "functional"
-  },
-  "lfilter-051": {
-   "class": "functional"
-  },
-  "lfilter-049": {
-   "class": "functional"
-  },
-  "upfirdn-000": {
-   "class": "functional"
-  },
-  "upfirdn-001": {
-   "class": "functional"
-  },
-  "upfirdn-003": {
-   "class": "functional"
-  },
-  "upfirdn-004": {
-   "class": "functional"
-  },
-  "lfilter-053": {
-   "class": "functional"
-  },
-  "upfirdn-006": {
-   "class": "functional"
-  },
-  "upfirdn-002": {
-   "class": "functional"
-  },
-  "upfirdn-007": {
-   "class": "functional"
-  },
-  "upfirdn-005": {
-   "class": "functional"
-  },
-  "upfirdn-009": {
-   "class": "functional"
-  },
-  "upfirdn-008": {
-   "class": "functional"
-  },
-  "upfirdn-010": {
-   "class": "functional"
-  },
-  "upfirdn-016": {
-   "class": "functional"
-  },
-  "upfirdn-017": {
-   "class": "functional"
-  },
-  "upfirdn-018": {
-   "class": "functional"
-  },
-  "upfirdn-011": {
-   "class": "functional"
-  },
-  "upfirdn-021": {
-   "class": "functional"
-  },
-  "upfirdn-019": {
-   "class": "functional"
-  },
-  "upfirdn-024": {
-   "class": "functional"
-  },
-  "upfirdn-023": {
-   "class": "functional"
-  },
-  "upfirdn-026": {
-   "class": "functional"
-  },
-  "upfirdn-027": {
-   "class": "functional"
-  },
-  "upfirdn-028": {
-   "class": "functional"
-  },
-  "upfirdn-025": {
-   "class": "functional"
-  },
-  "upfirdn-030": {
-   "class": "functional"
-  },
-  "upfirdn-020": {
-   "class": "functional"
-  },
-  "upfirdn-032": {
-   "class": "functional"
-  },
-  "upfirdn-022": {
-   "class": "functional"
-  },
-  "upfirdn-034": {
-   "class": "functional"
-  },
-  "upfirdn-035": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-000": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-001": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-002": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-003": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-004": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-005": {
-   "class": "functional"
-  },
-  "upfirdn-029": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-006": {
-   "class": "functional"
-  },
-  "upfirdn-031": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-008": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-007": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-009": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-010": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-013": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-014": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-015": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-011": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "ola-012": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-002": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-001": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-004": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-005": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "lfilter-000": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-007": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-003": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-009": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-008": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-012": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-010": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-015": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-013": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-017": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-018": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-019": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "lfilter-023": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-021": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "lfilter-024": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-026": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-020": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "lfilter-022": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-025": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-027": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-028": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-029": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-030": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-032": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-034": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-031": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-035": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-036": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-037": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-033": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-040": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "lfilter-042": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "lfilter-043": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-041": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "lfilter-045": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-038": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-039": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-048": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-044": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-050": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-046": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-052": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-047": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-049": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-054": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-000": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "upfirdn-001": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-051": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-003": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-004": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "lfilter-053": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-006": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "upfirdn-002": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "upfirdn-005": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "upfirdn-007": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "upfirdn-009": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "upfirdn-008": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "upfirdn-013": {
+   "class": "functional",
+   "sop": 0.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-010": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "upfirdn-015": {
+   "class": "functional",
+   "sop": 0.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-016": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-017": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-018": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-011": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "upfirdn-012": {
+   "class": "functional",
+   "sop": 0.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-021": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-014": {
+   "class": "functional",
+   "sop": 0.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-019": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-024": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-023": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-026": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-027": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-028": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-022": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-030": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-020": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-032": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-025": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-034": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-035": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
+  },
+  "upfirdn-029": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 0.0,
+   "dsp-props/uniform": 0.0,
+   "dsp-props/fixed-tol": 0.0,
+   "generic-pbt": 0.0
+  },
+  "upfirdn-031": {
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   },
   "upfirdn-033": {
-   "class": "functional"
+   "class": "functional",
+   "sop": 1.0,
+   "dsp-props": 1.0,
+   "dsp-props/uniform": 1.0,
+   "dsp-props/fixed-tol": 1.0,
+   "generic-pbt": 1.0
   }
  },
  "first_failure": {
   "dsp-props": {
    "median": 3.0,
-   "p90": 11.0
+   "p90": 8.600000000000023
   },
   "dsp-props/uniform": {
-   "median": 3.0,
-   "p90": 35.0
+   "median": 2.0,
+   "p90": 13.0
   },
   "dsp-props/fixed-tol": {
    "median": 3.0,
-   "p90": 11.0
+   "p90": 7.0
   },
   "generic-pbt": {
-   "median": 3.0,
-   "p90": 35.0
+   "median": 2.0,
+   "p90": 13.0
   }
  },
  "counterexample_length": {
   "dsp-props": {
    "median": 3.0,
-   "p90": 3.0,
-   "max": 256
+   "p90": 15.0,
+   "max": 337
   },
   "dsp-props/uniform": {
-   "median": 3.0,
-   "p90": 3.0,
-   "max": 129
+   "median": 2.0,
+   "p90": 12.0,
+   "max": 311
   },
   "dsp-props/fixed-tol": {
    "median": 3.0,
-   "p90": 3.0,
+   "p90": 31.0,
    "max": 256
   },
   "generic-pbt": {
-   "median": 3.0,
-   "p90": 3.0,
-   "max": 129
+   "median": 2.0,
+   "p90": 19.0,
+   "max": 192
   }
  },
  "seconds": {
+  "sop": {
+   "median": 0.001,
+   "total": 193.22799999999995
+  },
   "dsp-props": {
-   "median": 3.2560000000000002,
-   "total": 1702.1690000000003
+   "median": 3.214,
+   "total": 6829.881000000001
   },
   "dsp-props/uniform": {
-   "median": 1.6775,
-   "total": 1137.1019999999999
+   "median": 1.605,
+   "total": 4352.114
   },
   "dsp-props/fixed-tol": {
-   "median": 3.2199999999999998,
-   "total": 1662.0249999999999
+   "median": 3.288,
+   "total": 6823.266
   },
   "generic-pbt": {
-   "median": 1.6280000000000001,
-   "total": 1108.0
+   "median": 1.571,
+   "total": 4369.926
   }
  },
  "timeouts": {
-  "dsp-props": 15,
-  "dsp-props/uniform": 15,
-  "dsp-props/fixed-tol": 15,
-  "generic-pbt": 15
+  "sop": 4,
+  "dsp-props": 20,
+  "dsp-props/uniform": 20,
+  "dsp-props/fixed-tol": 20,
+  "generic-pbt": 20
  }
 }

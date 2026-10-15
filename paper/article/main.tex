@@ -53,10 +53,12 @@ periodic time invariance of resamplers, invariance of streaming processors to
 block boundaries), on inputs drawn from signal families known to break such code,
 with tolerances derived from an error model of each operation rather than chosen
 by hand. On \nMutAuto{} automatically generated faults in four reference
-implementations, dsp-props detects \killFuncDsp{} of the non-equivalent faults,
-against \killFuncSop{} for test suites ported from NumPy and SciPy; on
-\nMutHand{} hand-written faults, ablations show that the domain generators and the
-error-model tolerances are both needed to catch accuracy and edge-case faults.
+implementations, dsp-props detects \killFuncDsp{} of the non-equivalent faults
+and test suites ported from NumPy and SciPy detect \killFuncSop{}; the two miss
+different faults and together detect all of them. On \nMutHand{} hand-written
+faults, every variant detects every fault, and ablations show that the domain
+generators and the error-model tolerances make failures appear sooner, with
+smaller counterexamples, and without false alarms on subnormal inputs.
 On correct implementations it raised no false alarm in \fpRuns{} runs. Applied to SciPy,
 NumPy, PyTorch, librosa and torchaudio, it found faults that were reported upstream.
 \end{abstract}
@@ -328,8 +330,9 @@ deletion, giving \nMutAuto{} mutants (\nMutFft{} FFT, \nMutLfilter{}
 
 \paragraph*{Ground truth} An oracle used only for classification runs each
 mutant on a fixed battery of inputs (all lengths up to 130 and several larger
-ones for the FFT, many filters and initial states for \code{lfilter}, rates up
-to $5/4$ and $1/7$ for \code{upfirdn}, random block splits for overlap-add) and
+ones for the FFT, many filters, including order 0, and initial states for \code{lfilter}, rates up
+to $5/4$ and $1/7$ for \code{upfirdn} with and without default arguments,
+random block splits for overlap-add) and
 compares with an independent reference. A mutant is \emph{equivalent} if its
 largest relative error is at most $10^{-12}$, an \emph{accuracy} fault if it is
 between $10^{-12}$ and $10^{-6}$, and a \emph{functional} fault above $10^{-6}$,
@@ -481,8 +484,13 @@ faults and the bugs of RQ4 complement them. The SoP suites are ports of real
 suites restricted to the subject's interface; the original suites also test
 other dtypes and shapes. The subjects are small, and the oracle thresholds
 ($10^{-12}$, $10^{-6}$) are a choice; per-mutant errors are in the result file
-so that other thresholds can be applied. Results depend on random seeds, which
-we vary and report.
+so that other thresholds can be applied. The oracle was extended once after the
+first run: it did not call \code{upfirdn} with its default arguments nor
+\code{lfilter} with an order-0 filter, so it labelled as equivalent eight mutants
+that the SoP suites or dsp-props detected; with the extended oracle, no approach
+detects any equivalent mutant. The kill rates of dsp-props depend on the
+declarations, which we wrote before running the mutants and did not change
+afterwards. Results depend on random seeds, which we vary and report.
 
 \paragraph*{Reproducing} The scripts \code{run\_comparison.py} and
 \code{run\_hand\_mutants.py} (in \code{benchmarks/comparison/}),
