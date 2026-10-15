@@ -171,8 +171,10 @@ def run(args):
     jobs.sort(key=lambda j: (j[3] != "oracle", j[3] == "sop"))
     print(f"{len(done)} jobs already done, {len(jobs)} to run on {args.workers} workers", flush=True)
     t0 = time.time()
-    with mp.get_context("fork").Pool(args.workers, initializer=_init_worker, initargs=(args.mem_gb,),
-                                      maxtasksperchild=20) as pool, out.open("a") as fh:
+    # No maxtasksperchild: a replacement worker is forked from the pool's helper thread, and
+    # Python then never runs its SIGALRM handler, so the time limit would silently stop working.
+    with mp.get_context("fork").Pool(args.workers, initializer=_init_worker, initargs=(args.mem_gb,)) as pool, \
+            out.open("a") as fh:
         for k, record in enumerate(pool.imap_unordered(_job, jobs, chunksize=1), 1):
             fh.write(json.dumps(record) + "\n")
             fh.flush()
