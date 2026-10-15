@@ -15,6 +15,7 @@
 from __future__ import annotations
 
 import contextlib
+import importlib
 import time
 from dataclasses import dataclass
 
@@ -23,13 +24,14 @@ from hypothesis import strategies as st
 from hypothesis.errors import HypothesisException
 from hypothesis.extra import numpy as hnp
 
-import dsp_props.generators.signals as gen_signals
 import dsp_props.relations.lti as rel_lti
 import dsp_props.relations.multirate as rel_multirate
 import dsp_props.relations.streaming as rel_streaming
 import dsp_props.relations.transforms as rel_transforms
 from dsp_props.api import _hypothesis_test
 from dsp_props.core.tolerance import ToleranceModel
+
+gen_signals = importlib.import_module("dsp_props.generators.signals")  # the package re-exports a function named signals
 
 APPROACHES = ["sop", "dsp-props", "dsp-props/uniform", "dsp-props/fixed-tol", "generic-pbt"]
 RANDOMISED = APPROACHES[1:]

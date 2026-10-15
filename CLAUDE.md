@@ -18,7 +18,8 @@ Version 0.1.0 publiée sur PyPI (procédure : `RELEASING.md`). Plan de développ
    blocs d'un processeur en streaming (blocs vides et d'un échantillon compris).
 2. **Générateurs de signaux** (stratégies Hypothesis) : impulsions, constantes, sinusoïdes
    hors grille et quasi-Nyquist, paires de tons proches, signaux parcimonieux, bruit blanc ;
-   longueurs pathologiques (0, 1, 2, premiers, 2^k ± 1) ; amplitudes de 1e-100 à 1e100.
+   longueurs pathologiques (1, 2, premiers, 2^k ± 1) ; amplitudes de 1e-100 à 1e100 ;
+   découpages en blocs avec blocs vides et d'un échantillon.
 3. **Moteur de tolérance** : FFT en O(ε log N) (Schatzman 1996) ; filtres récursifs avec une
    borne d'erreur directe qui croît avec l'ordre et les normes ℓ1 des réponses
    impulsionnelles (Higham 2002) ; `dp.calibrate` mesure une implémentation contre une

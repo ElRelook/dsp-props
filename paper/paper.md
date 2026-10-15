@@ -66,9 +66,9 @@ re-implements, usually partially:
    for any split of its input, including empty and one-sample blocks.
 2. **Which signals expose bugs.** Uniform random arrays rarely do. `dsp-props`
    generates impulses, constants, off-grid and near-Nyquist tones, close tone
-   pairs, sparse signals and white noise, over pathological lengths (0, 1,
-   2, primes, powers of two plus or minus one) and amplitudes from 1e-100 to
-   1e100.
+   pairs, sparse signals and white noise, over pathological lengths (1, 2,
+   primes, powers of two plus or minus one), amplitudes from 1e-100 to
+   1e100, and block splits that include empty and one-sample blocks.
 3. **How close is close enough.** A fixed `rtol` is either too loose to catch
    a single-precision intermediate or too tight for a large transform. The
    FFT model follows the $O(\varepsilon \log N)$ bound of
