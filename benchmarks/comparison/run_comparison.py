@@ -50,8 +50,8 @@ SUBJECT_NAMES = ["fft", "lfilter", "upfirdn", "ola"]
 EQUIVALENT, ACCURACY = 1e-12, 1e-6
 
 
-class Timeout(Exception):
-    pass
+class Timeout(BaseException):
+    """Not an Exception, so that Hypothesis does not catch it and start shrinking a hanging input."""
 
 
 def _alarm(signum, frame):
@@ -97,7 +97,8 @@ def _job(args):
     t0 = time.perf_counter()
     record = {"subject": subject, "mutant": mid, "approach": approach, "seed": seed}
     try:
-        signal.alarm(timeout)
+        # re-fires every 10 s after the first expiry, in case some layer swallows the exception
+        signal.setitimer(signal.ITIMER_REAL, timeout, 10)
         with warnings.catch_warnings(), np.errstate(all="ignore"):
             warnings.simplefilter("ignore")
             mod = load(subject, mid, source)
@@ -114,17 +115,17 @@ def _job(args):
                 decls = decls_f(mod) if approach != "sop" else {}
                 sop_tests = sop_f(mod) if approach == "sop" else []
                 record.update(approaches.run_approach(approach, decls, sop_tests, seed))
-        signal.alarm(0)
+        signal.setitimer(signal.ITIMER_REAL, 0)
         # a time-out inside a test is caught by the approach as a failure: flag it as a time-out
         record["timeout"] = any(f.get("error") == "Timeout" for f in record.get("failures", []))
     except Timeout:
         record.update(killed=True, timeout=True, error=float("inf") if approach == "oracle" else None)
     except MemoryError:
-        signal.alarm(0)
+        signal.setitimer(signal.ITIMER_REAL, 0)
         record.update(killed=True, timeout=False, memory=True,
                       error=float("inf") if approach == "oracle" else None)
     except BaseException as exc:  # noqa: BLE001
-        signal.alarm(0)
+        signal.setitimer(signal.ITIMER_REAL, 0)
         record.update(killed=True, timeout=False, harness_error=f"{type(exc).__name__}: {exc}"[:300])
     record["wall"] = round(time.perf_counter() - t0, 3)
     return record
