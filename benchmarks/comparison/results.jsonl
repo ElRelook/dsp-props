@@ -1729,3 +1729,13 @@
 {"subject": "lfilter", "mutant": "lfilter-orig", "approach": "dsp-props", "seed": 1, "time_limit": 45, "killed": false, "failures": [], "examples": 1402, "seconds": 10.927, "timeout": false, "wall": 10.93}
 {"subject": "lfilter", "mutant": "lfilter-orig", "approach": "dsp-props", "seed": 2, "time_limit": 45, "killed": false, "failures": [], "examples": 1402, "seconds": 10.989, "timeout": false, "wall": 10.991}
 {"subject": "lfilter", "mutant": "lfilter-orig", "approach": "dsp-props", "seed": 3, "time_limit": 45, "killed": false, "failures": [], "examples": 1402, "seconds": 10.805, "timeout": false, "wall": 10.807}
+{"subject": "lfilter", "mutant": "lfilter-orig", "approach": "dsp-props/uniform", "seed": 0, "time_limit": 45, "killed": false, "failures": [], "examples": 1402, "seconds": 4.818, "timeout": false, "wall": 4.82}
+{"subject": "lfilter", "mutant": "lfilter-orig", "approach": "dsp-props/uniform", "seed": 1, "time_limit": 45, "killed": false, "failures": [], "examples": 1402, "seconds": 5.163, "timeout": false, "wall": 5.165}
+{"subject": "lfilter", "mutant": "lfilter-orig", "approach": "dsp-props/uniform", "seed": 2, "time_limit": 45, "killed": false, "failures": [], "examples": 1402, "seconds": 5.558, "timeout": false, "wall": 5.56}
+{"subject": "lfilter", "mutant": "lfilter-orig", "approach": "dsp-props", "seed": 4, "time_limit": 45, "killed": false, "failures": [], "examples": 1402, "seconds": 10.618, "timeout": false, "wall": 10.62}
+{"subject": "lfilter", "mutant": "lfilter-orig", "approach": "dsp-props/uniform", "seed": 3, "time_limit": 45, "killed": false, "failures": [], "examples": 1402, "seconds": 5.441, "timeout": false, "wall": 5.442}
+{"subject": "lfilter", "mutant": "lfilter-orig", "approach": "dsp-props/uniform", "seed": 4, "time_limit": 45, "killed": false, "failures": [], "examples": 1402, "seconds": 4.498, "timeout": false, "wall": 4.499}
+{"subject": "lfilter", "mutant": "lfilter-orig", "approach": "dsp-props/fixed-tol", "seed": 0, "time_limit": 45, "killed": false, "failures": [], "examples": 1402, "seconds": 11.763, "timeout": false, "wall": 11.765}
+{"subject": "lfilter", "mutant": "lfilter-orig", "approach": "dsp-props/fixed-tol", "seed": 2, "time_limit": 45, "killed": false, "failures": [], "examples": 1402, "seconds": 10.418, "timeout": false, "wall": 10.419}
+{"subject": "lfilter", "mutant": "lfilter-orig", "approach": "dsp-props/fixed-tol", "seed": 1, "time_limit": 45, "killed": false, "failures": [], "examples": 1402, "seconds": 10.86, "timeout": false, "wall": 10.861}
+{"subject": "lfilter", "mutant": "lfilter-orig", "approach": "dsp-props/fixed-tol", "seed": 3, "time_limit": 45, "killed": false, "failures": [], "examples": 1402, "seconds": 11.057, "timeout": false, "wall": 11.058}
