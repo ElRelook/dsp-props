@@ -1,16 +1,16 @@
 \begin{table*}[t]
-\caption{Test suites of five DSP libraries (syntactic counts). Tol.: comparisons with a hand-written tolerance; distinct: number of distinct tolerance values; empty: tests with an empty input; zi+empty: tests that also pass an initial state}
+\caption{Test suites of five DSP libraries (syntactic counts). Tol.: comparisons with a hand-written tolerance; distinct: number of distinct tolerance values; empty: tests with an empty input; zi+empty: tests that also pass an initial state; hard-coded: tests that compare with an array of at least four typed-in floating-point values}
 \label{tab:survey}
 \centering\footnotesize
-\begin{tabular}{@{}lrrrrrlrr@{}}
+\begin{tabular}{@{}lrrrrrlrrr@{}}
 \toprule
-Suite & Tests & Hypothesis & Comparisons & Tol. & Distinct & Range & Empty & zi+empty \\
+Suite & Tests & Hypothesis & Comparisons & Tol. & Distinct & Range & Empty & zi+empty & Hard-coded \\
 \midrule
-NumPy (numpy.fft) & 52 & 0 & 102 & 66 & 3 & $10^{-14}$--$10^{-6}$ & 1 & 0 \\
-SciPy (scipy.fft) & 96 & 0 & 132 & 11 & 7 & $10^{-10}$--$3.0\times10^{-6}$ & 0 & 0 \\
-SciPy (scipy.signal) & 1095 & 0 & 1645 & 584 & 66 & $10^{-31}$--$3.01$ & 62 & 2 \\
-librosa & 916 & 0 & 664 & 60 & 20 & $10^{-12}$--$3$ & 4 & 0 \\
-torchaudio (functional) & 229 & 0 & 13 & 12 & 12 & $10^{-7}$--$0.1$ & 0 & 0 \\
+NumPy (numpy.fft) & 52 & 0 & 102 & 66 & 3 & $10^{-14}$--$10^{-6}$ & 1 & 0 & 1 \\
+SciPy (scipy.fft) & 96 & 0 & 132 & 11 & 7 & $10^{-10}$--$3.0\times10^{-6}$ & 0 & 0 & 4 \\
+SciPy (scipy.signal) & 1095 & 0 & 1645 & 584 & 66 & $10^{-31}$--$3.01$ & 62 & 2 & 169 \\
+librosa & 916 & 0 & 664 & 60 & 20 & $10^{-12}$--$3$ & 4 & 0 & 36 \\
+torchaudio (functional) & 229 & 0 & 13 & 12 & 12 & $10^{-7}$--$0.1$ & 0 & 0 & 10 \\
 \bottomrule
 \end{tabular}
 \end{table*}

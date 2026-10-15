@@ -39,28 +39,25 @@ ORCID 0009-0004-7496-2365}
 \maketitle
 
 \begin{abstract}
-Signal processing code is hard to test because the correct output of a filter,
-a transform or a resampler on an arbitrary input is unknown. Libraries therefore
-compare a few hand-picked cases with values computed by another tool, under
-tolerances chosen by hand: in the test suite of \code{scipy.signal} alone we count
-\surveyScipyDistinctTol{} distinct hand-written tolerances spanning
-\surveyScipyTolDecades{} orders of magnitude, and no test in the five suites we
-surveyed generates its inputs. We present dsp-props, an open-source Python
-library that tests signal processing operators against properties every correct
-implementation must satisfy (linearity, shift and convolution theorems,
-Parseval's identity, causality, consistency with a declared transfer function,
-periodic time invariance of resamplers, invariance of streaming processors to
-block boundaries), on inputs drawn from signal families known to break such code,
-with tolerances derived from an error model of each operation rather than chosen
-by hand. On \nMutAuto{} automatically generated faults in four reference
-implementations, dsp-props detects \killFuncDsp{} of the non-equivalent faults
-and test suites ported from NumPy and SciPy detect \killFuncSop{}; the two miss
-different faults and together detect all of them. On \nMutHand{} hand-written
-faults, every variant detects every fault, and ablations show that the domain
-generators and the error-model tolerances make failures appear sooner, with
-smaller counterexamples, and without false alarms on subnormal inputs.
-On correct implementations it raised no false alarm in \fpRuns{} runs. Applied to SciPy,
-NumPy, PyTorch, librosa and torchaudio, it found faults that were reported upstream.
+Signal processing code is hard to test: the correct output of a filter, a
+transform or a resampler on an arbitrary input is unknown, the inputs that break
+such code are specific, and floating-point results can only be compared within
+a tolerance. A survey of five DSP libraries shows that their tests compare with
+typed-in values, never generate their inputs, and use hand-written tolerances
+spread over \surveyScipyTolDecades{} orders of magnitude. We propose a method
+that derives the test from a statement of what an operator is: metamorphic
+relations proved for transforms, linear time-invariant filters, rational
+resamplers and streaming processors replace the expected output; inputs are
+drawn from signal families known to break DSP code; tolerances follow forward
+error bounds instead of being chosen by hand. We evaluate it with a protocol
+that measures its power and its soundness. On \nFunctional{} functional faults
+injected by mutation, it detects \killFuncDsp{} and the ported test suites of
+NumPy and SciPy \killFuncSop{}; the two detect different faults and together
+detect all of them. Ablations on hand-written faults show that the domain
+generators and error models make failures appear sooner, with smaller
+counterexamples and no false alarm. On correct code the method raised no false
+alarm in \fpRuns{} runs. Applied to SciPy, it found faults on empty blocks that
+we reported with a fix.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -75,8 +72,10 @@ Digital signal processing (DSP) code sits at the bottom of a large software
 stack: the fast Fourier transform (FFT), linear filters and sample-rate
 converters of NumPy~\cite{harris2020numpy}, SciPy~\cite{virtanen2020scipy} and
 PyTorch~\cite{paszke2019pytorch} are called by audio, communication,
-geophysics and machine-learning code that rarely re-checks them. Testing these
-operators faces three problems at once.
+geophysics and machine-learning code that rarely re-checks them. A fault at
+this level propagates silently: a filter that loses its state on an empty
+block does not crash the application that streams audio through it, it makes
+the output diverge. Testing these operators faces three problems at once.
 
 \paragraph*{P1, no oracle} For most inputs nobody knows the exact output of a
 filter or a transform. This is the \emph{oracle problem} of software
@@ -94,10 +93,11 @@ specific places: lengths that are prime, odd or one away from a power of two
 Nyquist frequency, extreme amplitudes, and, for streaming code, empty or
 one-sample blocks. A concrete case: \code{scipy.signal.lfilter} returned an
 uninitialised final state when given an empty block and an initial state
-(SciPy issue gh-22571), so that any block-processing loop silently diverged
-after an empty block; \code{sosfilt} still raises on such input. Across the
-\surveyTotalTests{} tests we surveyed, only \surveyZiEmpty{} combine an initial
-state with an empty input, and none generates its inputs.
+(SciPy issue 22571\footnote{\url{https://github.com/scipy/scipy/issues/22571}}),
+so that any block-processing loop silently diverged after an empty block, and
+\code{sosfilt} still raises on such input. Across the \surveyTotalTests{} tests
+we surveyed, only \surveyZiEmpty{} combine an initial state with an empty
+input, and none generates its inputs.
 
 \paragraph*{P3, no principled tolerance} Even when the expected output is
 known, floating-point results are only close to it, and \emph{how close} depends
@@ -113,49 +113,77 @@ answers P2 in general by generating inputs, and metamorphic
 testing~\cite{chen2018metamorphic,segura2016metamorphic} answers P1 in general
 by checking relations between outputs instead of the outputs themselves.
 Neither tells a DSP developer which relations hold for which operator, which
-signals to generate, nor how to compare floating-point results; and a test tool
+signals to generate, nor how to compare floating-point results. And a method
 that claims to find faults in numerical libraries must itself be shown not to
-raise false alarms.
+raise false alarms, since a single spurious report costs a maintainer's trust.
 
-This article makes the following contributions.
+This article answers the three problems with one method and evaluates it with a
+protocol designed to measure both its power and its soundness. Its
+contributions are, in order of importance:
 \begin{itemize}
-\item A catalogue of metamorphic relations for four classes of DSP operators
-(transforms, linear time-invariant filters, rational resamplers, streaming
-processors), each with a proof (Appendix~\ref{app:proofs}), selected by a
-one-line declaration of what the operator is (answers P1).
-\item Signal generators that target the inputs known to break DSP code (P2).
-\item Tolerances derived from forward error bounds of the FFT and of linear
-recursions, and a calibration procedure that measures an implementation against
-an extended-precision reference but refuses to absorb an implausibly large error
-(P3).
-\item An evaluation protocol that compares the approach with the test suites of
-NumPy and SciPy on automatically generated faults, isolates the contribution of
-the generators and of the tolerances, and validates the tool itself: false
-alarms on correct code, margin between observed error and tolerance, accuracy of
-the reference against 50-digit arithmetic, and an audit of the generators.
+\item \emph{A method} that replaces the expected output by metamorphic relations
+proved for four classes of DSP operators (transforms, linear time-invariant
+filters, rational resamplers, streaming processors), draws inputs from the
+signal families that break DSP code, and derives each tolerance from a
+forward error bound instead of choosing it (Section~\ref{sec:method}).
+\item \emph{An evaluation protocol} that compares the method with the test
+suites of NumPy and SciPy on automatically generated faults, isolates the
+contribution of the generators and of the tolerances by ablation, and validates
+the method itself: false alarms on correct code, margin between observed error
+and tolerance, accuracy of the references against 50-digit arithmetic, and an
+audit of the generators (Section~\ref{sec:protocol}).
+\item \emph{Faults found in widely used libraries} and reported to their
+maintainers, with a proposed fix (Section~\ref{sec:rq4}).
+\item \emph{A survey} of how five DSP libraries test themselves, which grounds
+P1--P3 in counts rather than impressions (Section~\ref{sec:survey}).
 \end{itemize}
-The library, the experiments and the data are available at
+The method is implemented in dsp-props, an open-source layer on top of
+Hypothesis; the library, the experiments and their data are available at
 \url{https://github.com/clement-basdevant/dsp-props} under a BSD licence.
+
+Section~\ref{sec:related} reviews related work, Section~\ref{sec:survey}
+reports the survey, Section~\ref{sec:method} describes the method,
+Section~\ref{sec:protocol} the evaluation protocol and Section~\ref{sec:results}
+its results. Section~\ref{sec:discussion} discusses what the results mean for
+practitioners, and Section~\ref{sec:conclusion} concludes.
 
 % ===========================================================================
 \section{Background and related work}
 \label{sec:related}
 % ===========================================================================
 
-\subsection{Testing without an oracle}
-Metamorphic testing~\cite{chen2018metamorphic,segura2016metamorphic}, applied
+\subsection{The oracle problem and metamorphic testing}
+A test oracle decides whether an output is correct. When no such procedure
+exists, or when it is too costly, testing faces the oracle
+problem~\cite{barr2015oracle}; scientific software is the textbook case, since
+it is often written precisely because the answer is not known in
+advance~\cite{kanewala2014scientific}. Metamorphic
+testing~\cite{chen2018metamorphic,segura2016metamorphic} avoids the oracle by
+checking \emph{metamorphic relations}: if $f$ is correct, then for related
+inputs $x$ and $x'$ the outputs $f(x)$ and $f(x')$ must satisfy a known
+relation, \eg $f(x+x') = f(x)+f(x')$ for a linear $f$. It has been applied
 among others to bioinformatics~\cite{chen2009bioinformatics} and image
-processing~\cite{jafari2024image}, checks
-\emph{metamorphic relations}: if $f$ is correct, then for related inputs $x$
-and $x'$ the outputs $f(x)$ and $f(x')$ must satisfy a known relation, \eg
-$f(x+x') = f(x)+f(x')$ for a linear $f$. Property-based testing (PBT), introduced
-by QuickCheck~\cite{claessen2000quickcheck} and available in Python through
-Hypothesis~\cite{maciver2019hypothesis}, generates the inputs and shrinks a
-failing input to a minimal one~\cite{maciver2020reduction}. Both are general
-techniques: the relations, the generators and the comparison rule are left to
-the user. Interviews of PBT users identify writing properties and generators as
-their main weakness~\cite{goldstein2024pbt}; Maaz
-et~al.\ use language models to propose properties across the Python ecosystem~\cite{maaz2025agentic}.
+processing~\cite{jafari2024image}. The quality of the approach depends on the
+relations: a relation that holds for the faulty program too detects nothing,
+and finding relations is the main cost of the method. For DSP operators the
+relations are classical theorems (linearity, shift and convolution theorems,
+Parseval's identity), but which ones apply depends on what the operator is, and
+on finite sequences their exact form at the edges matters.
+
+\subsection{Property-based testing}
+Property-based testing (PBT), introduced by
+QuickCheck~\cite{claessen2000quickcheck} and available in Python through
+Hypothesis~\cite{maciver2019hypothesis}, states a property over all inputs of a
+type, generates inputs and, when one fails, \emph{shrinks} it to a smaller,
+simpler failing input~\cite{maciver2020reduction}. PBT supplies the machinery to check
+metamorphic relations, but not the relations themselves, nor the generators of
+meaningful inputs. Interviews of PBT users identify writing properties and
+generators as their main difficulty~\cite{goldstein2024pbt}, and Maaz
+et~al.\ use language models to propose properties for Python
+libraries~\cite{maaz2025agentic}. Generic generators of floating-point arrays
+also produce values, such as subnormal numbers, for which a purely relative
+tolerance is meaningless; Section~\ref{sec:rq2} shows a false alarm of this
+kind.
 
 \subsection{Self-testing of numerical programs}
 Blum, Luby and Rubinfeld~\cite{blum1993selftesting} showed that a program
@@ -164,8 +192,8 @@ random linear identities. Erg\"un~\cite{ergun1995testing,ergun2000selftesting}
 extended the idea to multivariate linear functions such as the DFT, and
 Erg\"un, Kumar and Rubinfeld~\cite{ergun2001checking} to computations that are
 only approximately correct. The FFTW library~\cite{frigo2005fftw} ships a
-self-test built on these results, which checks linearity, impulse responses and
-time and frequency shifts~\cite{fftwverify}. These works establish that
+self-test that implements Erg\"un's tester and checks linearity, impulse
+responses and time and frequency shifts~\cite{fftwverify}. These works establish that
 linearity and shift identities characterise the DFT; they do not cover
 filters, resamplers or streaming code, and they treat the floating-point error
 with a single threshold.
@@ -174,99 +202,289 @@ with a single threshold.
 Differential testing compares several implementations of the same
 function~\cite{vanover2020fpdiff}. It needs at least two of them, and they may
 share an algorithm or an assumption, \eg the same handling of an empty block.
-Di Franco et~al.\ analysed 269 real numerical bugs in NumPy, SciPy, LAPACK,
-GSL and Elemental~\cite{difranco2017floatingpoint}, showing that such bugs reach
-widely used, mature libraries.
+Di Franco et~al.\ studied 269 numerical bugs reported in NumPy, SciPy,
+LAPACK, GSL and Elemental~\cite{difranco2017floatingpoint}. They selected bugs
+confirmed by developers, most of them closed with a fix, and analysed 183 of
+those fixes: the study shows that numerical faults reach widely used, mature
+libraries, not that these particular faults remain in them.
 
 \subsection{Floating-point error of DSP operators}
-The FFT computed by a Cooley--Tukey algorithm has a relative error that grows
-as $O(\eps\log N)$~\cite{schatzman1996accuracy,higham2002accuracy}, where $\eps$
-is the unit roundoff, whereas the direct DFT grows as $O(\eps N)$. The error of a
-linear recursion depends on the conditioning of its poles~\cite{higham2002accuracy}.
-These bounds are rarely used in tests, which fall back on fixed relative tolerances.
+The FFT computed by a Cooley--Tukey algorithm has a worst-case relative error
+bounded by $O(\eps\log N)$~\cite{higham2002accuracy}, where $\eps$ is the unit
+roundoff, and its root-mean-square error on random inputs grows only as
+$O(\eps\sqrt{\log N})$~\cite{schatzman1996accuracy}; a direct DFT, computed as $N$
+dot products of length $N$, has a bound that grows as
+$O(\eps N)$~\cite{higham2002accuracy}. For a linear recursion, rounding errors
+are fed back through the poles: Appendix~\ref{app:iir} derives from the
+standard model of floating-point arithmetic~\cite{higham2002accuracy} a bound
+that grows with the $\ell_1$ norm of the impulse response, which is large when
+poles approach the unit circle. These bounds are
+rarely used in tests, which fall back on fixed relative tolerances; we use them
+to set tolerances (Section~\ref{sec:tolerances}).
 
 \subsection{Mutation analysis}
-To compare test approaches, we inject faults with mutation
-operators~\cite{offutt1996mutation,jia2011mutation,papadakis2019mutation}.
-Detection of mutants correlates with detection of real
-faults~\cite{just2014mutants}.
+Mutation analysis~\cite{jia2011mutation,papadakis2019mutation} measures the
+fault-detection power of a test approach by injecting small syntactic changes,
+\emph{mutants}, into a correct program and counting how many the tests detect
+(\emph{kill}). Mutation operators replace an arithmetic, relational or bitwise
+operator, change a constant, delete a statement, and so on. Offutt
+et~al.~\cite{offutt1996mutation} showed that a small selective set of operators
+(arithmetic, relational and logical operator replacement, operand replacement
+and unary operator insertion) yields almost the same mutation score as the full
+set, which keeps mutation affordable. Two
+assumptions underpin the method: the \emph{competent programmer} hypothesis,
+under which real faults are small deviations from a correct program, and the
+\emph{coupling effect}, under which tests that kill simple faults also kill
+complex ones~\cite{jia2011mutation}. Just et~al.\ found that mutant detection
+correlates with the detection of real faults in Java
+programs~\cite{just2014mutants}.
+
+Two difficulties matter here. First, some mutants are \emph{equivalent}: they
+compute the same function as the original, and no test can kill them; deciding
+equivalence is undecidable in general~\cite{jia2011mutation}, so studies use
+heuristics. Numerical code adds a third category: a mutant may change the
+output only by rounding, \eg by reordering an addition. Such a mutant is
+neither equivalent nor functionally wrong, and whether it should be killed
+depends on the accuracy the program promises. We classify mutants with an
+independent oracle into equivalent, accuracy and functional faults
+(Section~\ref{sec:groundtruth}) and report kill rates per class, so that a
+false alarm on an equivalent mutant counts against an approach instead of for
+it. Second, first-order mutants are mostly easy to kill; we therefore also use
+hand-written faults modelled on real DSP bugs, including accuracy faults.
+
+\subsection{Summary}
+Table~\ref{tab:positioning} summarises what each family of approaches leaves to
+the developer. Every approach answers part of P1--P3; none supplies relations,
+generators and tolerances together for the operators of a DSP library, which is
+the gap this article addresses.
+
+\begin{table}[t]
+\caption{What each approach supplies to the developer: P1, no need for expected values; P2, generated inputs; P3, a derived tolerance}
+\label{tab:positioning}
+\centering\scriptsize
+\begin{tabular}{@{}llll@{}}
+\toprule
+Approach & P1 & P2 & P3 \\
+\midrule
+Expected-value tests & -- & -- & -- \\
+Differential~\cite{vanover2020fpdiff} & needs 2nd impl. & partly & -- \\
+DFT self-testing~\cite{ergun1995testing,fftwverify} & DFT only & yes & -- \\
+Generic PBT, MT~\cite{maciver2019hypothesis,chen2018metamorphic} & user's relations & generic & -- \\
+This work & yes & DSP families & yes \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 % ===========================================================================
 \section{How DSP libraries test themselves}
 \label{sec:survey}
 % ===========================================================================
 
-To make P1--P3 concrete, we analysed the syntax trees of the test suites of
-\code{numpy.fft}, \code{scipy.fft}, \code{scipy.signal}, librosa~\cite{mcfee2015librosa}
-and the functional module of torchaudio (script
-\code{benchmarks/survey\_test\_suites.py}, results in
-\code{survey\_results.json}). Table~\ref{tab:survey} summarises the counts. They
-are syntactic heuristics: a comparison is counted when a known assertion
-function is called, and its tolerance when a literal is passed as
-\code{rtol}, \code{atol}, \code{decimal} or similar.
+To ground P1--P3 in data, we analysed the test suites of \code{numpy.fft},
+\code{scipy.fft}, \code{scipy.signal}, librosa~\cite{mcfee2015librosa} and the
+functional module of torchaudio, \surveyTotalTests{} test functions in total.
+
+\paragraph*{Method} A script parses every test file into a syntax tree and
+counts, per library: the test functions and those decorated with Hypothesis'
+\code{@given}; the numerical comparisons, \ie calls to \code{assert\_allclose},
+\code{assert\_array\_almost\_equal}, \code{allclose},
+\code{torch.testing.assert\_close} and their relatives; among them, those with a
+hand-written tolerance, \ie a literal passed as \code{rtol}, \code{atol},
+\code{decimal}, \code{nulp} or similar, converted to a magnitude
+($\code{decimal}=d$ means $1.5\times10^{-d}$); the tests that pass an empty
+signal, an initial filter state (\code{zi=}), or both; and the tests that compare
+with a typed-in array of at least four floating-point literals. These are
+syntactic heuristics: a tolerance computed at run time or an expected array
+loaded from a file is not counted, so the counts are lower bounds.
 
 \input{tables/survey.tex}
 
-No test uses Hypothesis or any other input generator. Hand-written tolerances
-are frequent and heterogeneous, which reflects P3: each test author picks a
-value that makes the test pass on their machine. Empty inputs appear in a few
-tests, but the combination that exposed the \code{lfilter} and \code{sosfilt}
-faults appears in \surveyZiEmpty{} tests only.
+\paragraph*{Three typical tests} The ported suites of Section~\ref{sec:protocol}
+give a concrete picture. SciPy's \code{test\_rank\_1\_IIR} filters the ramp
+$0,1,\dots,5$ with $b=[1,-1]$, $a=[0.5,-0.5]$ and compares the output with the six
+typed-in values $0,2,4,6,8,10$ to six decimals: one input, one filter, one
+tolerance. \code{test\_length\_factors} for \code{upfirdn} checks five
+combinations of lengths and rates against output vectors whose comment says they
+come from MATLAB. \code{test\_vs\_convolve} compares \code{upfirdn} with a
+straightforward implementation on 10\,000 random samples, for three
+decimation factors, at a relative and absolute tolerance of $10^{-7}$, which is a
+form of differential testing within the library. Several tests are regression
+tests added after an issue was reported, such as the two \code{test\_short\_x} tests for a
+one-sample input with an initial state: edge cases enter the suites after a user
+has met them.
+
+
+\paragraph*{No oracle (P1)} Table~\ref{tab:survey} shows that hard-coded
+expected arrays are common: \surveyHardcodedAll{} tests in total, of which
+\surveyScipyHardcoded{} in \code{scipy.signal}. Such arrays come from another
+tool, MATLAB according to the comments of some tests, or from an earlier run of
+the library, and they test the library against that source on a handful of
+inputs. The other tests compare
+two computations of the same quantity within the library, \eg \code{lfilter}
+against \code{convolve}, which is a form of differential testing.
+
+\paragraph*{Few, fixed inputs (P2)} No test in the five suites uses Hypothesis
+or any other input generator. In the tests we ported, inputs are written by
+hand: short ramps, a few random arrays with a fixed seed, constant signals. Edge cases are present
+but scattered: \code{scipy.signal} has \surveyScipyEmpty{} tests with an empty
+input and \surveyScipyZi{} with an initial state, but only \surveyZiEmpty{} that
+combine both, which is the case behind the faults of Section~\ref{sec:rq4}.
+
+\paragraph*{Hand-written tolerances (P3)} \code{scipy.signal} alone performs
+\surveyScipyComparisons{} comparisons, \surveyScipyExplicit{} of them with a
+hand-written tolerance, which take \surveyScipyDistinctTol{} distinct values
+spanning \surveyScipyTolDecades{} orders of magnitude (Fig.~\ref{fig:tolhist}).
+The most frequent are \surveyScipyTopTols. The spread does not follow the
+operations: tolerances near $10^{-15}$ assert agreement to the last bits,
+tolerances near $10^{-4}$ would accept a single-precision computation, and a few
+tolerances above 1 accept almost anything. Each value is what made a test pass
+on its author's machine, which is P3 in its plainest form.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[ybar, width=\columnwidth, height=0.42\columnwidth, bar width=3.5pt,
+  xlabel={Hand-written tolerance (decade, $\log_{10}$)}, ylabel={Comparisons}, ylabel near ticks,
+  xmin=-32, xmax=1, ymin=0, tick label style={font=\scriptsize},
+  label style={font=\footnotesize}, xtick={-30,-25,-20,-15,-10,-5,0}]
+\addplot[fill=blue!60!black, draw=none]
+  table[x=decade, y=count, col sep=comma]{tables/tolhist.csv};
+\end{axis}
+\end{tikzpicture}
+\caption{Hand-written tolerances in the tests of \code{scipy.signal}, grouped by
+decade.}
+\label{fig:tolhist}
+\end{figure}
 
 % ===========================================================================
-\section{Contribution}
-\label{sec:contrib}
+\section{Method}
+\label{sec:method}
 % ===========================================================================
 
-dsp-props is a layer on top of Hypothesis. The user declares \emph{what an
-operator is}, and the library derives the relations, the generators and the
-tolerance. For instance, \code{@dp.lti\_filter(transfer=(b, a))} declares a
-causal linear time-invariant (LTI) filter with transfer function $B(z)/A(z)$;
-\code{dp.verify} then runs every applicable relation on generated inputs and
-returns a report with the smallest failing input found by shrinking.
+The method rests on one idea: the user states \emph{what an operator is}, and
+everything else follows from that statement. A DFT, a causal LTI filter with a
+given transfer function, an $L/M$ resampler or a streaming processor each
+satisfy known theorems (the relations), are known to fail on known inputs (the
+generators), and have a known forward error (the tolerance). The method is
+implemented in dsp-props as a layer on top of Hypothesis, but its ingredients
+do not depend on that implementation.
+
+\subsection{Declarations}
+A declaration is a decorator on the operator under test. For instance,
+\begin{quote}\footnotesize\begin{verbatim}
+@dp.lti_filter(transfer=(b, a))
+def my_filter(x):
+    return scipy.signal.lfilter(b, a, x)
+
+dp.verify(my_filter)
+\end{verbatim}\end{quote}
+declares a causal linear time-invariant (LTI) filter with transfer function
+$B(z)/A(z)$. \code{dp.verify} runs every relation that applies to the declared
+class on generated inputs (200 per relation by default) and raises an error
+that carries the smallest failing input found by shrinking, the relation that
+failed, the observed error and the tolerance. The declarations available are
+transforms (complex DFT, DFT of real input, generic linear transforms such as
+the DCT), LTI filters (with an optional transfer function and gain bound),
+rational resamplers, and streaming or stateful processors; adapters wrap NumPy,
+SciPy, PyTorch and C functions called through \code{ctypes}.
+
+A declaration fixes the parameters of the operator: the coefficients of a
+filter, the rates of a resampler. The relations then vary the input signal
+only. This is a deliberate choice, since parameters such as filter
+coefficients must satisfy constraints (stability, a declared transfer function)
+that a generic generator cannot know; Section~\ref{sec:rq1} shows its cost.
 
 \subsection{Relations (answer to P1)}
-Table~\ref{tab:relations} lists the relations per operator class. Each one is a
-consequence of the declaration and is proved in Appendix~\ref{app:proofs}; we
+\label{sec:relations}
+Table~\ref{tab:relations} lists the relations for each operator class. Each is
+a consequence of the declaration~\cite{oppenheim2010dtsp,vaidyanathan1993multirate} and is proved in Appendix~\ref{app:proofs}; we
 state them on finite sequences of length $N$, as implementations compute them,
-which matters for shifts and edges. The relations replace the oracle: no
-expected output is needed, except for the optional transfer function, which the
-user states once instead of typing expected arrays.
+which matters for shifts and edges. For a transform, the shift theorem is the
+\emph{circular} one, and the shift is reduced modulo $N$ in integers so that the
+twiddle factors of the reference are themselves accurate. For a filter, a delay
+is applied by prepending zeros, and the delayed output is compared with the
+original output, also delayed, from zero state. For a resampler, a delay of $M$
+input samples must delay the output by exactly $L$ samples, and the output
+length must be $\lceil NL/M\rceil$. For a streaming processor, the input is cut
+into blocks at generated positions, including empty and one-sample blocks, and
+the concatenated outputs must equal the one-shot output.
 
-\begin{table}[t]
-\caption{Relations checked for each operator class}
+The relations replace the oracle: no expected output is needed, except for the
+optional transfer function, which the user states once instead of typing
+expected arrays. Without it, an LTI filter is only checked to be linear,
+time-invariant and causal, so a filter with the wrong coefficients but the
+right structure passes; this blind spot is measured in Section~\ref{sec:rq1}.
+
+\begin{table*}[t]
+\caption{Relations checked for each operator class. $T$: transform; $H$: filter; $R$: resampler; $D_s$: delay by $s$ samples with zero filling; $S_s$: circular shift; $\omega=e^{-2\pi i/N}$}
 \label{tab:relations}
 \centering\footnotesize
-\begin{tabular}{@{}p{0.27\columnwidth}p{0.66\columnwidth}@{}}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}lll@{}}
 \toprule
-Declaration & Relations \\
+Class & Relation & Checked property \\
 \midrule
-Transform (DFT, real DFT, generic linear) & linearity; circular shift theorem; Parseval's identity (scale declared); Hermitian symmetry and real DC/Nyquist bins of a real input; inversion; convolution theorem \\
-LTI filter & linearity; time invariance (delay with zero state); causality; frequency response equal to the declared $B/A$; output bounded by a declared gain for every input bounded by 1 \\
-Rational resampler $L/M$ & linearity; output length $\lceil NL/M\rceil$; delay of $M$ input samples gives a delay of $L$ output samples; DC gain; rejection of tones above the output Nyquist frequency \\
-Streaming / stateful & any split of the input into blocks, including empty and one-sample blocks, gives the one-shot output \\
+Transform & Linearity & $T(\alpha x+\beta y)=\alpha Tx+\beta Ty$ \\
+ & Circular shift theorem & $T(S_s x)[k]=\omega^{ks}\,Tx[k]$ \\
+ & Parseval's identity & $\|Tx\|_2^2=c\,\|x\|_2^2$, with $c$ declared \\
+ & Hermitian symmetry & $x$ real $\Rightarrow Tx[N-k]=\overline{Tx[k]}$; DC and Nyquist bins real \\
+ & Inversion & $T^{-1}(Tx)=x$ \\
+ & Convolution theorem & $T(x\circledast y)=Tx\cdot Ty$ \\
+\midrule
+LTI filter & Linearity & $H(\alpha x+\beta y)=\alpha Hx+\beta Hy$, from zero state \\
+ & Time invariance & $H(D_s x)=D_s(Hx)$ \\
+ & Causality & changing $x[n]$ for $n\ge k$ leaves $y[n]$ unchanged for $n<k$ \\
+ & Frequency response & DFT of the impulse response equals $B(e^{i\theta})/A(e^{i\theta})$ on the DFT grid \\
+ & Bounded gain & $|x[n]|\le1$ for all $n$ $\Rightarrow$ $|y[n]|\le G$, with $G$ declared \\
+\midrule
+Resampler $L/M$ & Linearity & as for filters \\
+ & Output length & $|Rx|=\lceil NL/M\rceil$ \\
+ & Periodic time invariance & $R(D_{Ms}x)=D_{Ls}(Rx)$ \\
+ & DC gain & a constant input gives the declared constant away from the edges \\
+ & Alias rejection & a tone above the output Nyquist frequency is attenuated, not folded back \\
+\midrule
+Streaming & Block invariance & any split into blocks, including empty and one-sample blocks, gives the one-shot output \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
 \subsection{Generators (answer to P2)}
-Signals are drawn from seven families: impulses, constants, sinusoids at
-arbitrary frequency (including off-grid ones), sinusoids near the Nyquist
-frequency, pairs of tones less than one DFT bin apart, sparse signals and white
-noise; amplitudes are drawn from $\{10^{-100},10^{-3},1,10^{3},10^{100}\}$.
-Lengths are biased towards 1, 2, small primes, and $2^k-1$, $2^k$, $2^k+1$, and
-block splits include empty and one-sample blocks. The families are ordered so
-that shrinking converges to short impulses, which yields readable counterexamples.
+\label{sec:generators}
+Signals are drawn from seven families, each aimed at a known class of fault:
+impulses (indexing and edge errors), constants (DC gain, normalisation),
+sinusoids at arbitrary frequency, including off-grid ones (leakage and twiddle
+errors), sinusoids near the Nyquist frequency (aliasing, sign alternation),
+pairs of tones less than one DFT bin apart (resolution, accumulated rounding),
+sparse signals and white noise. Amplitudes are drawn from
+$\{10^{-100},10^{-3},1,10^{3},10^{100}\}$ to reach underflow and overflow paths.
+Lengths are biased towards the values that change the code path of an FFT or
+a filter: 1, 2, small primes, and $2^k-1$, $2^k$, $2^k+1$, mixed with uniform
+lengths up to 512. Block splits for streaming code include empty and
+one-sample blocks.
+
+The families are ordered so that Hypothesis' shrinking converges to short
+impulses of unit amplitude, which yields counterexamples a DSP engineer can read
+at a glance: on the hand-written faults of Section~\ref{sec:rq2}, the median
+counterexample has \handMedianLen{} samples.
 
 \subsection{Tolerances (answer to P3)}
+\label{sec:tolerances}
 All comparisons use the $\ell_2$ norm of the error, scaled by the norm of a
-reference quantity, and a model of the admissible error.
+reference quantity, and a model of the admissible error. Using norms rather
+than element-wise comparisons follows the form of the error bounds, which are
+normwise, and avoids spurious failures on output samples close to zero.
 
-\emph{FFT.} For transforms, $\|\hat y-y\|_2 \le c\,\eps\,\max(\log_2N,1)\,\|y\|_2 + N\,\mathrm{tiny}$,
-the form of the forward error bound of the radix-2 FFT~\cite[Thm.~24.2]{higham2002accuracy},
-with a constant $c$ that covers the few chained transforms in a relation, and a
-floor at the smallest normal number $\mathrm{tiny}$ that keeps exact zeros
-strict while tolerating underflow.
+\emph{FFT.} For transforms,
+\begin{equation}
+\|\hat y-y\|_2 \le c\,\eps\,\max(\log_2N,1)\,\|y\|_2 + N\,\mathrm{tiny},
+\label{eq:fft}
+\end{equation}
+the form of the forward error bound of the radix-2
+FFT~\cite[Thm.~24.2]{higham2002accuracy}, with a constant $c$ that covers the
+few chained transforms in a relation, and a floor at $N$ times the smallest
+normal number $\mathrm{tiny}$. The floor keeps exact zeros strict while
+tolerating underflow on signals of amplitude $10^{-100}$ or subnormal values,
+where a purely relative tolerance would be zero.
 
 \emph{Linear recursions.} For a filter $y=(B/A)x$ computed by a direct-form
 recursion, Appendix~\ref{app:iir} derives
@@ -277,17 +495,20 @@ recursion, Appendix~\ref{app:iir} derives
 to first order in $\eps$, where $k$ is the number of coefficients, $h_A$ and
 $h_{B/A}$ are the impulse responses of $1/A$ and $B/A$, and $a_{1:}$ are the
 feedback coefficients. The bound grows as poles approach the unit circle, which
-is where recursions lose accuracy.
+is where recursions lose accuracy, and reduces to the error of a dot product for
+a FIR filter.
 
 \emph{Calibration.} An analytic bound cannot describe every library: an FFT
-may switch algorithm with the factorisation of $N$. \code{dp.calibrate}
-measures the error of an implementation against an extended-precision
-reference for every length and turns it into a per-length tolerance. It refuses
-to calibrate when the error exceeds what rounding can explain ($10^6\eps$), so a
-fault cannot be absorbed into the tolerance.
+may switch algorithm with the factorisation of $N$, and its error then varies by
+two orders of magnitude between neighbouring lengths (Fig.~\ref{fig:profile}).
+\code{dp.calibrate} measures the error of an implementation against an
+extended-precision reference for every length, over several random inputs, and
+turns the worst error times a margin of 8 into a per-length tolerance. It
+refuses to calibrate when the error exceeds what rounding can explain
+($10^6\eps$), so that a fault cannot be absorbed into the tolerance.
 
 \subsection{Differences with the state of the art}
-Compared with generic PBT, dsp-props supplies the three pieces of domain
+Compared with generic PBT, the method supplies the three pieces of domain
 knowledge that PBT leaves to the user; Section~\ref{sec:rq2} measures the
 contribution of two of them. Compared with self-testing of the
 DFT~\cite{ergun1995testing,fftwverify}, it covers filters, resamplers and
@@ -297,94 +518,108 @@ Compared with the test suites of Section~\ref{sec:survey}, it needs no expected
 values and no hand-chosen tolerance.
 
 % ===========================================================================
+\section{Evaluation protocol}
+\label{sec:protocol}
+% ===========================================================================
+
+We answer four research questions (RQ).
+\textbf{RQ1}: does the method detect more faults than the state of practice?
+\textbf{RQ2}: what do the domain generators and the error-model tolerances contribute?
+\textbf{RQ3}: is the method itself correct, \ie free of false alarms, with sound references and generators?
+\textbf{RQ4}: does it find faults in real libraries?
+RQ1 and RQ2 use injected faults, RQ3 correct code, RQ4 the libraries
+themselves.
+
+\subsection{Subjects}
+We wrote four small reference implementations with the interface of a library
+function: a radix-2 FFT with Bluestein's algorithm for other lengths, a
+direct-form~II transposed \code{lfilter} with initial state, a polyphase
+\code{upfirdn} used by a port of \code{resample\_poly}, and a block FIR filter
+by overlap-add. They are short enough for exhaustive mutation and use the same
+algorithms as the libraries they imitate. All four agree with NumPy or SciPy to
+a relative error below $1.6\times10^{-15}$ and pass every suite below.
+
+\subsection{Faults}
+A mutation tool generates every first-order mutant of each subject with
+standard operators, following~\cite{offutt1996mutation,jia2011mutation}: arithmetic, bitwise and
+relational operator replacement, constant replacement ($k\to k\pm1$,
+$c\to c+1$), unary minus deletion, \code{min}/\code{max} swap and statement
+deletion. This gives \nMutAuto{} mutants (\nMutFft{} FFT, \nMutLfilter{}
+\code{lfilter}, \nMutUpfirdn{} \code{upfirdn}, \nMutOla{} overlap-add).
+
+We also use \nMutHand{} hand-written faults in six families, modelled on real
+DSP bugs: a forgotten $1/N$, a twiddle sign error, single-precision
+intermediates, a filter that changes after 64 samples, a gain wrong by 1\,\%, a
+missing interpolation gain, a state reset between blocks. Four of them are
+accuracy faults (single-precision intermediates), which first-order mutation
+does not produce.
+
+\subsection{Ground truth}
+\label{sec:groundtruth}
+An oracle used only for classification runs each mutant on a fixed battery of
+inputs and compares it with an independent reference: all lengths up to 130
+and several larger ones for the FFT; many filters, including order 0, and
+initial states for \code{lfilter}; rates up to $5/4$ and $1/7$ for
+\code{upfirdn}, with and without default arguments; random block splits for
+overlap-add. A mutant is \emph{equivalent} if its largest relative error is at
+most $10^{-12}$, an \emph{accuracy} fault if it is between $10^{-12}$ and
+$10^{-6}$, and a \emph{functional} fault above $10^{-6}$, or if it raises,
+returns the wrong shape or exceeds the time limit. This gives \nFunctional{}
+functional faults and \nEquivalent{} equivalent mutants. No mutant falls in the
+accuracy band: the largest relative error of a mutant is either below
+$10^{-14}$ or above 1. First-order mutation of these subjects thus produces
+large faults only, and the hand-written faults cover accuracy.
+
+\subsection{Approaches compared}
+\emph{SoP} (state of practice) is the test suite of the library whose
+interface the subject implements, ported test by test with its inputs and
+tolerances: NumPy's and SciPy's FFT tests, SciPy's \code{lfilter},
+\code{lfilter\_zi}, \code{upfirdn} and \code{resample\_poly} tests, including
+the regression test added for issue 22571. The overlap-add subject, which has no
+library counterpart, gets four tests in the same style. \emph{dsp-props} runs
+the declarations a user would write, two to four per subject, written before
+the mutants were run. Three ablations isolate the components: \emph{uniform}
+replaces the domain generators by uniform lengths in $[1,512]$ and values in
+$[-1,1]$; \emph{fixed-tol} replaces every tolerance model by a fixed relative
+tolerance of $10^{-7}$, the default of \code{numpy.testing.assert\_allclose};
+\emph{generic PBT} applies both, \ie the same relations written with Hypothesis
+alone.
+
+\subsection{Metrics and execution}
+For each approach and mutant we record whether the mutant is detected, the
+number of generated inputs before the first failure, the length of the shrunk
+counterexample and the run time. Each randomised approach runs with \nSeeds{}
+seeds and we report the mean, with the range across seeds when they disagree;
+SoP is deterministic and runs once. A run that exceeds \timeoutSeconds{}~s
+counts as a detection, since a hanging test fails in continuous integration.
+All runs use 200 inputs per relation, the library default, in the following
+environment: \envDescription.
+
+% ===========================================================================
 \section{Results}
 \label{sec:results}
 % ===========================================================================
 
-We answer four research questions (RQ).
-\textbf{RQ1}: does dsp-props detect more faults than the state of practice?
-\textbf{RQ2}: what do the domain generators and the error-model tolerances contribute?
-\textbf{RQ3}: is dsp-props itself correct, \ie free of false alarms, with sound references and generators?
-\textbf{RQ4}: does it find faults in real libraries?
-
-\paragraph*{Environment} \envDescription. All runs use
-\code{max\_examples=200} per relation, the library default.
-
-\subsection{RQ1 and RQ2: fault detection on generated mutants}
+\subsection{RQ1: detection compared with the state of practice}
 \label{sec:rq1}
-
-\paragraph*{Subjects} We wrote four small reference implementations with the
-interface of a library function (\code{benchmarks/comparison/subjects/}): a
-radix-2 FFT with Bluestein's algorithm for other lengths, a direct-form~II
-transposed \code{lfilter} with initial state, a polyphase \code{upfirdn} used by
-a port of \code{resample\_poly}, and a block FIR filter by overlap-add. All four
-agree with NumPy or SciPy to a relative error below $1.6\times10^{-15}$ and pass
-every suite below.
-
-\paragraph*{Faults} \code{mutate.py} generates every first-order mutant with
-the classic operators~\cite{offutt1996mutation}: arithmetic, bitwise and
-relational operator replacement, constant replacement ($k\to k\pm1$,
-$c\to c+1$), unary minus deletion, \code{min}/\code{max} swap and statement
-deletion, giving \nMutAuto{} mutants (\nMutFft{} FFT, \nMutLfilter{}
-\code{lfilter}, \nMutUpfirdn{} \code{upfirdn}, \nMutOla{} overlap-add).
-
-\paragraph*{Ground truth} An oracle used only for classification runs each
-mutant on a fixed battery of inputs (all lengths up to 130 and several larger
-ones for the FFT, many filters, including order 0, and initial states for \code{lfilter}, rates up
-to $5/4$ and $1/7$ for \code{upfirdn} with and without default arguments,
-random block splits for overlap-add) and
-compares with an independent reference. A mutant is \emph{equivalent} if its
-largest relative error is at most $10^{-12}$, an \emph{accuracy} fault if it is
-between $10^{-12}$ and $10^{-6}$, and a \emph{functional} fault above $10^{-6}$,
-or if it raises, returns the wrong shape or exceeds the time limit. This gives
-\nFunctional{} functional faults and \nEquivalent{} equivalent mutants. No mutant
-falls in the accuracy band: the largest relative error of a mutant is either below
-$10^{-14}$ or above 1. First-order mutation of these subjects thus produces gross
-faults only, and we study accuracy faults with the hand-written mutants below.
-
-\paragraph*{Approaches} \emph{SoP} (state of practice) is the test suite of
-the library whose interface the subject implements, ported test by test with
-its inputs and tolerances: NumPy's and SciPy's FFT tests, SciPy's
-\code{lfilter}, \code{lfilter\_zi}, \code{upfirdn} and \code{resample\_poly}
-tests, including the regression test added for gh-22571; the overlap-add
-subject, which has no library counterpart, gets four tests in the same style.
-\emph{dsp-props} runs the declarations a user would write (two to four per
-subject). Two ablations isolate the components: \emph{uniform} replaces the
-domain generators by uniform lengths in $[1,512]$ and values in $[-1,1]$, and
-\emph{fixed-tol} replaces every tolerance model by a fixed relative tolerance of
-$10^{-7}$ (the default of \code{numpy.testing.assert\_allclose}); \emph{generic
-PBT} applies both, \ie the same relations written with Hypothesis alone. Each
-randomised approach runs with \nSeeds{} seeds; a run that exceeds
-\timeoutSeconds{}~s counts as a detection, since a hanging test fails in
-continuous integration.
 
 \input{tables/comparison.tex}
 
-\paragraph*{RQ1} Table~\ref{tab:comparison} gives the share of mutants
-detected, averaged over seeds. \rqOneText
+Table~\ref{tab:comparison} gives the share of mutants detected, averaged over
+seeds. \rqOneText
 
-\paragraph*{Hand-written faults} The repository also contains \nMutHand{}
-hand-written faults in six families, closer to real bugs (a forgotten $1/N$, a
-twiddle sign error, single-precision intermediates, a filter that changes after
-64 samples, a gain wrong by 1\,\%, a missing interpolation gain, state reset
-between blocks; script \code{mutants/run\_mutants.py}). The four
-single-precision faults are accuracy faults in the sense above. dsp-props detects \handKilled{} of them;
-\handFirstThree{} fail within the first three generated inputs, and the median
-length of the shrunk counterexample is \handMedianLen{} samples. One fault class
-is a documented blind spot: a filter whose gain is wrong by 1\% is still linear,
-time-invariant and causal, and is detected only when its transfer function is
-declared.
+\subsection{RQ2: contribution of generators and tolerances}
+\label{sec:rq2}
 
 \input{tables/hand.tex}
 
-\paragraph*{RQ2}\label{sec:rq2} \rqTwoText
+\rqTwoText
 
-\subsection{RQ3: is the tool itself correct?}
+\subsection{RQ3: is the method itself correct?}
 \label{sec:rq3}
 
-A reviewer of any fault-finding tool should ask whether its alarms are real.
-We check four things (script \code{benchmarks/validation.py}, results in
-\code{validation.json}).
+A reader of any fault-finding method should ask whether its alarms are real.
+We check four things.
 
 \paragraph*{Relations} Every relation is a theorem about the declared class of
 operators (Appendix~\ref{app:proofs}), so a correct implementation in exact
@@ -397,21 +632,20 @@ NumPy's FFT and real FFT, SciPy's \code{lfilter}, \code{sosfilt},
 \fpSeeds{} independent seeds: \fpRuns{} runs of a relation, \fpComparisons{}
 floating-point comparisons, \fpFailed{} failures. SciPy's \code{lfilter} with
 an initial state on empty blocks is excluded from this count because it is the
-known fault gh-22571; dsp-props flags it in \knownBugFlagged{} of
+known fault of issue 22571; dsp-props flags it in \knownBugFlagged{} of
 \knownBugRuns{} runs on SciPy \scipyVersion.
 
 \paragraph*{Margin} During the same runs we recorded the ratio of the observed
 error to the tolerance for every comparison. \marginExact{} of the comparisons
 are exact (ratio 0); the 99th percentile is \marginPnn{} and the maximum
 \marginMax: the tolerance is \marginFactor{} times larger than the worst error
-observed on correct code.
-Table~\ref{tab:hand} shows that it is nevertheless tight enough to catch the
-single-precision faults.
+observed on correct code. It is nevertheless tight enough to catch the four
+single-precision faults (Table~\ref{tab:hand}).
 
 \paragraph*{References} Calibration and the tests of the IIR model compare
 against extended-precision references, a DFT computed by NumPy in
 \code{long double} and a direct recursion in \code{long double}. Against
-a 50-digit computation with mpmath, their relative error is at most
+a 50-digit computation with mpmath~\cite{mpmath}, their relative error is at most
 \refDftMax{}$\,\eps$ and \refLfilterMax{}$\,\eps$ respectively, where $\eps$ is
 the double-precision unit roundoff: the references are three orders of
 magnitude more accurate than what they are used to measure.
@@ -431,12 +665,12 @@ frequencies.
 
 \subsection{RQ4: faults in real libraries}
 \label{sec:rq4}
-A campaign over \campaignTargets{} targets in SciPy, NumPy, PyTorch, librosa
-and torchaudio (\code{benchmarks/campaign.py}) produced the following findings.
+We ran declarations of \campaignTargets{} operators of SciPy, NumPy, PyTorch,
+librosa and torchaudio. The campaign produced the following findings.
 \begin{itemize}
 \item \code{scipy.signal.lfilter} returns an uninitialised final state, and
 \code{sosfilt} raises, when given an empty block with an initial state. The
-\code{lfilter} part is an independent rediscovery of gh-22571, fixed in the
+\code{lfilter} part is an independent rediscovery of issue 22571, fixed in the
 development version after SciPy~1.18.1; the \code{sosfilt} part, which fails on
 any input that is empty along the filtered axis, was new. The same fault makes
 librosa's streaming pre-emphasis fail on an empty block.
@@ -451,13 +685,13 @@ returns an identity section, so \code{sosfilt(tf2sos(b, a), x)} differs from
 tolerance cannot fit every library.
 \end{itemize}
 The campaign also produced \campaignTriaged{} alarms that triage traced to
-errors in our own specifications (\eg \code{filtfilt} is not symmetric under time
+errors in our own declarations (\eg \code{filtfilt} is not symmetric under time
 reversal with its default padding); they are listed in the repository.
 
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}
-\begin{semilogyaxis}[width=\columnwidth, height=0.62\columnwidth,
+\begin{semilogyaxis}[width=\columnwidth, height=0.55\columnwidth,
   xlabel={Length $N$}, ylabel={Worst relative error ($\eps$)},
   xmin=0, xmax=1200, ymin=0.1, ymax=400, tick label style={font=\scriptsize},
   label style={font=\footnotesize}, legend style={font=\scriptsize, draw=none, fill=none},
@@ -479,42 +713,93 @@ behaves like NumPy.}
 \end{figure}
 
 \subsection{Threats to validity}
-Mutants are a proxy for real faults~\cite{just2014mutants}; the hand-written
-faults and the bugs of RQ4 complement them. The SoP suites are ports of real
+\emph{Construct.} Mutants are a proxy for real faults~\cite{just2014mutants};
+the hand-written faults and the faults of RQ4 complement them. The oracle
+thresholds ($10^{-12}$, $10^{-6}$) are a choice; the per-mutant errors are in
+the result files so that other thresholds can be applied. The oracle was
+extended once after the first run: it did not call \code{upfirdn} with its
+default arguments nor \code{lfilter} with an order-0 filter, so it labelled as
+equivalent eight mutants that the SoP suites or dsp-props detected; with the
+extended oracle, no approach detects any equivalent mutant.
+\emph{Internal.} The kill rates of dsp-props depend on the declarations, which
+we wrote before running the mutants and did not change afterwards. Results
+depend on random seeds, which we vary and report.
+\emph{External.} The subjects are small, and the SoP suites are ports of real
 suites restricted to the subject's interface; the original suites also test
-other dtypes and shapes. The subjects are small, and the oracle thresholds
-($10^{-12}$, $10^{-6}$) are a choice; per-mutant errors are in the result file
-so that other thresholds can be applied. The oracle was extended once after the
-first run: it did not call \code{upfirdn} with its default arguments nor
-\code{lfilter} with an order-0 filter, so it labelled as equivalent eight mutants
-that the SoP suites or dsp-props detected; with the extended oracle, no approach
-detects any equivalent mutant. The kill rates of dsp-props depend on the
-declarations, which we wrote before running the mutants and did not change
-afterwards. Results depend on random seeds, which we vary and report.
+other data types and array shapes. The survey counts are syntactic lower bounds.
 
-\paragraph*{Reproducing} The scripts \code{run\_comparison.py} and
-\code{run\_hand\_mutants.py} (in \code{benchmarks/comparison/}),
-\code{benchmarks/validation.py}, \code{mutants/run\_mutants.py} and
-\code{benchmarks/survey\_test\_suites.py} produce the result files, and
-\code{paper/article/make\_numbers.py} turns them into every number and table of
-this article.
+\paragraph*{Reproducing} Every number and table of this article is produced by
+the following scripts, all in the \code{benchmarks/} folder of the repository:
+\begin{itemize}
+\item \code{survey\_test\_suites.py}: survey of Section~\ref{sec:survey};
+\item \code{comparison/run\_comparison.py}: RQ1 and RQ2, generated mutants;
+\item \code{comparison/run\_hand\_mutants.py}: RQ2, hand-written faults;
+\item \code{validation.py}: RQ3;
+\item \code{campaign.py} and \code{error\_profile.py}: RQ4.
+\end{itemize}
+The script \code{paper/article/make\_numbers.py} turns their result files into
+the numbers and tables of the article.
+
+% ===========================================================================
+\section{Discussion}
+\label{sec:discussion}
+% ===========================================================================
+
+\paragraph*{What the relations can and cannot see} A relation detects a fault
+only if the fault breaks it. Faults that change the operator into another
+operator of the same class, a filter with the wrong coefficients but still LTI
+and causal, a resampler that ignores the last input sample consistently,
+satisfy every structural relation. The transfer-function relation closes the
+first gap at the cost of one declaration; the second remains. Relations are
+thus strongest on faults of structure (state, edges, indexing, normalisation)
+and weakest on faults of value, where expected outputs remain useful.
+
+\paragraph*{Parameters are part of the input} The misses of RQ1 all come from
+parameter values that no declaration exercised. A practitioner should declare
+an operator for several representative parameters, including degenerate ones
+(order 0 and 1 filters, rate 1, default arguments), much as the SoP suites do.
+Generating parameters as well as signals is possible for some classes, \eg
+stable filters from random poles, and is the most direct way to extend the
+method.
+
+\paragraph*{Complementary, not competing} The method and expected-value tests
+detected disjoint sets of faults, and together all of them. In practice they
+combine: a library keeps its regression tests, which pin values and parameter
+combinations, and adds relations, which need no values and explore inputs no
+one thought to write down. The cost is modest: one declaration per operator and
+a few seconds per run.
+
+\paragraph*{Soundness first} A method that reports faults in other people's code
+must not cry wolf. The validation of RQ3 is therefore part of the method, not an
+afterthought: proofs of the relations, an error model with a measured margin,
+references checked against 50-digit arithmetic, and generators audited against
+their own claims. The audit found a weakness in our own generators, and the
+campaign of RQ4 found \campaignTriaged{} errors in our own declarations before any fault was
+reported upstream.
 
 % ===========================================================================
 \section{Conclusion}
+\label{sec:conclusion}
 % ===========================================================================
-DSP code is tested against expected values that someone computed elsewhere,
-with tolerances chosen case by case, on inputs that rarely include the cases
-that break it. Generic property-based and metamorphic testing remove the need for
-expected values but leave the relations, the inputs and the tolerances to each
-developer. dsp-props supplies these three pieces for transforms, filters,
-resamplers and streaming code. \conclusionResult{} It raised no false alarm on
-correct implementations, its references and generators were audited, and the
-audit itself revealed a weakness that we report.
+Signal processing code is hard to test because the correct output is unknown,
+the inputs that break it are specific, and floating-point results can only be
+compared within a tolerance that nobody derives: in the libraries we surveyed,
+tests compare with typed-in values, never generate their inputs, and use
+tolerances spread over \surveyScipyTolDecades{} orders of magnitude.
 
-We reported the faults found to the projects concerned: the empty-block fault of
-\code{lfilter} and \code{sosfilt} to SciPy (issue \#26406, the \code{lfilter} part
-being a duplicate of gh-22571), with a proposed fix (pull request \#26415),
-\reportedOthers
+We proposed a method that answers each problem from a single statement of what
+an operator is: metamorphic relations proved for four classes of DSP operators
+replace the expected output, signal generators target the inputs that break DSP
+code, and tolerances follow forward error bounds or a calibration that refuses
+to absorb faults. We evaluated it with a protocol that measures both its power
+and its soundness. \conclusionResult{} On correct implementations it raised no
+false alarm in \fpRuns{} runs, with references and generators that we audited.
+
+Applied to widely used libraries, the method found faults in SciPy's
+\code{lfilter} and \code{sosfilt} on empty blocks with an initial state, the
+first being an independent rediscovery of a known issue, as well as a dropped
+delay in \code{tf2sos} and a clamping in torchaudio's \code{deemphasis}.
+\reportedUpstream
 
 % ===========================================================================
 \section*{Acknowledgments}
@@ -524,7 +809,7 @@ and on its experimental protocol.
 \section*{AI usage disclosure}
 The authors conceived and directed this research: they defined the problem,
 the scope and the design of dsp-props, chose the experimental protocol, checked
-every result and wrote the bug reports to upstream projects. An AI coding
+every result and submitted the bug reports to upstream projects. An AI coding
 assistant (Claude, Anthropic) was used under their direction to write code and
 experiment scripts and to assist with the writing. Every number in this article
 is produced by a script of the repository.

@@ -65,19 +65,32 @@ def survey(macros):
     macros["surveyScipyHardcoded"] = str(sig["tests_hardcoded_expected"])
     macros["surveyTotalTests"] = f"{sum(v['tests'] for v in s.values()):,}".replace(",", "\\,")
     macros["surveyZiEmpty"] = str(sum(v["tests_zi_and_empty"] for v in s.values()))
+    macros["surveyScipyTests"] = f"{sig['tests']:,}".replace(",", "\\,")
+    macros["surveyScipyComparisons"] = f"{sig['comparisons']:,}".replace(",", "\\,")
+    macros["surveyScipyExplicit"] = str(sig["explicit_tolerance"])
+    macros["surveyScipyEmpty"] = str(sig["tests_empty_input"])
+    macros["surveyScipyZi"] = str(sig["tests_zi"])
+    macros["surveyHardcodedAll"] = str(sum(v["tests_hardcoded_expected"] for v in s.values()))
+    macros["surveyLibrosaTests"] = str(s["librosa"]["tests"])
+    macros["surveyLibrosaCompared"] = str(s["librosa"]["tests_with_comparison"])
+    hist = sorted(((float(k), n) for k, n in sig["tolerance_histogram"].items()), reverse=True)
+    top = sorted(hist, key=lambda kv: -kv[1])[:3]
+    macros["surveyScipyTopTols"] = ", ".join(f"$10^{{{round(math.log10(k))}}}$ ({n})" for k, n in top)
+    lines = ["decade,count"] + [f"{round(math.log10(k))},{n}" for k, n in sorted(hist)]
+    (HERE / "tables" / "tolhist.csv").write_text("\n".join(lines) + "\n")
     rows = []
     for name, v in s.items():
         rows.append(f"{name.replace('_', r'_')} & {v['tests']} & {v['tests_hypothesis']} & {v['comparisons']} & "
                     f"{v['explicit_tolerance']} & {v['distinct_tolerance_values']} & "
                     f"{sci(v['tolerance_min'])}--{sci(v['tolerance_max']) if v['tolerance_max'] < 0.01 else ('$%g$' % v['tolerance_max'])} & {v['tests_empty_input']} & "
-                    f"{v['tests_zi_and_empty']} \\\\")
+                    f"{v['tests_zi_and_empty']} & {v['tests_hardcoded_expected']} \\\\")
     table = r"""\begin{table*}[t]
-\caption{Test suites of five DSP libraries (syntactic counts). Tol.: comparisons with a hand-written tolerance; distinct: number of distinct tolerance values; empty: tests with an empty input; zi+empty: tests that also pass an initial state}
+\caption{Test suites of five DSP libraries (syntactic counts). Tol.: comparisons with a hand-written tolerance; distinct: number of distinct tolerance values; empty: tests with an empty input; zi+empty: tests that also pass an initial state; hard-coded: tests that compare with an array of at least four typed-in floating-point values}
 \label{tab:survey}
 \centering\footnotesize
-\begin{tabular}{@{}lrrrrrlrr@{}}
+\begin{tabular}{@{}lrrrrrlrrr@{}}
 \toprule
-Suite & Tests & Hypothesis & Comparisons & Tol. & Distinct & Range & Empty & zi+empty \\
+Suite & Tests & Hypothesis & Comparisons & Tol. & Distinct & Range & Empty & zi+empty & Hard-coded \\
 \midrule
 """ + "\n".join(rows) + r"""
 \bottomrule

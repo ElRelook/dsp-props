@@ -28,7 +28,8 @@ filter would have caught the \code{lfilter} survivors.}
 
 \newcommand{\rqTwoText}{On the generated mutants the four randomised variants
 detect the same faults, up to one FFT mutant that the variants with uniform
-inputs miss in some seeds (Table~\ref{tab:comparison}). These faults are gross:
+inputs miss in some seeds (Table~\ref{tab:comparison}). These mutants change the output by orders of magnitude, and almost any input
+reveals them:
 the median number of inputs before the first failure is \firstMedDsp{} for
 dsp-props and \firstMedUni{} for uniform inputs, and the median counterexample
 has \cexMedDsp{} and \cexMedUni{} samples. The generators and tolerances do
@@ -49,8 +50,10 @@ subnormal input of norm $10^{-323}$, for which a purely relative tolerance is
 zero and a rounding error of one subnormal fails the test. The error model of
 dsp-props includes an absolute floor, and it raised no false alarm.
 With 200 inputs per relation, these differences do not change the detection
-rate; with a smaller budget, or on faults that need a specific input, they
-would.}
+rate. We expect them to matter with a smaller budget or on faults that need a
+specific input, but we did not measure this. One hand-written fault, a filter
+whose gain is wrong by 1\,\%, is detected only because its transfer function is
+declared: it is still linear, time-invariant and causal.}
 
 \newcommand{\conclusionResult}{On \nFunctional{} generated faults it detects
 \killFuncDsp{}, against \killFuncSop{} for the ported test suites of NumPy and
@@ -58,4 +61,8 @@ SciPy, and the two are complementary: together they detect \killUnion. Its
 misses come from operator parameters that no declaration exercised; the misses
 of the suites, from code paths that their few expected values do not reach.}
 
-\newcommand{\reportedOthers}{the delay dropped by \code{tf2sos} to SciPy, and the clamping of \code{deemphasis} to torchaudio.}
+\newcommand{\reportedUpstream}{We reported the empty-block faults to
+SciPy\footnote{\url{https://github.com/scipy/scipy/issues/26406}} and
+contributed a fix\footnote{\url{https://github.com/scipy/scipy/pull/26415}};
+the reports of the two other findings are written and will be submitted to their
+projects.}
