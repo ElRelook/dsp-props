@@ -1,0 +1,165 @@
+{
+ "seeds": 5,
+ "rows": [
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 7.64
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.96
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.44
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.99
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.39
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.76
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.19
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.34
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.28
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.23
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.35
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 7.76
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.84
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.61
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 8.01
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.46
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": false,
+   "failures": [],
+   "seconds": 2.92
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.1
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.08
+  },
+  {
+   "mutant": "reference:fft",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": false,
+   "failures": [],
+   "seconds": 3.23
+  }
+ ]
+}
