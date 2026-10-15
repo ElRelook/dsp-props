@@ -1989,6 +1989,1706 @@
     }
    ],
    "seconds": 0.95
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 7.071068e-01 but ||x|| = 1.000000e+00 (N=2)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 3.02
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.95
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.92
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 3.1
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.91
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 14,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.44
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 11,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.44
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 11,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.43
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 5,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.49
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 6,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.27
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 7.071068e-01 but ||x|| = 1.000000e+00 (N=2)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.82
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.8
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.85
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.68
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.94
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 14,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.25
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 11,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.25
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 11,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.48
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 5,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.28
+  },
+  {
+   "mutant": "fft_wrong_normalisation",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_normalisation",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(2) = 1.000000e+00 but ||x|| = 1.414214e+00 (N=2)",
+     "first_failure": 6,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.31
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ExceptionGroup",
+     "message": "Hypothesis found 2 distinct failures. (2 sub-exceptions)",
+     "first_failure": 3,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.62
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ExceptionGroup",
+     "message": "Hypothesis found 2 distinct failures. (2 sub-exceptions)",
+     "first_failure": 5,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 2.11
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 4.668e-08 exceeds tolerance 4.445e-15 (N=1, ref norm 1.001e+00)",
+     "first_failure": 3,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.62
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ExceptionGroup",
+     "message": "Hypothesis found 2 distinct failures. (2 sub-exceptions)",
+     "first_failure": 3,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.41
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ExceptionGroup",
+     "message": "Hypothesis found 2 distinct failures. (2 sub-exceptions)",
+     "first_failure": 3,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.67
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 5.960e-08 exceeds tolerance 5.696e-15 (N=1, ref norm 1.283e+00)",
+     "first_failure": 9,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.48
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 5.960e-08 exceeds tolerance 5.678e-15 (N=1, ref norm 1.278e+00)",
+     "first_failure": 15,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.59
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 2.980e-08 exceeds tolerance 6.582e-15 (N=1, ref norm 1.482e+00)",
+     "first_failure": 9,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.54
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.490e-08 exceeds tolerance 8.805e-15 (N=1, ref norm 1.983e+00)",
+     "first_failure": 19,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.86
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.863e-08 exceeds tolerance 4.601e-15 (N=1, ref norm 1.036e+00)",
+     "first_failure": 4,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.49
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ExceptionGroup",
+     "message": "Hypothesis found 2 distinct failures. (2 sub-exceptions)",
+     "first_failure": 3,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.9
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: non-finite values in output",
+     "first_failure": 5,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.38
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: non-finite values in output",
+     "first_failure": 5,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.27
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: non-finite values in output",
+     "first_failure": 3,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.91
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ExceptionGroup",
+     "message": "Hypothesis found 2 distinct failures. (2 sub-exceptions)",
+     "first_failure": 3,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 2.53
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(1) = 0.000000e+00 but ||x|| = 1.399265e-160 (N=1)",
+     "first_failure": 23,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.34
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(1) = 0.000000e+00 but ||x|| = 2.223079e-80 (N=1)",
+     "first_failure": 130,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.81
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(1) = 0.000000e+00 but ||x|| = 1.838699e-143 (N=1)",
+     "first_failure": 50,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.65
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 3.815e-06 exceeds tolerance 3.440e-06 (N=33, ref norm 3.440e+01)",
+     "first_failure": 64,
+     "counterexample_length": 33
+    }
+   ],
+   "seconds": 38.32
+  },
+  {
+   "mutant": "fft_float32_internal",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_float32_internal",
+     "relation": "parseval",
+     "error": "ToleranceError",
+     "message": "parseval: ||f(x)||/sqrt(1) = 0.000000e+00 but ||x|| = 1.761109e-186 (N=1)",
+     "first_failure": 12,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.29
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.219e-14 (N=3, ref norm 1.732e+00)",
+     "first_failure": 3,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 8.05
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.219e-14 (N=3, ref norm 1.732e+00)",
+     "first_failure": 3,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 7.71
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.219e-14 (N=3, ref norm 1.732e+00)",
+     "first_failure": 3,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 8.69
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.219e-14 (N=3, ref norm 1.732e+00)",
+     "first_failure": 5,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 8.17
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.219e-14 (N=3, ref norm 1.732e+00)",
+     "first_failure": 5,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 7.4
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.724e-14 (N=3, ref norm 2.449e+00)",
+     "first_failure": 4,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 7.95
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 6.335e-12 exceeds tolerance 6.068e-12 (N=182, ref norm 1.820e+02)",
+     "first_failure": 8,
+     "counterexample_length": 182
+    }
+   ],
+   "seconds": 8.4
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.724e-14 (N=3, ref norm 2.449e+00)",
+     "first_failure": 12,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 9.63
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.724e-14 (N=3, ref norm 2.449e+00)",
+     "first_failure": 5,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 8.93
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.724e-14 (N=3, ref norm 2.449e+00)",
+     "first_failure": 10,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 8.42
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.732e-07 (N=3, ref norm 1.732e+00)",
+     "first_failure": 3,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 7.88
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.732e-07 (N=3, ref norm 1.732e+00)",
+     "first_failure": 3,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 8.03
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.732e-07 (N=3, ref norm 1.732e+00)",
+     "first_failure": 3,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 7.32
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.732e-07 (N=3, ref norm 1.732e+00)",
+     "first_failure": 5,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 7.66
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 1.732e-07 (N=3, ref norm 1.732e+00)",
+     "first_failure": 5,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 7.76
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 2.449e-07 (N=3, ref norm 2.449e+00)",
+     "first_failure": 4,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 7.8
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 2.449e-07 (N=3, ref norm 2.449e+00)",
+     "first_failure": 12,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 8.16
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 2.449e-07 (N=3, ref norm 2.449e+00)",
+     "first_failure": 12,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 9.63
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 2.449e-07 (N=3, ref norm 2.449e+00)",
+     "first_failure": 5,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 8.34
+  },
+  {
+   "mutant": "fft_wrong_twiddle_sign",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_wrong_twiddle_sign",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.449e+00 exceeds tolerance 2.449e-07 (N=3, ref norm 2.449e+00)",
+     "first_failure": 10,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 8.51
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 1.414e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.18
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 9,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.89
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 1.414e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.07
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.95
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.1
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 4,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.92
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 8,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.78
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 12,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.93
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 5,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.0
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 6.280e-15 (N=2, ref norm 1.414e+00)",
+     "first_failure": 13,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.87
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.18
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 9,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.97
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 1.414e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.83
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.96
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 3,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 2.04
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 4,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.98
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 8,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.87
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 12,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 1.01
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 5,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.99
+  },
+  {
+   "mutant": "fft_last_sample_dropped",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_last_sample_dropped",
+     "relation": "circular shift",
+     "error": "ToleranceError",
+     "message": "circular shift (s=1): L2 error 2.000e+00 exceeds tolerance 1.414e-07 (N=2, ref norm 1.414e+00)",
+     "first_failure": 13,
+     "counterexample_length": 2
+    }
+   ],
+   "seconds": 0.89
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 8.882e-15 (N=1, ref norm 2.000e+00)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.98
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 8.882e-15 (N=1, ref norm 2.000e+00)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.54
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 8.882e-15 (N=1, ref norm 2.000e+00)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.93
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 8.882e-15 (N=1, ref norm 2.000e+00)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.75
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.732e-09 exceeds tolerance 4.223e-14 (N=3, ref norm 6.000e+00)",
+     "first_failure": 1,
+     "counterexample_length": 3
+    }
+   ],
+   "seconds": 0.54
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props/uniform",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 8.882e-24 (N=1, ref norm 2.000e-09)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.35
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props/uniform",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 8.882e-24 (N=1, ref norm 2.000e-09)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.23
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props/uniform",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 8.882e-24 (N=1, ref norm 2.000e-09)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.25
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props/uniform",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 8.882e-24 (N=1, ref norm 2.000e-09)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.22
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props/uniform",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 8.882e-24 (N=1, ref norm 2.000e-09)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.28
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 2.000e-10 (N=1, ref norm 2.000e-03)",
+     "first_failure": 47,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.56
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 2.000e-10 (N=1, ref norm 2.000e-03)",
+     "first_failure": 7,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.86
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 2.000e-10 (N=1, ref norm 2.000e-03)",
+     "first_failure": 22,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.91
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 2.000e-10 (N=1, ref norm 2.000e-03)",
+     "first_failure": 9,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.77
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "dsp-props/fixed-tol",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 2.000e-10 (N=1, ref norm 2.000e-03)",
+     "first_failure": 13,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 1.02
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "generic-pbt",
+   "seed": 0,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 2.000e-16 (N=1, ref norm 2.000e-09)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.17
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "generic-pbt",
+   "seed": 1,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 2.000e-16 (N=1, ref norm 2.000e-09)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.16
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "generic-pbt",
+   "seed": 2,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 2.000e-16 (N=1, ref norm 2.000e-09)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.18
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "generic-pbt",
+   "seed": 3,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 2.000e-16 (N=1, ref norm 2.000e-09)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.2
+  },
+  {
+   "mutant": "fft_dc_offset",
+   "approach": "generic-pbt",
+   "seed": 4,
+   "killed": true,
+   "failures": [
+    {
+     "declaration": "fft_dc_offset",
+     "relation": "linearity",
+     "error": "ToleranceError",
+     "message": "linearity: L2 error 1.000e-09 exceeds tolerance 2.000e-16 (N=1, ref norm 2.000e-09)",
+     "first_failure": 1,
+     "counterexample_length": 1
+    }
+   ],
+   "seconds": 0.15
   }
  ]
 }
