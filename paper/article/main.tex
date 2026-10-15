@@ -137,7 +137,9 @@ The library, the experiments and the data are available at
 % ===========================================================================
 
 \subsection{Testing without an oracle}
-Metamorphic testing~\cite{chen2018metamorphic,segura2016metamorphic} checks
+Metamorphic testing~\cite{chen2018metamorphic,segura2016metamorphic}, applied
+among others to bioinformatics~\cite{chen2009bioinformatics} and image
+processing~\cite{jafari2024image}, checks
 \emph{metamorphic relations}: if $f$ is correct, then for related inputs $x$
 and $x'$ the outputs $f(x)$ and $f(x')$ must satisfy a known relation, \eg
 $f(x+x') = f(x)+f(x')$ for a linear $f$. Property-based testing (PBT), introduced
@@ -145,17 +147,19 @@ by QuickCheck~\cite{claessen2000quickcheck} and available in Python through
 Hypothesis~\cite{maciver2019hypothesis}, generates the inputs and shrinks a
 failing input to a minimal one~\cite{maciver2020reduction}. Both are general
 techniques: the relations, the generators and the comparison rule are left to
-the user. Goldstein et~al.\ observe that writing good properties and generators
-is the main cost of PBT in practice~\cite{goldstein2024pbt}; Maaz
+the user. Interviews of PBT users identify writing properties and generators as
+their main weakness~\cite{goldstein2024pbt}; Maaz
 et~al.\ use language models to propose properties across the Python ecosystem~\cite{maaz2025agentic}.
 
 \subsection{Self-testing of numerical programs}
 Blum, Luby and Rubinfeld~\cite{blum1993selftesting} showed that a program
 computing a linear function can be tested, and even corrected, by checking
-random linear identities. Erg\"un~\cite{ergun1995testing} extended the idea to
-the DFT, and Erg\"un, Kumar and Rubinfeld~\cite{ergun2001checking} to
-computations that are only approximately correct. FFTW~\cite{frigo2005fftw}
-ships a self-test based on these results. These works establish that
+random linear identities. Erg\"un~\cite{ergun1995testing,ergun2000selftesting}
+extended the idea to multivariate linear functions such as the DFT, and
+Erg\"un, Kumar and Rubinfeld~\cite{ergun2001checking} to computations that are
+only approximately correct. The FFTW library~\cite{frigo2005fftw} ships a
+self-test built on these results, which checks linearity, impulse responses and
+time and frequency shifts~\cite{fftwverify}. These works establish that
 linearity and shift identities characterise the DFT; they do not cover
 filters, resamplers or streaming code, and they treat the floating-point error
 with a single threshold.
@@ -164,9 +168,9 @@ with a single threshold.
 Differential testing compares several implementations of the same
 function~\cite{vanover2020fpdiff}. It needs at least two of them, and they may
 share an algorithm or an assumption, \eg the same handling of an empty block.
-Studies of numerical bugs~\cite{difranco2017floatingpoint} show that a large
-share of them concern precision and special values, which is what the
-generators of Section~\ref{sec:contrib} target.
+Di Franco et~al.\ analysed 269 real numerical bugs in NumPy, SciPy, LAPACK,
+GSL and Elemental~\cite{difranco2017floatingpoint}, showing that such bugs reach
+widely used, mature libraries.
 
 \subsection{Floating-point error of DSP operators}
 The FFT computed by a Cooley--Tukey algorithm has a relative error that grows
@@ -280,7 +284,7 @@ fault cannot be absorbed into the tolerance.
 Compared with generic PBT, dsp-props supplies the three pieces of domain
 knowledge that PBT leaves to the user; Section~\ref{sec:rq2} measures the
 contribution of two of them. Compared with self-testing of the
-DFT~\cite{ergun1995testing,frigo2005fftw}, it covers filters, resamplers and
+DFT~\cite{ergun1995testing,fftwverify}, it covers filters, resamplers and
 streaming code, and its tolerance follows the operator. Compared with
 differential testing~\cite{vanover2020fpdiff}, it needs a single implementation.
 Compared with the test suites of Section~\ref{sec:survey}, it needs no expected
