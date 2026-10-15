@@ -72,7 +72,10 @@ La CI (`.github/workflows/ci.yml`) lance pytest, la suite de mutation, la CLI su
   entrées. Angle mort connu : un filtre faux mais toujours LTI et causal, détecté dès qu'on
   déclare sa fonction de transfert.
 - Bugs trouvés : `scipy.signal.lfilter` / `sosfilt` avec un bloc vide et un état initial
-  (scipy/scipy#26406), propagé à la pré-emphase en streaming de librosa. Comportements
+  (scipy/scipy#26406). La partie `lfilter` redécouvre scipy/scipy#22571 (déjà connu, corrigé
+  dans la version de dev) ; la partie `sosfilt` est nouvelle. Le cas FIR de `lfilter` se
+  propage à la pré-emphase en streaming de librosa. SciPy applique une politique IA : tickets
+  et PR rédigés par l'auteur, pas par une IA. Comportements
   documentés mais surprenants : `tf2sos` supprime les retards purs ; `deemphasis` de
   torchaudio écrête dans [-1, 1].
 - FFT CPU de PyTorch : jusqu'à 195 ε pour certaines longueurs à grands facteurs premiers
