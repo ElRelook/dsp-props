@@ -492,7 +492,7 @@ recursion, Appendix~\ref{app:iir} derives
 \|\hat y-y\|_2 \le c\,\eps\,k\,\|h_A\|_1\bigl(\|b\|_1+\|a_{1:}\|_1\|h_{B/A}\|_1\bigr)\|x\|_2,
 \label{eq:iir}
 \end{equation}
-to first order in $\eps$, where $k$ is the number of coefficients, $h_A$ and
+to first order in $\eps$, where $k$ is the number of coefficients other than $a_0=1$, $h_A$ and
 $h_{B/A}$ are the impulse responses of $1/A$ and $B/A$, and $a_{1:}$ are the
 feedback coefficients. The bound grows as poles approach the unit circle, which
 is where recursions lose accuracy, and reduces to the error of a dot product for
@@ -738,7 +738,8 @@ the following scripts, all in the \code{benchmarks/} folder of the repository:
 \item \code{campaign.py} and \code{error\_profile.py}: RQ4.
 \end{itemize}
 The script \code{paper/article/make\_numbers.py} turns their result files into
-the numbers and tables of the article.
+the numbers and tables of the article, and \code{proofs/check.sh} checks the
+Coq proofs of the appendices.
 
 % ===========================================================================
 \section{Discussion}
@@ -829,6 +830,12 @@ The authors declare no conflict of interest.
 
 Sequences have length $N$, indices are taken modulo $N$ for the DFT, and
 $\DFT x[k]=\sum_{n=0}^{N-1}x[n]\,\omega^{kn}$ with $\omega=e^{-2\pi i/N}$.
+Every proposition of this appendix and the argument of Appendix~\ref{app:iir}
+are also proved in Coq, with the Mathematical Components library, in the
+\code{proofs/} directory of the repository; its README maps each proposition to
+its Coq theorem and lists the modelling choices. The proofs use no axiom beyond
+the three classical axioms of MathComp Analysis, which only the specialisation to
+$\omega=e^{-2\pi i/N}$ needs.
 
 \begin{proposition}[Linearity] $\DFT$ is linear, and so is every LTI filter
 from zero state and every resampler of the form ``upsample by $L$, filter,
@@ -872,10 +879,11 @@ substitute $m'=m-s$. (ii) $f(x)[n]$ for $n<k$ only involves $x[m]$, $m\le n<k$.
 For a non-causal filter (\eg a centred FIR), (i) holds after discarding the
 first $s$ output samples, which is what the library checks.
 
-\begin{proposition}[Transfer function] For a stable causal filter with
-transfer function $H=B/A$ and impulse response $h$, the length-$L$ DFT of
+\begin{proposition}[Transfer function] For a causal filter with
+transfer function $H=B/A$ whose impulse response $h$ is absolutely summable,
+and $k$ with $A(e^{2\pi ik/L})\neq0$, the length-$L$ DFT of
 $(h[0],\dots,h[L-1])$ equals $H(e^{2\pi i k/L})$ up to the aliasing term
-$\sum_{n\ge L}h[n]\omega_L^{kn}$, whose norm is bounded by $\sum_{n\ge L}|h[n]|$.
+$\sum_{n\ge L}h[n]\omega_L^{kn}$, whose modulus is at most $\sum_{n\ge L}|h[n]|$.
 \end{proposition}
 \begin{proof} $H(e^{i\theta})=\sum_{n\ge0}h[n]e^{-i\theta n}$ converges
 absolutely for a stable filter; split the sum at $L$.\end{proof}
@@ -888,8 +896,9 @@ $x[m]=\mathrm{sign}(h[N-1-m])$ attains $\sum_{n<N}|h[n]|$ at $n=N-1$.\end{propos
 \begin{proof} $|y[n]|\le\sum_m|h[n-m]||x[m]|\le\|h\|_1$; with the given input,
 every term of $y[N-1]=\sum_m h[N-1-m]x[m]$ is $|h[N-1-m]|$.\end{proof}
 
-\begin{proposition}[Periodic time invariance] Let
-$f=\downarrow_M\circ(h*\cdot)\circ\uparrow_L$. Delaying the input by $Ms$
+\begin{proposition}[Periodic time invariance] Let $L,M\ge1$ and
+$f=\downarrow_M\circ(h*\cdot)\circ\uparrow_L$, the filter being applied from
+zero state. Delaying the input by $Ms$
 samples delays the output by $Ls$ samples.\end{proposition}
 \begin{proof} $\uparrow_L$ turns a delay of $Ms$ into a delay of $LMs$; the
 filter preserves it; $\downarrow_M$ turns a delay of $LMs$, a multiple of $M$,
@@ -916,18 +925,23 @@ but a correct one computes the same function, which is what the relation checks.
 \label{app:iir}
 % ===========================================================================
 Normalise $a_0=1$. The direct recursion computes
-$y[n]=\sum_{j=0}^{q}b_jx[n-j]-\sum_{j=1}^{p}a_jy[n-j]$ with $k=p+q+1$ products.
+$y[n]=\sum_{j=0}^{q}b_jx[n-j]-\sum_{j=1}^{p}a_jy[n-j]$ with $k=p+q+1$ products,
+one per coefficient other than $a_0$.
 In floating point, with the standard model~\cite{higham2002accuracy}, the
 computed $\hat y$ satisfies
 $\hat y[n]=\sum_jb_jx[n-j]-\sum_ja_j\hat y[n-j]+\delta[n]$ with
 $|\delta[n]|\le\gamma_k\bigl(\sum_j|b_j||x[n-j]|+\sum_j|a_j||\hat y[n-j]|\bigr)$,
-$\gamma_k=k\eps/(1-k\eps)$. The error $e=\hat y-y$ therefore obeys
+$\gamma_k=k\eps/(1-k\eps)$. The Coq proof takes this bound on $\delta$ as a
+hypothesis; everything after it is proved. The error $e=\hat y-y$ therefore obeys
 $A(z)e=\delta$, \ie $e=h_A*\delta$. By Young's inequality
 $\|e\|_2\le\|h_A\|_1\|\delta\|_2$, and
 $\|\delta\|_2\le\gamma_k(\|b\|_1\|x\|_2+\|a_{1:}\|_1\|\hat y\|_2)$. Finally
 $\|\hat y\|_2\le\|h_{B/A}\|_1\|x\|_2+\|e\|_2$, which gives
-\eqref{eq:iir} to first order in $\eps$, with $\gamma_k\approx k\eps$. The library
-uses $c=4$ to cover the two computations compared in a relation, and the
+\eqref{eq:iir} with $c=1$ to first order in $\eps$, with $\gamma_k\approx k\eps$.
+Rigorously, if $k\eps\le1/2$ and $2k\eps\|h_A\|_1\|a_{1:}\|_1\le1/2$, the bound
+holds with $c=4$ for one computation. The library uses $c=4$ for the difference
+of the two computations compared in a relation, twice the first-order
+requirement $c=2$, and the
 validation of Section~\ref{sec:rq3} confirms that the bound is never reached on
 correct code.
 
