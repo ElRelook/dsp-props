@@ -154,7 +154,7 @@ def validation(macros):
     macros["fpFailed"] = "no" if fp["failed_runs"] == 0 else str(fp["failed_runs"])
     macros["fpComparisons"] = f"{fp['comparisons']:,}".replace(",", "\\,")
     q = fp["margin_quantiles"]
-    macros["marginMedian"] = f"${tex_float(q['50'])}$"
+    macros["marginExact"] = pct(fp["exact_comparisons"] / fp["comparisons"])
     macros["marginPnn"] = f"${tex_float(q['99'])}$"
     macros["marginMax"] = f"${tex_float(q['100'])}$"
     macros["marginFactor"] = f"{1 / q['100']:.0f}"

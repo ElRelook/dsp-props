@@ -390,9 +390,10 @@ known fault gh-22571; dsp-props flags it in \knownBugFlagged{} of
 \knownBugRuns{} runs on SciPy \scipyVersion.
 
 \paragraph*{Margin} During the same runs we recorded the ratio of the observed
-error to the tolerance for every comparison. The median is \marginMedian, the
-99th percentile \marginPnn, and the maximum \marginMax: the tolerance is
-\marginFactor{} times larger than the worst error observed on correct code.
+error to the tolerance for every comparison. \marginExact{} of the comparisons
+are exact (ratio 0); the 99th percentile is \marginPnn{} and the maximum
+\marginMax: the tolerance is \marginFactor{} times larger than the worst error
+observed on correct code.
 At the same time, RQ1 shows that it is tight enough to catch accuracy faults
 that fixed tolerances miss.
 
