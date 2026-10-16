@@ -6,8 +6,6 @@ authors:
   - family-names: "Basdevant"
     given-names: "Clément"
     orcid: "https://orcid.org/0009-0004-7496-2365"
-  - family-names: "Boganski"
-    given-names: "Nicolas"
 license: BSD-3-Clause
 repository-code: "https://github.com/clement-basdevant/dsp-props"
 version: 0.1.1

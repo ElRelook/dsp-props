@@ -10,13 +10,9 @@ authors:
   - name: Clément Basdevant
     orcid: 0009-0004-7496-2365
     affiliation: 1
-  - name: Nicolas Boganski
-    affiliation: 2  # TODO: ORCID and affiliation
 affiliations:
   - name: Independent Researcher
     index: 1
-  - name: TODO, Nicolas Boganski's affiliation
-    index: 2
 date: 14 October 2026
 bibliography: paper.bib
 ---
@@ -141,12 +137,16 @@ models to propose properties across the Python ecosystem
 [@maaz2025agentic]; `dsp-props` instead provides a curated, verified
 catalogue for one domain, with tolerances grounded in error analysis.
 
+# Acknowledgements
+
+I thank Nicolas Boganski for discussions during the development of `dsp-props`.
+
 # AI usage disclosure
 
 Most of the code, tests and this draft were written with the help of an AI
-coding assistant (Claude, Anthropic), under the direction of the first author, who
-chose the scope and design, reviewed the results and reported upstream bugs
-himself. Every number in this paper is produced by scripts in the repository
+coding assistant (Claude, Anthropic), under the direction of the author, who
+chose the scope and design, reviewed the results and reported the upstream
+bugs. Every number in this paper is produced by scripts in the repository
 (`mutants/run_mutants.py`, `benchmarks/campaign.py`,
 `benchmarks/error_profile.py`).
 

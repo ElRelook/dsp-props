@@ -5,7 +5,7 @@ Au lieu de comparer à une sortie de référence, on vérifie des relations mét
 doivent tenir pour toute implémentation correcte, avec une tolérance dérivée d'un modèle
 d'erreur, et on rapporte le plus petit contre-exemple.
 
-Auteurs : Clément Basdevant, Nicolas Boganski. Papier JOSS en préparation (`paper/paper.md`, `paper/paper.bib`).
+Auteur : Clément Basdevant (Nicolas Boganski, retiré des auteurs pour l'instant, est cité dans les remerciements). Papier JOSS en préparation (`paper/paper.md`, `paper/paper.bib`).
 Version 0.1.0 publiée sur PyPI (procédure : `RELEASING.md`). Plan de développement :
 `docs/schema-directeur.md`. Tickets de bugs à poster en amont : `papers/tickets-a-poster.md`.
 
