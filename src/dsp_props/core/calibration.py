@@ -79,7 +79,7 @@ class CalibratedTolerance(ToleranceModel):
 
 
 class CalibrationError(AssertionError):
-    pass
+    """Raised by ``calibrate`` when the measured error is too large to be rounding."""
 
 
 def calibrate(op, reference=longdouble_dft, lengths=range(1, 257), trials=6, *,

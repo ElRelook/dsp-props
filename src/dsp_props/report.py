@@ -65,6 +65,8 @@ def _fmt(s):
 
 @dataclass
 class Failure:
+    """One violated relation: the error raised, the shrunk input and when it first failed."""
+
     relation: str
     error: BaseException
     example: Any = None  # the shrunk input, as passed to the relation's check
@@ -89,6 +91,14 @@ class Failure:
 
 @dataclass
 class Report:
+    """Outcome of ``verify`` for one operator.
+
+    ``checked`` lists the relation names that were run, ``failures`` the
+    ``Failure`` objects for those that were violated.
+    ``str(report)`` gives the text summary; ``to_dict``, ``to_json``,
+    ``to_markdown`` and ``to_html`` export it.
+    """
+
     func_name: str
     checked: list
     failures: list
@@ -189,6 +199,8 @@ def render_html(reports, title="dsp-props report"):
 
 
 class PropertyViolation(AssertionError):
+    """Raised by ``verify`` when a relation fails; ``.report`` holds the full ``Report``."""
+
     def __init__(self, report: Report):
         super().__init__(str(report))
         self.report = report

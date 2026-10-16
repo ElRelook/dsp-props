@@ -6,6 +6,8 @@ from hypothesis import strategies as st
 
 
 class Relation:
+    """Base class of a metamorphic relation; subclasses set ``name`` and implement ``inputs`` and ``check``."""
+
     name: str = "relation"
 
     def applies(self, spec) -> bool:

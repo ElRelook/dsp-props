@@ -39,6 +39,8 @@ dsp-props = "dsp_props.cli:main"
 # transfer-function checks, IIR error model and the examples use scipy.signal
 scipy = ["scipy>=1.11"]
 dev = ["pytest>=7", "scipy>=1.11", "build", "twine"]
+# documentation site (mkdocs build --strict); MkDocs 2 drops the plugin system
+docs = ["mkdocs>=1.6,<2", "mkdocs-material>=9.5", "mkdocstrings[python]>=0.26"]
 
 [tool.hatch.version]
 path = "src/dsp_props/__init__.py"
