@@ -8,7 +8,7 @@ from typing import Callable, Optional
 
 import numpy as np
 
-from hypothesis import HealthCheck, given, settings
+from hypothesis import HealthCheck, given, seed as _seed, settings
 from hypothesis.errors import FlakyFailure, HypothesisException
 
 from .core.tolerance import FFTTolerance, ToleranceModel
@@ -234,7 +234,7 @@ def transform(inverse=None, *, kind="dft", linear=True, parseval=False, parseval
     return decorate
 
 
-def _hypothesis_test(rel, spec, max_examples, derandomize):
+def _hypothesis_test(rel, spec, max_examples, derandomize, seed=None):
     @settings(max_examples=max_examples, deadline=None, database=None,
               derandomize=derandomize, suppress_health_check=list(HealthCheck),
               print_blob=False)
@@ -250,19 +250,25 @@ def _hypothesis_test(rel, spec, max_examples, derandomize):
                 trace["first_failure"] = trace["calls"]
             raise
 
+    if seed is not None:
+        run = _seed(seed)(run)
     trace = {"calls": 0, "example": None, "first_failure": None}
     return run, trace
 
 
-def verify(func, *, max_examples=200, raise_on_failure=True, derandomize=False) -> Report:
-    """Run every relation declared for ``func`` and return a report."""
+def verify(func, *, max_examples=200, raise_on_failure=True, derandomize=False, seed=None) -> Report:
+    """Run every relation declared for ``func`` and return a report.
+
+    ``seed`` makes the run reproducible (the same inputs are drawn), which
+    the benchmarks use to repeat experiments over independent seeds.
+    """
     spec = getattr(func, "__dsp_props__", None)
     if spec is None:
         raise TypeError(f"{func!r} has no dsp-props declaration (use @dp.transform, @dp.lti_filter, @dp.resampler or @dp.streaming)")
     failures, checked, seconds = [], [], {}
     for rel in spec.relations:
         checked.append(rel.name)
-        run, trace = _hypothesis_test(rel, spec, max_examples, derandomize)
+        run, trace = _hypothesis_test(rel, spec, max_examples, derandomize, seed)
         t0 = time.perf_counter()
         error = None
         try:

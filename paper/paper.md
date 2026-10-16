@@ -66,9 +66,9 @@ re-implements, usually partially:
    for any split of its input, including empty and one-sample blocks.
 2. **Which signals expose bugs.** Uniform random arrays rarely do. `dsp-props`
    generates impulses, constants, off-grid and near-Nyquist tones, close tone
-   pairs, sparse signals and white noise, over pathological lengths (0, 1,
-   2, primes, powers of two plus or minus one) and amplitudes from 1e-100 to
-   1e100.
+   pairs, sparse signals and white noise, over pathological lengths (1, 2,
+   primes, powers of two plus or minus one), amplitudes from 1e-100 to
+   1e100, and block splits that include empty and one-sample blocks.
 3. **How close is close enough.** A fixed `rtol` is either too loose to catch
    a single-precision intermediate or too tight for a large transform. The
    FFT model follows the $O(\varepsilon \log N)$ bound of
@@ -119,8 +119,11 @@ Applied to 46 targets in SciPy, NumPy, PyTorch, librosa [@mcfee2015librosa]
 and torchaudio, the relations found that `scipy.signal.lfilter` returns an
 uninitialised final state, and `sosfilt` raises, when given an empty block
 with an initial state, so block processing silently diverges after an empty
-block (reported as scipy/scipy#26406). The same failure propagates to
-librosa's streaming pre-emphasis. They also found two documented-but-surprising
+block (reported as scipy/scipy#26406). The `lfilter` part turned out to be an
+independent rediscovery of a known issue (scipy/scipy#22571, fixed in the
+development version after SciPy 1.18.1); the `sosfilt` failure, which occurs on
+any input that is empty along the filtered axis, was new. The FIR case of
+`lfilter` propagates to librosa's streaming pre-emphasis. They also found two documented-but-surprising
 behaviours: `tf2sos` drops pure delays, and torchaudio's `deemphasis` clips
 its output to [-1, 1], so it does not invert `preemphasis`. An error profile
 over lengths 2 to 1200 shows that PyTorch's CPU FFT reaches 195 ε for some
