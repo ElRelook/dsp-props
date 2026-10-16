@@ -32,6 +32,12 @@ def hermitian_extend(half, n):
 
 @dataclass
 class TransformSpec:
+    """Declaration of a transform, stored on ``func.__dsp_props__`` by ``transform``.
+
+    Fields mirror the arguments of ``transform``; ``relations`` lists the
+    relations that apply to this declaration.
+    """
+
     func: Callable
     inverse: Optional[Callable] = None
     kind: str = "dft"
@@ -68,6 +74,12 @@ class TransformSpec:
 
 @dataclass
 class StreamingSpec:
+    """Declaration of a block processor, stored by ``streaming`` and ``stateful``.
+
+    ``make`` is called with no argument to build a fresh processor whose
+    ``process(block)`` method returns the output for that block.
+    """
+
     make: Callable
     tolerance: ToleranceModel = field(default_factory=lambda: FFTTolerance(c=1000.0))
     max_n: int = 512
@@ -79,6 +91,11 @@ class StreamingSpec:
 
 @dataclass
 class LTISpec:
+    """Declaration of an LTI filter, stored on ``func.__dsp_props__`` by ``lti_filter``.
+
+    Fields mirror the arguments of ``lti_filter``.
+    """
+
     func: Callable
     causal: bool = True
     transfer: Optional[tuple] = None
@@ -119,6 +136,12 @@ def lti_filter(*, causal=True, transfer=None, max_gain=None, tolerance=None, max
 
 @dataclass
 class MultirateSpec:
+    """Declaration of a rational resampler, stored on ``func.__dsp_props__`` by ``resampler``.
+
+    Fields mirror the arguments of ``resampler``; ``length`` is the resolved
+    output-length rule (a callable ``N -> length``, or ``None``).
+    """
+
     func: Callable
     up: int = 1
     down: int = 1

@@ -28,6 +28,7 @@ def _amplitude():
 
 
 def impulse(n: int):
+    """A single non-zero sample at an arbitrary position, of length ``n``."""
     return st.builds(
         lambda k, a: _impulse(n, k, a), st.integers(0, n - 1), _amplitude()
     )
@@ -40,6 +41,7 @@ def _impulse(n, k, a):
 
 
 def dc(n: int):
+    """A constant signal of length ``n``."""
     return _amplitude().map(lambda a: np.full(n, a))
 
 
@@ -56,6 +58,7 @@ def offgrid_sine(n: int):
 
 
 def near_nyquist_sine(n: int):
+    """Sinusoid with normalised frequency in [0.45, 0.5], close to Nyquist."""
     freq = st.floats(0.45, 0.5, allow_nan=False)
     phase = st.floats(-np.pi, np.pi, allow_nan=False)
     return st.builds(lambda f, p, a: _sine(n, f, p, a), freq, phase, _amplitude())
@@ -74,6 +77,7 @@ def close_tones(n: int):
 
 
 def white_noise(n: int):
+    """Noise with independent samples in [-1, 1], scaled by one of the test amplitudes."""
     elems = st.floats(-1.0, 1.0, allow_nan=False, allow_infinity=False, width=64)
     return st.builds(
         lambda x, a: a * x, hnp.arrays(np.float64, n, elements=elems), _amplitude()
@@ -106,6 +110,7 @@ def signals(n: int):
 
 @st.composite
 def signal_pairs(draw, max_n: int = 512):
+    """Two signals of the same length (drawn from ``lengths(max_n)``)."""
     n = draw(lengths(max_n))
     return draw(signals(n)), draw(signals(n))
 
@@ -121,5 +126,6 @@ def block_splits(draw, n: int, max_blocks: int = 8):
 
 
 def split_blocks(x, cuts):
+    """Split ``x`` at the sorted cut points ``cuts`` (from ``block_splits``) into a list of blocks."""
     edges = [0, *cuts, len(x)]
     return [x[i:j] for i, j in zip(edges[:-1], edges[1:])]

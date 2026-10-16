@@ -1,0 +1,81 @@
+site_name: dsp-props
+site_description: Property-based testing for digital signal processing code
+site_url: https://dsp-props.readthedocs.io/
+repo_url: https://github.com/clement-basdevant/dsp-props
+repo_name: clement-basdevant/dsp-props
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; 2026 Clément Basdevant, BSD-3-Clause
+
+strict: true
+
+# Internal development plan (in French), kept in docs/ but not published.
+exclude_docs: |
+  schema-directeur.md
+
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            members_order: source
+            show_root_heading: true
+            show_root_full_path: true
+            show_source: false
+            show_signature_annotations: true
+            filters: ["!^_"]
+            heading_level: 2
+
+nav:
+  - Home: index.md
+  - Tutorial: tutorial.md
+  - Relations catalogue: relations.md
+  - Choosing a tolerance: tolerances.md
+  - What the relations don't see: blind-spots.md
+  - API reference:
+      - Overview: api/index.md
+      - dsp_props: api/dsp_props.md
+      - dsp_props.core: api/core.md
+      - dsp_props.generators: api/generators.md
+      - dsp_props.relations: api/relations.md
+      - dsp_props.report: api/report.md
+      - dsp_props.adapters: api/adapters.md
+      - dsp_props.cli: api/cli.md

@@ -24,3 +24,12 @@ jobs:
         run: dsp-props check examples/filters.py:fft examples/filters.py:lowpass examples/filters.py:resample_2_3 --derandomize
       - name: Package builds
         run: python -m build && python -m twine check dist/*
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[docs]" && mkdocs build --strict

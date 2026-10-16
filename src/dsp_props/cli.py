@@ -104,6 +104,7 @@ def _check(args):
 
 
 def main(argv=None):
+    """Entry point of the ``dsp-props`` command; returns the exit status."""
     parser = argparse.ArgumentParser(prog="dsp-props", description="Property-based checks for DSP code.")
     parser.add_argument("--version", action="version", version=f"dsp-props {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
