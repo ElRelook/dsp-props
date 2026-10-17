@@ -76,9 +76,9 @@ La CI (`.github/workflows/ci.yml`) lance pytest, la suite de mutation, la CLI su
   (scipy/scipy#26406). La partie `lfilter` redécouvre scipy/scipy#22571 (déjà connu, corrigé
   dans la version de dev) ; la partie `sosfilt` est nouvelle. Le cas FIR de `lfilter` se
   propage à la pré-emphase en streaming de librosa. SciPy applique une politique IA : tickets
-  et PR rédigés par l'auteur, pas par une IA. Comportements
-  documentés mais surprenants : `tf2sos` supprime les retards purs ; `deemphasis` de
-  torchaudio écrête dans [-1, 1].
+  et PR rédigés par l'auteur, pas par une IA. Correctif
+  proposé : scipy/scipy#26415. Aussi signalés : `tf2sos` supprime les retards purs
+  (scipy/scipy#26417) ; `deemphasis` de torchaudio écrête dans [-1, 1] (pytorch/audio#4238).
 - FFT CPU de PyTorch : jusqu'à 195 ε pour certaines longueurs à grands facteurs premiers
   (N = 596), contre environ 4 ε pour NumPy/SciPy.
 
