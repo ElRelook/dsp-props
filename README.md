@@ -1,6 +1,6 @@
 # dsp-props
 
-[![PyPI](https://img.shields.io/pypi/v/dsp-props)](https://pypi.org/project/dsp-props/) [![CI](https://github.com/clement-basdevant/dsp-props/actions/workflows/ci.yml/badge.svg)](https://github.com/clement-basdevant/dsp-props/actions/workflows/ci.yml) [![Documentation](https://readthedocs.org/projects/dsp-props/badge/?version=latest)](https://dsp-props.readthedocs.io/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23437841.svg)](https://doi.org/10.5281/zenodo.23437841)
+[![PyPI](https://img.shields.io/pypi/v/dsp-props)](https://pypi.org/project/dsp-props/) [![CI](https://github.com/clement-basdevant/dsp-props/actions/workflows/ci.yml/badge.svg)](https://github.com/clement-basdevant/dsp-props/actions/workflows/ci.yml) [![Documentation](https://readthedocs.org/projects/dsp-props/badge/?version=latest)](https://dsp-props.readthedocs.io/) [![DOI](https://zenodo.org/badge/1418824686.svg)](https://doi.org/10.5281/zenodo.23437840)
 
 **Property-based testing for digital signal processing code**
 
@@ -190,7 +190,7 @@ python -m pytest
 
 ## Citation
 
-If you use `dsp-props`, please cite it with its DOI, [10.5281/zenodo.23437841](https://doi.org/10.5281/zenodo.23437841), or with the metadata in [`CITATION.cff`](CITATION.cff) (GitHub's *Cite this repository* button).
+If you use `dsp-props`, please cite it with its DOI, [10.5281/zenodo.23437840](https://doi.org/10.5281/zenodo.23437840) (all versions; each release also has its own DOI on Zenodo), or with the metadata in [`CITATION.cff`](CITATION.cff) (GitHub's *Cite this repository* button).
 
 ## License
 
