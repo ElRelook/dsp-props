@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 import scipy.signal as ss
 
 import dsp_props as dp
@@ -35,3 +36,20 @@ def test_non_causal_filter_declared_causal_is_caught():
     f = dp.lti_filter(causal=True)(lambda x: np.convolve(x, [0.25, 0.5, 0.25], mode="same"))
     report = dp.verify(f, max_examples=100, raise_on_failure=False)
     assert "causality" in [fl.relation for fl in report.failures]
+
+
+@pytest.mark.parametrize("a", [[1.0, -1.5], [1.0, -1.0], [1.0, 0.0, 1.0], [2.0, -2.5]])
+def test_unstable_transfer_is_rejected(a):
+    # poles at 1.5, 1 (integrator), +-i and 1.25: the error bound would be infinite
+    b = [1.0]
+    with pytest.raises(ValueError, match="unstable"):
+        dp.lti_filter(transfer=(b, a))(lambda x: ss.lfilter(b, a, x))
+    with pytest.raises(ValueError, match="unstable"):
+        dp.lti_filter(transfer=(b, a), tolerance=dp.core.FFTTolerance(c=1000.0))(lambda x: x)
+    with pytest.raises(ValueError, match="unstable"):
+        IIRTolerance(b, a)
+
+
+def test_stable_and_fir_transfers_are_accepted():
+    dp.lti_filter(transfer=([0.2, 0.3], [1.0, -0.999]))(lambda x: x)
+    dp.lti_filter(transfer=([0.25, 0.5, 0.25], [1.0]))(lambda x: x)

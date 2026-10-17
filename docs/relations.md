@@ -101,6 +101,7 @@ Every relation draws its signals from
 | two tones less than one bin apart | resolution, accumulated rounding |
 | sparse (up to four impulses) | superposition |
 | white noise | generic coverage |
+| complex exponential (any frequency in [-0.5, 0.5]), x + iy from two real signals, complex noise | code that drops or mixes up the imaginary part; transforms only, unless declared `real_input_only` |
 
 Amplitudes are drawn from {1, 1e-3, 1e3, 1e-100, 1e100}, to reach underflow
 and overflow paths. Lengths mix uniform values up to `max_n` with
