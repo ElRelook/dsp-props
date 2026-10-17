@@ -117,7 +117,13 @@ def lti_filter(*, causal=True, transfer=None, max_gain=None, tolerance=None, max
     follows the conditioning of the recursion. With ``max_gain`` it checks
     that no input bounded by 1 gives an output above ``max_gain`` (BIBO
     stability with a declared bound, e.g. the l1 norm of the impulse response).
+    An unstable ``transfer`` (a pole on or outside the unit circle) raises
+    ``ValueError``: no relation could fail against it.
     """
+    if transfer is not None:
+        from .core.iir import check_stable
+
+        check_stable(*transfer)
     if tolerance is None:
         if transfer is not None:
             from .core.iir import IIRTolerance

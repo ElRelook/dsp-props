@@ -89,9 +89,10 @@ FILTERS = {
 The generators are aimed at the inputs that break DSP code, but they do not
 cover everything:
 
-- **dtype and shape.** Generated signals are 1-D float64 arrays. Complex inputs
-  reach a transform only through the linearity relation, which uses complex
-  coefficients. float32 inputs, integer inputs, multi-channel arrays and the
+- **dtype and shape.** Generated signals are 1-D float64 or complex128 arrays.
+  Complex signals go to every transform not declared `real_input_only`
+  (`kind="rdft"` is real-input only by default); filters, resamplers and
+  streaming processors get real signals only. float32 inputs, integer inputs, multi-channel arrays and the
   `axis=` argument are never exercised.
 - **Length.** Lengths go up to `max_n` (512 by default; the convolution theorem
   caps at 256). A bug that appears only for longer signals, such as a code path
@@ -138,10 +139,10 @@ relation, so state carried *between instances* is not checked.
 ## Unstable declarations
 
 `IIRTolerance` and the transfer-function relation assume a stable declared
-filter. With a pole on or outside the unit circle, the tolerance is infinite
-(NaN for an all-zero input), so time invariance and causality pass
-vacuously, and the transfer-function relation errors out. Declare unstable
-recursions with an explicit `tolerance=` and without `transfer`.
+filter: with a pole on or outside the unit circle the error bound would be
+infinite and every relation would pass vacuously. `dp.lti_filter(transfer=...)`
+and `IIRTolerance(b, a)` therefore raise `ValueError` for an unstable B(z)/A(z).
+Declare unstable recursions with an explicit `tolerance=` and without `transfer`.
 
 ## Things outside the scope
 

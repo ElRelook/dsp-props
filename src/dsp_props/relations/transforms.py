@@ -6,7 +6,7 @@ import numpy as np
 from hypothesis import strategies as st
 
 from ..core.tolerance import ToleranceError, assert_close, norm
-from ..generators import lengths, signals, signal_pairs
+from ..generators import complex_signals, lengths, signals, signal_pairs
 from .base import Relation
 
 COEFFS = [1.0, -1.0, 2.0, 0.5, 1j, -0.75 + 0.25j, 3.0 - 2.0j]
@@ -14,9 +14,14 @@ REAL_COEFFS = [1.0, -1.0, 2.0, 0.5, -0.75, 3.0]
 
 
 @st.composite
-def _signal(draw, max_n):
+def _signal(draw, max_n, complex=False):
     n = draw(lengths(max_n))
-    return draw(signals(n))
+    return draw(complex_signals(n) if complex else signals(n))
+
+
+def _accepts_complex(spec):
+    """Unless declared real-input only, a transform must handle complex input."""
+    return not spec.real_input_only
 
 
 class Linearity(Relation):
@@ -30,7 +35,7 @@ class Linearity(Relation):
     def inputs(self, spec):
         coeffs = REAL_COEFFS if spec.real_input_only else COEFFS
         c = st.sampled_from(coeffs)
-        return st.tuples(signal_pairs(spec.max_n), c, c)
+        return st.tuples(signal_pairs(spec.max_n, complex=_accepts_complex(spec)), c, c)
 
     def check(self, spec, inputs):
         (x, y), a, b = inputs
@@ -50,7 +55,7 @@ class CircularShift(Relation):
         return spec.is_fourier
 
     def inputs(self, spec):
-        return st.tuples(_signal(spec.max_n), st.integers(-1024, 1024))
+        return st.tuples(_signal(spec.max_n, _accepts_complex(spec)), st.integers(-1024, 1024))
 
     def check(self, spec, inputs):
         x, s = inputs
@@ -73,7 +78,7 @@ class Parseval(Relation):
         return spec.parseval
 
     def inputs(self, spec):
-        return _signal(spec.max_n)
+        return _signal(spec.max_n, _accepts_complex(spec))
 
     def check(self, spec, x):
         n = len(x)
@@ -114,7 +119,7 @@ class Inversibility(Relation):
         return spec.inverse is not None
 
     def inputs(self, spec):
-        return _signal(spec.max_n)
+        return _signal(spec.max_n, _accepts_complex(spec))
 
     def check(self, spec, x):
         y = spec.invert(spec.func(x), len(x))
@@ -137,7 +142,7 @@ class ConvolutionTheorem(Relation):
         return spec.is_fourier and spec.inverse is not None
 
     def inputs(self, spec):
-        return signal_pairs(min(spec.max_n, 256))
+        return signal_pairs(min(spec.max_n, 256), complex=_accepts_complex(spec))
 
     def check(self, spec, inputs):
         x, y = inputs

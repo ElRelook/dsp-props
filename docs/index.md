@@ -20,7 +20,7 @@ instead of a fixed `atol`, and every failure is reported with a **small
 counterexample**.
 
 !!! note "Status"
-    Alpha. Version 0.1.1 is on [PyPI](https://pypi.org/project/dsp-props/).
+    Alpha. Version 0.1.2 is on [PyPI](https://pypi.org/project/dsp-props/).
 
 ## Install
 

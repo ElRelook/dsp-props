@@ -17,6 +17,9 @@ Every name below is also importable from `dsp_props.generators`.
         - white_noise
         - SIGNAL_KINDS
         - signals
+        - complex_exponential
+        - complex_noise
+        - complex_signals
         - signal_pairs
         - block_splits
         - split_blocks
