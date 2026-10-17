@@ -27,7 +27,7 @@ are a matter of declarations rather than of relations: declaring a first-order
 filter would have caught the \code{lfilter} survivors.}
 
 \newcommand{\rqTwoText}{On the generated mutants the four randomised variants
-detect the same faults, up to one FFT mutant that the variants with uniform
+detect the same faults, up to three FFT mutants that the variants with uniform
 inputs miss in some seeds (Table~\ref{tab:comparison}). These mutants change the output by orders of magnitude, and almost any input
 reveals them:
 the median number of inputs before the first failure is \firstMedDsp{} for
@@ -38,8 +38,10 @@ not change what is detected here, and the generators cost time, with a median of
 \secMedSop{}~s for a ported suite.
 
 The hand-written faults, which include the accuracy faults, separate the
-variants (Table~\ref{tab:hand}). Every variant detects every fault in every seed,
-but not equally fast. With the domain generators, the median failure appears at
+variants (Table~\ref{tab:hand}). Every variant but one detects every fault in every seed:
+with a fixed tolerance, the resampler that filters in single precision escapes
+in one of the \nSeeds{} seeds, because its relative error, about $10^{-7}$, is
+close to the fixed tolerance of $10^{-7}$. Nor are the variants equally fast. With the domain generators, the median failure appears at
 input \handDspFirstMed{} (90th percentile \handDspFirstPnn{}); with uniform inputs
 at input \handUniFirstMed{} (\handUniFirstPnn{}), and with generic PBT at input
 \handGenFirstMed{} (\handGenFirstPnn{}). Counterexamples are smaller too: the 90th percentile of their length is
