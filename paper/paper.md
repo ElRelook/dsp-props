@@ -65,12 +65,15 @@ re-implements, usually partially:
    pairs, sparse signals and white noise, over pathological lengths (1, 2,
    primes, powers of two plus or minus one), amplitudes from 1e-100 to
    1e100, and block splits that include empty and one-sample blocks.
+   Transforms that accept complex input also receive complex exponentials,
+   negative frequencies included, and complex noise.
 3. **How close is close enough.** A fixed `rtol` is either too loose to catch
    a single-precision intermediate or too tight for a large transform. The
    FFT model follows the $O(\varepsilon \log N)$ bound of
    @schatzman1996accuracy; recursive filters use a forward-error bound that
    grows with the order and the $\ell_1$ norms of the recursion's impulse
-   responses [@higham2002accuracy]; and `dp.calibrate` measures an
+   responses [@higham2002accuracy], so a filter declared with an unstable
+   transfer function, whose bound would be infinite, is rejected; and `dp.calibrate` measures an
    implementation against an extended-precision reference, length by length,
    refusing to calibrate an operator whose error is implausibly large instead
    of absorbing the bug into the tolerance.

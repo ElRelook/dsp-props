@@ -457,7 +457,12 @@ $\{10^{-100},10^{-3},1,10^{3},10^{100}\}$ to reach underflow and overflow paths.
 Lengths are biased towards the values that change the code path of an FFT or
 a filter: 1, 2, small primes, and $2^k-1$, $2^k$, $2^k+1$, mixed with uniform
 lengths up to 512. Block splits for streaming code include empty and
-one-sample blocks.
+one-sample blocks. A transform that accepts complex input also receives complex
+signals: complex exponentials, including negative frequencies, sums $x+iy$ of
+two signals from the families above, and complex noise. Real signals come
+first, so that a failure shrinks to a real input when one exists; an inverse
+FFT that returns only the real part of its result, correct on every real
+input, fails on a one-sample complex input.
 
 The families are ordered so that Hypothesis' shrinking converges to short
 impulses of unit amplitude, which yields counterexamples a DSP engineer can read
@@ -493,7 +498,9 @@ to first order in $\eps$, where $k$ is the number of coefficients other than $a_
 $h_{B/A}$ are the impulse responses of $1/A$ and $B/A$, and $a_{1:}$ are the
 feedback coefficients. The bound grows as poles approach the unit circle, which
 is where recursions lose accuracy, and reduces to the error of a dot product for
-a FIR filter.
+a FIR filter. For a pole on or outside the unit circle $\|h_A\|_1$ is infinite,
+and so is the bound, which would accept any output: dsp-props rejects such a
+declaration instead.
 
 \emph{Calibration.} An analytic bound cannot describe every library: an FFT
 may switch algorithm with the factorisation of $N$, and its error then varies by
@@ -577,7 +584,7 @@ library counterpart, gets four tests in the same style. \emph{dsp-props} runs
 the declarations a user would write, two to four per subject, written before
 the mutants were run. Three ablations isolate the components: \emph{uniform}
 replaces the domain generators by uniform lengths in $[1,512]$ and values in
-$[-1,1]$; \emph{fixed-tol} replaces every tolerance model by a fixed relative
+$[-1,1]$, for both the real and imaginary parts of complex inputs; \emph{fixed-tol} replaces every tolerance model by a fixed relative
 tolerance of $10^{-7}$, the default of \code{numpy.testing.assert\_allclose};
 \emph{generic PBT} applies both, \ie the same relations written with Hypothesis
 alone.

@@ -194,6 +194,11 @@ def category(err, crashed=False):
 
 def summarise(path: Path):
     records = [json.loads(line) for line in path.read_text().splitlines()]
+    broken = [r for r in records if r.get("harness_error")]
+    if broken:
+        # a harness error is recorded as a kill, so summarising it would inflate the kill rates
+        raise SystemExit(f"{len(broken)} runs failed in the harness, e.g. {broken[0]['approach']} on "
+                         f"{broken[0]['mutant']}: {broken[0]['harness_error']}; delete them and rerun")
     cls = {}
     runs = defaultdict(list)
     for r in records:
