@@ -129,10 +129,10 @@ also the tightest gain bound to declare with `max_gain=` (see the
 
 !!! note "Stable filters only"
     The model assumes a stable declared filter. If A(z) has a pole on or outside
-    the unit circle, `recursion_gain` returns infinity and the tolerance is
-    infinite (or NaN for an all-zero input), so the results of the relations
-    are meaningless, and the transfer-function relation errors out. Declare
-    unstable recursions with an explicit `tolerance=` and without `transfer`.
+    the unit circle, `recursion_gain` returns infinity, so `IIRTolerance(b, a)`
+    and `dp.lti_filter(transfer=(b, a))` raise `ValueError` instead of checking
+    against an infinite tolerance. Declare unstable recursions with an explicit
+    `tolerance=` and without `transfer`.
 
 `dsp_props.core.longdouble_lfilter(b, a, x)` is a slow reference recursion in
 extended precision, used by the tests to check that the bound holds.

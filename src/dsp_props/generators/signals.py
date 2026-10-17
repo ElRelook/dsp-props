@@ -108,11 +108,42 @@ def signals(n: int):
     return st.one_of([kind(n) for kind in SIGNAL_KINDS])
 
 
+def complex_exponential(n: int):
+    """exp(i (2 pi f t + phi)) with f in [-0.5, 0.5]: negative frequencies have no real counterpart."""
+    freq = st.floats(-0.5, 0.5, allow_nan=False)
+    phase = st.floats(-np.pi, np.pi, allow_nan=False)
+    return st.builds(
+        lambda f, p, a: a * np.exp(1j * (2 * np.pi * f * np.arange(n) + p)), freq, phase, _amplitude()
+    )
+
+
+def complex_noise(n: int):
+    """Noise with independent real and imaginary parts in [-1, 1], scaled by a test amplitude."""
+    elems = st.floats(-1.0, 1.0, allow_nan=False, allow_infinity=False, width=64)
+    part = hnp.arrays(np.float64, n, elements=elems)
+    return st.builds(lambda re, im, a: a * (re + 1j * im), part, part, _amplitude())
+
+
+def complex_signals(n: int):
+    """Real signals first (so failures shrink to real input when they can), then complex ones.
+
+    Besides the two families above, ``x + i y`` with ``x`` and ``y`` any real
+    signals catches code that mixes up or drops the imaginary part of its input.
+    """
+    return st.one_of(
+        signals(n),
+        complex_exponential(n),
+        st.builds(lambda x, y: x + 1j * y, signals(n), signals(n)),
+        complex_noise(n),
+    )
+
+
 @st.composite
-def signal_pairs(draw, max_n: int = 512):
-    """Two signals of the same length (drawn from ``lengths(max_n)``)."""
+def signal_pairs(draw, max_n: int = 512, complex: bool = False):
+    """Two signals of the same length (drawn from ``lengths(max_n)``), complex ones too if ``complex``."""
     n = draw(lengths(max_n))
-    return draw(signals(n)), draw(signals(n))
+    kind = complex_signals if complex else signals
+    return draw(kind(n)), draw(kind(n))
 
 
 @st.composite

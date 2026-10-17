@@ -26,6 +26,33 @@ import numpy as np
 from .tolerance import ToleranceModel
 
 
+def pole_radius(a):
+    """Largest pole modulus of 1/A(z) (0 for a pure FIR filter)."""
+    a = np.atleast_1d(np.asarray(a, dtype=float))
+    if len(a) < 2:
+        return 0.0
+    return float(np.max(np.abs(np.roots(a / a[0]))))
+
+
+def check_stable(b, a):
+    """Raise ``ValueError`` if B(z)/A(z) has a pole on or outside the unit circle.
+
+    The error bound of an unstable recursion is infinite and its frequency
+    response is not the DFT of its impulse response, so every check against
+    such a declaration would pass whatever the filter computes.
+    """
+    a = np.atleast_1d(np.asarray(a, dtype=float))
+    if a[0] == 0:
+        raise ValueError("transfer function: a[0] must be non-zero")
+    r = pole_radius(a)
+    if r >= 1.0:
+        raise ValueError(
+            f"transfer function is unstable: pole at |z| = {r:.6g} >= 1, so its error bound is "
+            "infinite and no relation could fail; declare a stable B(z)/A(z) (all poles inside "
+            "the unit circle)"
+        )
+
+
 def recursion_gain(a, b=(1.0,), tol=1e-12, max_len=1_000_000):
     """||h||_1 for h the impulse response of B(z)/A(z), truncated once it has decayed."""
     from scipy.signal import lfilter
@@ -57,6 +84,7 @@ class IIRTolerance(ToleranceModel):
     c: float = 4.0
 
     def __post_init__(self):
+        check_stable(self.b, self.a)
         self.b = tuple(np.atleast_1d(np.asarray(self.b, dtype=float)))
         self.a = tuple(np.atleast_1d(np.asarray(self.a, dtype=float)))
         a0 = abs(self.a[0])
